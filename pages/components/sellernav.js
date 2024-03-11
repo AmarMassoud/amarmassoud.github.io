@@ -14,9 +14,15 @@ class SellerNav extends LitElement {
         padding: 8px;
         margin: 8px;
         align-items: center;
-        border-bottom: 1px solid black; /* Add a border at the bottom */
+        border-bottom: 1px solid #888; /* Add a border at the bottom */
+        font-size: 1.1rem;
+        font-family: "Inter", Times, serif;
+        font-weight: 500;
+
+
     }
     #nav-buttons a:hover {
+        // font-size: 1.2rem;
         font-weight: 600;
         background: #F0F0F0;      
     border-radius: 0.5rem;
@@ -62,6 +68,12 @@ class SellerNav extends LitElement {
         flex-direction: row;
         align-items: center;
     }
+    #nav-end>a{
+        display: flex;
+        flex-direction: Column;
+        align-items: center;
+        justify-content: center;
+    }
     
    
   `;
@@ -85,7 +97,6 @@ class SellerNav extends LitElement {
    <div></a>
    </div>
   </div>
-
 
     `;
   }

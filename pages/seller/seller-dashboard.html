@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/dist/output.css" />
+    <script type="module" src="/pages/components/sellernav.js"></script>
+    <script type="module" src="/pages/components/footer.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <nav>
+      <seller-nav name="Wardan"> </seller-nav>
+    </nav>
+    <main class="grid grid-cols-4 gap-16 font-inter px-8 mt-8">
+      <section id="analytics" class="col-span-3">
+        <section
+          class="bg-custom-gray rounded-3xl flex items-center justify-around flex-col h-19rem p-4 px-8"
+        >
+          <h2 class="text-4xl font-bold text-left w-full ps-4">
+            Sales Summary
+          </h2>
+          <div
+            class="bg-white w-full rounded-3xl h-44 p-2 grid grid-cols-2 gap-4"
+          >
+            <div class="flex p-4 h-full">
+              <div>
+                <img src="../../media/sales.svg" alt="" class="me-4" />
+              </div>
+              <div class="flex flex-col text-left justify-around">
+                <p class="font-bold text-xl">Total Sales</p>
+                <h3 class="text-5xl font-bold ms-3">QR 7500</h3>
+              </div>
+            </div>
+            <div class="flex p-4 h-full bg-custom-gray rounded-3xl">
+              <div>
+                <img src="../../media/grey-cart.svg" alt="" class="me-4" />
+              </div>
+              <div class="flex flex-col text-left justify-around">
+                <p class="font-bold text-xl">Total Customers</p>
+                <h3 class="text-5xl font-bold ms-3">105</h3>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+      <section id="interactions" class="w-full bg-custom-gray rounded-3xl p-4">
+        <p class="text-2xl font-bold">Latest comments</p>
+        <div class="p-2 mt-4">
+          <div class="flex pb-8 border-b-2 border-gray-300 mt-4">
+            <div>
+              <img src="../../media/grey-cart.svg" alt="" class="me-4" />
+            </div>
+            <div class="mt-4">
+              <h3 class="text-2xl font-bold">Mohanad Ahmad</h3>
+              <p class="text-sm">on product -500</p>
+              <p class="mt-3">Very Nice, Matches description</p>
+            </div>
+          </div>
+          <div class="flex pb-8 border-b-2 border-gray-300 mt-4">
+            <div>
+              <img src="../../media/grey-cart.svg" alt="" class="me-4" />
+            </div>
+            <div class="mt-4">
+              <h3 class="text-2xl font-bold">Mohanad Ahmad</h3>
+              <p class="text-sm">on product -500</p>
+              <p class="mt-3">Very Nice, Matches description</p>
+            </div>
+          </div>
+          <div class="flex pb-8 border-b-2 border-gray-300 mt-4">
+            <div>
+              <img src="../../media/grey-cart.svg" alt="" class="me-4" />
+            </div>
+            <div class="mt-4">
+              <h3 class="text-2xl font-bold">Mohanad Ahmad</h3>
+              <p class="text-sm">on product -500</p>
+              <p class="mt-3">Very Nice, Matches description</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <web-footer> </web-footer>
+  </body>
+</html>
