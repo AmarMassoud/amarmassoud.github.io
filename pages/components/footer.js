@@ -17,7 +17,7 @@ class Footer1 extends LitElement {
       h2 {
         flex-shrink: 0;
         color: #101010;
-        font-family: Poppins;
+        font-family: Inter;
         font-size: 1.6rem;
         font-style: normal;
         font-weight: 700;
