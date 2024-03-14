@@ -3,17 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/dist/output.css" />
-    <script type="module" src="/pages/components/sellernav.js"></script>
-    <script type="module" src="/pages/components/footer.js"></script>
+    <link rel="stylesheet" href="../../dist/output.css" type="text/css" />
+    <script type="text/javascript" src="./account.js"></script>
+    <script type="module" src="../../pages/components/sellernav.js"></script>
+    <script type="module" src="../../pages/components/footer.js"></script>
+    
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <title>Login</title>
+    
   </head>
   <body>
+    <script>
+      console.log("test");
+
+    </script>
     <main class="h-full w-full bg-white flex justify-between items-center">
       <section
         id="login-section "
@@ -26,7 +33,7 @@
             <h1 class="text-5xl font-bold">Sing in</h1>
           </div>
 
-          <form action="" class="mb-6">
+          <form action="" class="mb-6" id="login-form">
             <div class="mb-4">
               <label
                 for="email"

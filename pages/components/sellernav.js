@@ -82,14 +82,14 @@ class SellerNav extends LitElement {
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="/"><img src="/media/logo.svg" alt="Logo" width="150" height="50"></a>
+  <a href="/"><img src="../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
       <a href="/seller">Dashboard</a>
       <a href="/seller#products">Products</a>
       <a href="/seller/add-item">Add Item</a>
   </div>
   <div id="nav-end">
-  <a href="/"><img src="/media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
+  <a href="/"><img src="../../media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
   
   <a href="/" >
   <div id="profile-icon">
