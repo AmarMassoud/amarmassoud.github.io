@@ -21,6 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
       product: "product object",
     },
   ];
+  const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+  const select = document.getElementById("sellerNav");
+  console.log(currentUser.firstName)
+    select.setAttribute("name",currentUser.firstName)
+
   const renderComment = (comment) => {
 
     const commentDiv = document.createElement("div");

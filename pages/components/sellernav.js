@@ -51,7 +51,7 @@ class SellerNav extends LitElement {
         height: .4em;
         padding: .9em;
         border-radius: 50%;
-        background-color: #0094FF
+        background-color: #F20E0F
     }
     h3{       
         text-align: center;
@@ -91,7 +91,7 @@ class SellerNav extends LitElement {
   <div id="nav-end">
   <a href="/"><img src="../../media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
   
-  <a href="/" >
+  <a href="../account/login.html" >
   <div id="profile-icon">
   <h3>${this.name.charAt(0)}</h3>
    <div></a>

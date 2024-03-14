@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../dist/output.css" />
-    <script type="text/javascript" src="./account.js"></script>
+    <script type="text/javascript" src="./signup.js"></script>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -25,10 +25,10 @@
           <img src="../../media/logo.svg" alt="" />
           <div class="mb-6 mt-14">
             <p class="text-gray-500 text-sm mb-1">Welcome back !</p>
-            <h1 class="text-5xl font-bold">Sign up</h1>
+            <h1 class="text-5xl font-bold text-black">Sign up</h1>
           </div>
 
-          <form action="" class="mb-6" id="singup-form">
+          <form action="" class="mb-6" id="signup-form">
             <div class="mb-4">
               <label for="name" class="block text-sm font-medium text-gray-700">
                 Full Name
@@ -39,6 +39,19 @@
                 id="name"
                 class="mt-1 p-2 rounded-lg w-96 bg-custom-coral text-gray-600 focus:outline-none"
               />
+            </div>
+            <div class="mb-4">
+              <label for="role" class="block text-sm font-medium text-gray-700">
+                Account type
+              </label>
+              <select
+                name="role"
+                id="role"
+                class="mt-1 p-2 rounded-lg w-96 bg-custom-coral text-gray-600 focus:outline-none cursor-pointer hover:bg-custom-coral"
+              >
+                <option value="CUSTOMER">Customer</option>
+                <option value="BUYER">Buyer</option>
+              </select>
             </div>
             <div class="mb-4">
               <label
@@ -79,7 +92,7 @@
               already have an account ?
               <span
                 ><a href="./login.html" class="text-custom-red">
-                  Sign up</a
+                  SING IN</a
                 ></span
               >
             </p>
