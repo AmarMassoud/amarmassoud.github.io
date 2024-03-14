@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/dist/output.css" />
     <script type="module" src="/pages/components/sellernav.js"></script>
     <script type="module" src="/pages/components/footer.js"></script>
+    <script type="module" src="seller-dashboard-script.js"></script>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -34,18 +35,18 @@
               <div>
                 <img src="../../media/sales.svg" alt="" class="me-4" />
               </div>
-              <div class="flex flex-col text-left justify-around">
+              <div class="flex flex-col text-left justify-around" id="total-sales-div">
                 <p class="font-bold text-xl">Total Sales</p>
-                <h3 class="text-5xl font-bold ms-3">QR 7500</h3>
+                <!-- <h3 class="text-5xl font-bold ms-3">QR 7500</h3> -->
               </div>
             </div>
-            <div class="flex p-4 h-full bg-custom-gray rounded-3xl">
+            <div class="flex p-4 h-full bg-custom-gray rounded-3xl" >
               <div>
                 <img src="../../media/grey-cart.svg" alt="" class="me-4" />
               </div>
-              <div class="flex flex-col text-left justify-around">
+              <div class="flex flex-col text-left justify-around" id="total-customers-div">
                 <p class="font-bold text-xl">Total Customers</p>
-                <h3 class="text-5xl font-bold ms-3">105</h3>
+                <!-- <h3 class="text-5xl font-bold ms-3">105</h3> -->
               </div>
             </div>
           </div>
@@ -84,8 +85,8 @@
       </section>
       <section id="interactions" class="w-full bg-custom-gray rounded-3xl p-4">
         <p class="text-2xl font-bold">Latest comments</p>
-        <div class="p-2 mt-4">
-          <div class="flex pb-8 border-b-2 border-gray-300 mt-4">
+        <div class="p-2 mt-4" id="latest-comments">
+          <!-- <div class="flex pb-8 border-b-2 border-gray-300 mt-4">
             <div>
               <img src="../../media/grey-cart.svg" alt="" class="" />
             </div>
@@ -114,7 +115,7 @@
               <p class="text-sm">on product -500</p>
               <p class="mt-3">Very Nice, Matches description</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
     </main>
