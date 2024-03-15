@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         let user = users.find((user) => user.email === email && user.password === password);
         if (user != null) {
             localStorage.setItem('currentUser', JSON.stringify(user));
-            window.location.href = '../seller/seller-dashboard.html';
+            window.location.href = '../../pages/seller/seller-dashboard.html';
         } else {
             alert('Invalid email or password');
         }
