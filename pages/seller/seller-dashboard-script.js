@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async() => {
               if (Array.isArray(responseData)) {
                   localStorage.setItem('products', JSON.stringify(responseData));
                   products = responseData;
-                  console.log('products data:', users);
+                  // console.log('products data:', users);
               } else {
                   console.error('Invalid products data format:', responseData);
               }
