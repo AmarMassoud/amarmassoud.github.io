@@ -3,10 +3,11 @@ import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core
 
 class Footer1 extends LitElement {
     static styles = css`
+
     h1 {
         color: #000;
         font-family: Inter;
-        font-size: 3.125rem;
+        font-size: 3rem;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
@@ -18,11 +19,13 @@ class Footer1 extends LitElement {
         flex-shrink: 0;
         color: #101010;
         font-family: Inter;
-        font-size: 1.6rem;
+        font-size: 1.2rem;
         font-style: normal;
         font-weight: 700;
         min-width: fit-content;
         line-height: 1.8rem;
+        text-wrap: nowrap;
+
       }            
   
       a {
@@ -30,11 +33,13 @@ class Footer1 extends LitElement {
         flex-shrink: 0;
         color: #7a7a7a;
         font-family: Poppins;
-        font-size: 1.4rem;
+        font-size: 1.1rem;
         font-style: normal;
         font-weight: 400;
         line-height: 1.8rem;
         min-width: fit-content;
+                text-wrap: nowrap;
+
       }
   
       div {
@@ -62,6 +67,7 @@ class Footer1 extends LitElement {
         }
       }
       }
+    
   `;
 
 
@@ -77,10 +83,12 @@ class Footer1 extends LitElement {
         <a href="#">Instagram</a>
       </section>
 
-      <section class="column">
+      <section class="column" >
         <h2>About</h2>
         <a href="#">Help</a>
         <a href="#">FAQ</a>
+        <a href="#">Objectives</a>
+
       </section>
 
       <section class="column">
