@@ -91,7 +91,7 @@ class SellerNav extends LitElement {
   <div id="nav-end">
   <a href="/"><img src="../../media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
   
-  <a href="../account/login.html" >
+  <a href="../../index.html" >
   <div id="profile-icon">
   <h3>${this.name.charAt(0)}</h3>
    <div></a>
