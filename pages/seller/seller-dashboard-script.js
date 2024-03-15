@@ -168,7 +168,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     infoDiv.classList.add("mt-4", "ms-3");
 
     const name = document.createElement("h3");
-    name.classList.add("text-2xl", "font-bold");
+    name.classList.add("text-xl", "font-bold");
     name.textContent = comment.user.firstName + " " + comment.user.lastName;
 
     const product = document.createElement("p");
@@ -226,12 +226,106 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     totalCustomersDiv.appendChild(totalCustomers);
 
   }
+  
+  const renderRequest = (comment) => {
 
+    const requestDiv = document.createElement("div");
+    requestDiv.classList.add(
+      "flex",
+      "pb-4",
+      "border-b-2",
+      "border-gray-300",
+      "mt-4"
+    );
+
+    const imgDiv = document.createElement("div");
+    const commentImg = document.createElement("img");
+    commentImg.src = "../../media/grey-cart.svg";
+
+    imgDiv.appendChild(commentImg);
+
+    const infoDiv = document.createElement("div");
+    infoDiv.classList.add("mt-4", "ms-3");
+
+    const name = document.createElement("h3");
+    name.classList.add("text-xl", "font-bold");
+    name.textContent = comment.user.firstName + " " + comment.user.lastName;
+
+    const product = document.createElement("p");
+    product.classList.add("text-sm");
+    product.textContent = products.find((product) => product.id===comment.productId).title;
+
+    const commentP = document.createElement("p");
+    commentP.classList.add("mt-3");
+    commentP.textContent = comment.body;
+
+    const moreDetails = document.createElement("button");
+    moreDetails.classList.add("text-bs", "font-bold", "text-black-500", "bg-white","py-2", "px-10","rounded-xl", "hover:text-red-700",   "mt-5");
+    moreDetails.textContent = 'More Details';
+
+
+
+    infoDiv.appendChild(name);
+    infoDiv.appendChild(product);
+    infoDiv.appendChild(commentP);
+    infoDiv.appendChild(moreDetails);
+    
+    requestDiv.appendChild(imgDiv);
+    requestDiv.appendChild(infoDiv);
+
+    return requestDiv;
+  };
+
+  const renderRequests = () => {
+
+    const commentsDiv = document.querySelector("#refund-requests");
+    commentsDiv.replaceChildren();
+
+    let displayRequests=[]
+    for (let i = 0; i < 3; i++) {
+      displayRequests.push(comments[i]);
+    }
+
+    displayRequests.forEach((comment) =>
+      commentsDiv.appendChild(renderRequest(comment))
+    );
+  };
+
+
+
+
+  const ctx = document.getElementById('barchart').getContext('2d');  
+  const barchart= new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of sales',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      backgroundColor: '#F20E0F',
+      borderRadius: 10
+    },
+    
+  });
+
+
+
+  
 
 
 
 
   renderComments();
   rednderTotalSales();
+  renderRequests();
   totalCustomers();
 });

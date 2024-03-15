@@ -16,6 +16,9 @@ module.exports = {
     fontFamily: {
       inter: ['Inter', 'sans-serif'],
     },
+    maxHeight:{
+      '45': '35rem'
+    },
   },
   },
   plugins: [require("daisyui")],
