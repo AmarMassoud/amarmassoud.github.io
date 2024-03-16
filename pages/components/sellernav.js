@@ -86,7 +86,7 @@ class SellerNav extends LitElement {
   <div id="nav-buttons">
       <a href="../seller/seller-dashboard.html">Dashboard</a>
       <a href="../seller/sellerProducts.html">Products</a>
-      <a href="/seller/add-item">Add Item</a>
+      <a href="../seller/addProduct.html">Add Item</a>
   </div>
   <div id="nav-end">
   <a href="/"><img src="../../media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
