@@ -1,26 +1,5 @@
 document.addEventListener("DOMContentLoaded", async() => {
-  let comments = [
-    {
-      name: "suiiiiii",
-      comment: "very nice, matches description",
-      product: "product object",
-    },
-    {
-      name: "mohaned ahmed",
-      comment: "very nice, matches description",
-      product: "product object",
-    },
-    {
-      name: "mohaned ahmed",
-      comment: "very nice, matches description",
-      product: "product object",
-    },
-    {
-      name: "mohaned ahmed",
-      comment: "very nice, matches description",
-      product: "product object",
-    },
-  ];
+
   comments = [];
   const getComments = async () => {
       const commentsData = localStorage.getItem('comments');
@@ -260,7 +239,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     commentP.textContent = comment.body;
 
     const moreDetails = document.createElement("button");
-    moreDetails.classList.add("text-bs", "font-bold", "text-black-500", "bg-white","py-2", "px-10","rounded-xl", "hover:text-red-700",   "mt-5");
+    moreDetails.classList.add("text-bs", "font-bold", "text-black-500", "bg-white","py-2", "px-10","rounded-xl", "hover:text-red-700",   "mt-5", "text-nowrap");
     moreDetails.textContent = 'More Details';
 
 

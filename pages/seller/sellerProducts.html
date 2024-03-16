@@ -8,16 +8,26 @@
     <script type="text/javascript" src="./sellerProducts.js"></script>
     <script type="module" src="../../pages/components/sellernav.js"></script>
     <script type="module" src="../../pages/components/footer.js"></script>
+    <script
+      src="https://kit.fontawesome.com/056ea1a590.js"
+      crossorigin="anonymous"
+    ></script>
+
     <title>Document</title>
   </head>
   <body>
     <nav>
       <seller-nav name="Wardan" id="sellerNav"> </seller-nav>
     </nav>
-    <section class="flex">
-      <p class="text-3xl text-bold">Your Products</p>
+    <section
+      class="flex justify-around items-center mx-8 my-4"
+      id="top-section"
+    >
+      <p class="text-3xl text-bold bg-custom-gray p-4 rounded-2xl">
+        Your Products
+      </p>
       <label class="input input-bordered flex items-center gap-2">
-        <input type="text" class="grow" placeholder="Search" />
+        <input type="text" class="grow" placeholder="Search" id="search" />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
@@ -31,6 +41,23 @@
           />
         </svg>
       </label>
+      <button class="btn bg-custom-gray">Save</button>
+    </section>
+    <section id="products" class="ms-10">
+      <div
+        id="products-header"
+        class="grid grid-cols-10 border-b-2 border-cusotm-gray-500 pb-5 gap-8"
+      >
+        <p onclick="" class="cursor-pointer col-span-2 text-center">Product</p>
+        <p onclick="" class="cursor-pointer col-span-1">Price</p>
+        <p onclick="" class="cursor-pointer col-span-1">Stock</p>
+        <p onclick="" class="cursor-pointer col-span-1">Earnings</p>
+        <p onclick="" class="cursor-pointer col-span-1">Sales</p>
+        <p onclick="" class="cursor-pointer col-span-1">Category</p>
+        <p onclick="" class="cursor-pointer col-span-1">Rating</p>
+        <p onclick="" class="cursor-pointer col-span-2">Actions</p>
+      </div>
+      <div id="products-table" class=""></div>
     </section>
     <footer>
       <web-footer></web-footer>
