@@ -1,5 +1,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+    var widnowWidth = window.innerWidth;
+    const smallScreen=widnowWidth > 600;
+
+
 let product=[]
     product =JSON.parse( localStorage.getItem('products'));
     localStorage.setItem('currentProduct', JSON.stringify(product[0]));
@@ -18,7 +22,7 @@ let product=[]
 const renderProductDetails = () => {
     const producDetailsDiv= document.querySelector("#product-details");
     producDetailsDiv.replaceChildren();
-    producDetailsDiv.className="flex flex-row w-full px-10 py-20 "
+    producDetailsDiv.className = "w-full px-10 py-20 flex " + (smallScreen ? "flex-row" : "flex-col");
 
 
     const imagesColumn=document.createElement("div")
@@ -26,23 +30,23 @@ const renderProductDetails = () => {
 
     const displayedImg= document.createElement("img");
     displayedImg.src=currentImage;
-    displayedImg.className="object-contain h-[500px]  ";
+    displayedImg.className="object-contain h-96 ";
     
 
     const imageBackground=document.createElement("div");
-    imageBackground.className="border-5 border-red-600 bg-white shadow-md rounded-2xl h-[500px] w-[500px] bg-center"
+    imageBackground.className="border-5 border-red-600 bg-white shadow-md rounded-2xl h-96 w-96 bg-center"
     
 
     imageBackground.appendChild(displayedImg);
 
 
     imagesDiv=document.createElement("div");
-    imagesDiv.className="flex flex-row place-content-center w-[500px] h-[100px]";
+    imagesDiv.className="flex flex-row place-content-center w-96 ";
     images.forEach((image) => {
         if(image != currentImage){
             const miniImage = document.createElement("img");
             miniImage.src = image;
-            miniImage.className = "saturate-[0%] w-[4.5em] h-full object-scale-down transition-all duration-[ease] delay-[0.1s] cursor-pointer rounded-xl  hover:saturate-[100%] mr-2 hover:w-[25%]";
+            miniImage.className = "saturate-[0%] w-[4.5em] h-full object-scale-down transition-all duration-[ease]  cursor-pointer rounded-xl  hover:saturate-[100%] mr-2 hover:w-[25%] shadow";
             
             miniImage.addEventListener("click",()=>{
                 currentImage=image;
