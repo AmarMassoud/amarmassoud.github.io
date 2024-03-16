@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 
-class SellerNav extends LitElement {
+class BuyerNav extends LitElement {
     static properties = {
         name: {},
       };
@@ -61,7 +61,7 @@ class SellerNav extends LitElement {
     a{
         text-decoration: none;
         color: white;
-        text-wrap: nowrap;**/
+        text-wrap: nowrap;
     }
     #nav-end{
         display: flex;
@@ -82,14 +82,14 @@ class SellerNav extends LitElement {
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="/"><img src="../../media/logo.svg" alt="Logo" width="150" height="50"></a>
+  <a href="/"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
-      <a href="/seller">Dashboard</a>
-      <a href="/seller#products">Products</a>
-      <a href="/seller/add-item">Add Item</a>
+      <a href="/seller">Home Screen</a>
+      <a href="/seller#products">Categories</a>
+      <a href="/seller/add-item">Cart</a>
   </div>
   <div id="nav-end">
-  <a href="/"><img src="../../media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
+
   
   <a href="../../index.html" >
   <div id="profile-icon">
@@ -103,8 +103,8 @@ class SellerNav extends LitElement {
   
 }
 
-customElements.define('seller-nav', SellerNav);
+customElements.define('buyer-nav', BuyerNav);
 
-const tag = document.createElement('seller-nav');
+const tag = document.createElement('buyer-nav');
 // tag.name = 'dynamically created';
 // document.body.appendChild(tag);
