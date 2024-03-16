@@ -53,7 +53,9 @@ document.addEventListener('DOMContentLoaded', async() => {
             console.log(users)
         users.push(newUser)
         localStorage.setItem('user', JSON.stringify(users));
-        window.location.href = '../account/login.html';
+        console.log(newUser);
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+        window.location.href = '../../../pages/seller/seller-dashboard.html';
         console.log(users)
     }
         // if () {
