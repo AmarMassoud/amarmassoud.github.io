@@ -1,6 +1,12 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+let product=[]
+    product =JSON.parse( localStorage.getItem('products'));
+    localStorage.setItem('currentProduct', JSON.stringify(product[0]));
+
+    
     let currentProduct=localStorage.getItem('currentProduct');
+
     currentProduct=JSON.parse(currentProduct);
     document.title = currentProduct.title;
 
@@ -24,7 +30,7 @@ const renderProductDetails = () => {
     
 
     const imageBackground=document.createElement("div");
-    imageBackground.className="border-5 border-red-600 bg-gray-100 rounded-2xl h-[500px] w-[500px] bg-center grid-background-squared"
+    imageBackground.className="border-5 border-red-600 bg-white shadow-md rounded-2xl h-[500px] w-[500px] bg-center"
     
 
     imageBackground.appendChild(displayedImg);

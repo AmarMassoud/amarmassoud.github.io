@@ -26,5 +26,13 @@ module.exports = {
 
     themes: [],
   },
+  purge:{
+    enabled: true,
+    content: ["./pages/**/*.{html,js}"],
+
+    safelist: [
+      '@media screen and (max-width: 1024px) { :root { font-size: 12px; } }'
+    ]
+  }
 }
 

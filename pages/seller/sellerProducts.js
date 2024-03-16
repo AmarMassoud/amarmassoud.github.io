@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", async() => {
-let products = [];
+
+
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 let allProducts = JSON.parse(localStorage.getItem('products'));
-    products = allProducts.filter(product => product.seller.id === currentUser.id);
+let  products = allProducts.filter(product => product.seller.id === currentUser.id);
 const select = document.getElementById("sellerNav");
 console.log(currentUser.firstName)
 select.setAttribute("name",currentUser.firstName)
@@ -98,10 +99,8 @@ const originalProducts = products.slice();
 const  handleSearch= (event)=> {
   const inputValue = event.target.value.toLowerCase();
   if (inputValue === '') {
-    // Reset the products list to the original list when the search input is empty
     products = originalProducts.slice();
   } else {
-    // Filter products based on the search input
     products = originalProducts.filter((product) => product.title.toLowerCase().includes(inputValue));
   }
   renderProducts();
