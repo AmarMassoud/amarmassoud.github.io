@@ -14,7 +14,7 @@ const renderProduct= (product) =>{
 
     const productImg=document.createElement('img');
     productImg.src=product.thumbnail  || product.images[0];
-    productImg.className='h-16 w-20';
+    productImg.className='max-h-16 max-w-20';
     const productName=document.createElement('p');
     productName.textContent=product.title;
     const productInfo=document.createElement('div');
@@ -71,7 +71,11 @@ const renderProduct= (product) =>{
         deleteProduct(product.id);
         renderProducts()
     })
+    editButton.addEventListener('click',()=>{
+           localStorage.setItem('currentProduct',JSON.stringify(product)); 
+           window.location.href = './addProduct.html';
 
+    })
     
 return productDiv;
 }

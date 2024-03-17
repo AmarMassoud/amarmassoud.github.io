@@ -42,6 +42,70 @@ option.textContent= 'Other';
 renderCategories()
 
 
+const selectedProduct= JSON.parse(localStorage.getItem('currentProduct'));
+const productId= selectedProduct? selectedProduct.id : null;
+
+const onEdit=(product) =>{
+    document.querySelector('#product-name').value=product.title;
+    document.querySelector('#product-description').value=product.description;
+    document.querySelector("#base-price").value=product.price;
+    document.querySelector("#stock").value=product.stock;
+    document.querySelector("#category").value=product.category;
+    document.querySelector("#discount-percentage").value=product.discountPercentage;
+    images=product.images;
+    
+    // onDelete(product);
+    previewImages();
+    }
+if (productId){
+    onEdit(selectedProduct)
+}
+
+
+
+    
+// function previewImages() {
+//     const maxImagesToShow = 2;
+
+//     // Clear the existing preview
+//     preview.innerHTML = '';
+//     preview.appendChild(addImageBtn);
+//     let imagesToShow = images.slice(0, maxImagesToShow);
+//     let remainingImagesCount = Math.max(images.length - maxImagesToShow, 0);
+  
+//     imagesToShow.forEach((file, index) => {
+//         let count=0;
+//         count+=1
+//         console.log(count);
+//       const reader = new FileReader();
+  
+//       reader.onload = function(e) {
+//         const imgSrc = e.target.result;
+//         const img = document.createElement('img');
+//         img.src = imgSrc;
+//         img.style.width = '150px';
+//         img.style.marginRight = '10px';
+//         img.addEventListener('click', function(){
+//             deleteImage(index)
+//         });
+//         preview.appendChild(img);
+        
+//         if (index === imagesToShow.length - 1 && remainingImagesCount > 0) {
+//           const remainingImagesDiv = document.createElement('div');
+//           remainingImagesDiv.className = 'bg-gray-500 shadow-md w-40 h-40 grid grid-cols place-items-center rounded-xl';
+//           const remainingImagesNo = document.createElement('p');
+//           remainingImagesNo.className = 'font-bold text-lg ';
+//           remainingImagesNo.textContent = `+${remainingImagesCount} `;
+//             remainingImagesDiv.appendChild(remainingImagesNo);
+//           preview.appendChild(remainingImagesDiv);
+//         }
+//       };
+  
+//       reader.readAsDataURL(file);
+//     });
+//   }
+  
+
 
 
 
@@ -53,15 +117,13 @@ function previewImages() {
     preview.appendChild(addImageBtn);
     let imagesToShow = images.slice(0, maxImagesToShow);
     let remainingImagesCount = Math.max(images.length - maxImagesToShow, 0);
-  
-    imagesToShow.forEach((file, index) => {
-        let count=0;
-        count+=1
-        console.log(count);
-      const reader = new FileReader();
-  
-      reader.onload = function(e) {
-        const imgSrc = e.target.result;
+    console.log(imagesToShow);
+    imagesToShow.forEach((url, index) => {
+        // let count=0;
+        // count+=1
+        // console.log(count);
+
+        const imgSrc = url;
         const img = document.createElement('img');
         img.src = imgSrc;
         img.style.width = '150px';
@@ -80,12 +142,21 @@ function previewImages() {
             remainingImagesDiv.appendChild(remainingImagesNo);
           preview.appendChild(remainingImagesDiv);
         }
-      };
+      ;
   
-      reader.readAsDataURL(file);
+    //   reader.readAsDataURL(file);
     });
   }
-  
+
+
+
+
+
+
+
+
+
+
 const deleteImage= (index) => {
 
 images.splice(index, 1);
@@ -93,30 +164,66 @@ previewImages()
 
 }
 
+const  addImage= async (file)=> {
+        
 
-function addImage(file) {
-  const preview = document.getElementById('preview');
+    if (!file) {
+      alert("Please select an image.");
+      return;
+    }
 
-  if (!images.some(image => image.name === file.name)) {
+    const cloudName = "dib1xd9zh"; // Replace YOUR_CLOUD_NAME with your actual Cloudinary cloud name
+    const apiKey = "899658446687419"; // Replace YOUR_API_KEY with your actual Cloudinary API key
+    const apiSecret = "foW9SYkUoXemif9tLgEUruIukhQ"; // Replace YOUR_API_SECRET with your actual Cloudinary API secret
 
-  // Add the new file to the images array
-  images.push(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "mymjce3c"); // Replace YOUR_UPLOAD_PRESET with your actual Cloudinary upload preset
 
-  // Create a FileReader to read the image file
-  const reader = new FileReader();
+    try {
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        const imageUrl = data.secure_url;
+        // Use imageUrl to display or store the image URL
+        console.log("Image uploaded. URL:", imageUrl);
+        images.push(imageUrl);
+        previewImages()
+        console.log(images);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    };
 
-  // Set up the FileReader onload event handler
-  reader.onload = function(e) {
-    // Re-render the preview
-    ;}
-    reader.readAsDataURL(file);
-  };
 
-  // Read the image file as a data URL
+// function addImage(file) {
+//   const preview = document.getElementById('preview');
+
+//   if (!images.some(image => image.name === file.name)) {
+
+//   // Add the new file to the images array
+//   images.push(file);
+
+//   // Create a FileReader to read the image file
+//   const reader = new FileReader();
+
+//   // Set up the FileReader onload event handler
+//   reader.onload = function(e) {
+//     // Re-render the preview
+//     ;}
+//     reader.readAsDataURL(file);
+//   };
+
+//   // Read the image file as a data URL
   
-}
+// }
 
-document.getElementById('file').addEventListener('change', function(e) {
+document.getElementById('file').addEventListener('change', function(e)  {
   const files = e.target.files;
   for (let i = 0; i < files.length; i++) {
     addImage(files[i]);
@@ -140,21 +247,10 @@ requestCategoryBtn.addEventListener("click", function() {
     categoryRequestElement.focus();
 });
 
-const onEdit=(product) =>{
-document.querySelector('#product-name').value.trim()=product.title;
-document.querySelector('#product-description').value.trim()=product.description;
-document.querySelector("#base-price").value.trim()=product.price;
-document.querySelector("#stock").value.trim()=product.stock;
-document.querySelector("#category").value.trim()=product.category;
-document.querySelector("#discount-percentage").value.trim()=product.discountPercentage;
-images=product.images;
-// onDelete(product);
-previewImages();
-}
 
-const onDelete=(product) => {
-const storedProduct= JSON.parse(localStorage.getItem('products'));
-const updatedProducts= storedProduct.filter(p=> p.id !== product.id);
+const onDelete=(productId) => {
+const storedProducts= JSON.parse(localStorage.getItem('products'));
+const updatedProducts= storedProducts.filter(p=> p.id !== productId);
 localStorage.setItem('products',JSON.stringify(updatedProducts));
 }
 
@@ -167,7 +263,8 @@ const stock=document.querySelector("#stock").value.trim();
 const category=document.querySelector("#category").value.trim();
 const discountPercentage= document.querySelector("#discount-percentage").value.trim();
 const categoryRequest=document.querySelector("#request-category").value.trim();
-const imagesUrl=await saveImages();
+const rating=Math.floor(Math.random()*6)
+const imagesUrl=images;
 
 const user= JSON.parse(localStorage.getItem('currentUser'));
 const currentProduct= JSON.parse(localStorage.getItem('currentProduct'));
@@ -176,7 +273,7 @@ console.log(currentProduct);
 if (imagesUrl){
 const product={
 
-id: currentProduct ? product.id :allProducts.length + 1,
+id: currentProduct ? productId :allProducts.length + 1,
 title: productName,
 description: productDescription,
 price: price,
@@ -185,9 +282,16 @@ category: category,
 discountPercentage: discountPercentage,
 images: imagesUrl,
 seller: user,
+thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
+rating: currentProduct? currentProduct.rating: rating,
 };
 
+if(productId){
+    allProducts.splice (allProducts.findIndex((product)=> product.id===productId),1);
+}
 allProducts.push(product)
+// onDelete(productId);
+
       localStorage.setItem('products', JSON.stringify(allProducts));
 }
 if (categoryRequest!==''){
@@ -195,40 +299,26 @@ if (categoryRequest!==''){
     categoryRequests.push(categoryRequest);
     localStorage.setItem('categoryRequest', JSON.stringify(categoryRequests));
 }
-}
 
-async function saveImages() {
-    return new Promise((resolve, reject) => {
-        const files = [];
-        const urls = [];
+localStorage.removeItem('currentProduct');
 
-        let imagesProcessed = 0;
-
-        for (let i = 0; i < images.length; i++) {
-            const file = images[i];
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                urls.push(e.target.result);
-                imagesProcessed++;
-
-                if (imagesProcessed === images.length) {
-                    resolve(urls);
-                }
-            };
-
-            reader.readAsDataURL(file);
-        }
-    });
 }
 
     
 const submitBtn= document.querySelector("#submit-btn");
 submitBtn.addEventListener('click', function(){
+    const form= document.querySelector('#add-product');
+    if (form.checkValidity()) {
     onSave()
+    window.location.href = './sellerProducts.html';
+}
+    // window.location.href = '../seller/seller-dashboard.html';
+    
+
 });
 previewImages();
 // saveImages();
+
 
 
 
