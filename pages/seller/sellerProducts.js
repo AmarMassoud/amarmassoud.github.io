@@ -13,7 +13,7 @@ const renderProduct= (product) =>{
     productDiv.className = 'grid grid-cols-10 border-b-2 border-custom-gray-500 pb-2 pt-2 gap-8 text-slate-600';
 
     const productImg=document.createElement('img');
-    productImg.src=product.thumbnail;
+    productImg.src=product.thumbnail  || product.images[0];
     productImg.className='h-16 w-20';
     const productName=document.createElement('p');
     productName.textContent=product.title;

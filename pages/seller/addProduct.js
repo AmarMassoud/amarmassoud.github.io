@@ -149,11 +149,12 @@ const stock=document.querySelector("#stock").value.trim();
 const category=document.querySelector("#category").value.trim();
 const discountPercentage= document.querySelector("#discount-percentage").value.trim();
 const categoryRequest=document.querySelector("#request-category").value.trim();
-const imagesUrl=saveImages();
+const imagesUrl=await saveImages();
 
 const user= JSON.parse(localStorage.getItem('currentUser'));
 const currentProduct= JSON.parse(localStorage.getItem('currentProduct'));
-
+const allProducts= JSON.parse(localStorage.getItem('products'));
+console.log(currentProduct);
 if (!currentProduct){
 const product={
 
@@ -167,7 +168,6 @@ discountPercentage: discountPercentage,
 images: imagesUrl,
 seller: user,
 };
-const allProducts= JSON.parse(localStorage.getItem('products'));
 
 allProducts.push(product)
       localStorage.setItem('products', JSON.stringify(allProducts));
@@ -178,31 +178,32 @@ if (categoryRequest!==''){
     localStorage.setItem('categoryRequest', JSON.stringify(categoryRequests));
 }
 }
-function saveImages() {
-    const files = [];
-    const urls = [];
 
-    for (let i = 0; i < images.length; i++) {
-        const file = images[i];
-        const reader = new FileReader();
+async function saveImages() {
+    return new Promise((resolve, reject) => {
+        const files = [];
+        const urls = [];
 
-        reader.onload = function (e) {
-            // Add the image URL to the urls array
-            urls.push(e.target.result);
+        let imagesProcessed = 0;
 
-            // Check if this is the last image
-            if (urls.length === images.length) {
-                // Save the URLs to local storage
-                localStorage.setItem('images', JSON.stringify(urls));
-            }
-        };
+        for (let i = 0; i < images.length; i++) {
+            const file = images[i];
+            const reader = new FileReader();
 
-        reader.readAsDataURL(file);
-    }
+            reader.onload = function (e) {
+                urls.push(e.target.result);
+                imagesProcessed++;
 
-    // Return the list of URLs
-    return urls;
+                if (imagesProcessed === images.length) {
+                    resolve(urls);
+                }
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
 }
+
     
 const submitBtn= document.querySelector("#submit-btn");
 submitBtn.addEventListener('click', function(){
