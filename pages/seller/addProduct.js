@@ -140,6 +140,24 @@ requestCategoryBtn.addEventListener("click", function() {
     categoryRequestElement.focus();
 });
 
+const onEdit=(product) =>{
+document.querySelector('#product-name').value.trim()=product.title;
+document.querySelector('#product-description').value.trim()=product.description;
+document.querySelector("#base-price").value.trim()=product.price;
+document.querySelector("#stock").value.trim()=product.stock;
+document.querySelector("#category").value.trim()=product.category;
+document.querySelector("#discount-percentage").value.trim()=product.discountPercentage;
+images=product.images;
+// onDelete(product);
+previewImages();
+}
+
+const onDelete=(product) => {
+const storedProduct= JSON.parse(localStorage.getItem('products'));
+const updatedProducts= storedProduct.filter(p=> p.id !== product.id);
+localStorage.setItem('products',JSON.stringify(updatedProducts));
+}
+
 const onSave = async () => {
 
 const productName=document.querySelector('#product-name').value.trim();
@@ -155,10 +173,10 @@ const user= JSON.parse(localStorage.getItem('currentUser'));
 const currentProduct= JSON.parse(localStorage.getItem('currentProduct'));
 const allProducts= JSON.parse(localStorage.getItem('products'));
 console.log(currentProduct);
-if (!currentProduct){
+if (imagesUrl){
 const product={
 
-id: allProducts.length + 1,
+id: currentProduct ? product.id :allProducts.length + 1,
 title: productName,
 description: productDescription,
 price: price,
