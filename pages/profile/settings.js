@@ -8,52 +8,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 
 
-/*
-// editButton = document.querySelector("#edit-phone");
-        editButton.addEventListener("click", () => {
-                if(editButton.textContent === "Edit") {
-                    var element = editButton.parentNode;
-                    var h2 = editButton.previousElementSibling;
-                    var textField = document.createElement("input");
-                    textField.setAttribute("type", "phone");
-                    textField.className = "mr-3.5";
-                    textField.setAttribute("id", "textField");
-                    element.replaceChild(textField, h2);
-                    editButton.textContent = "Save";
-                } else if (editButton.textContent === "Save") {
-                    var element = editButton.parentNode;
-                    var textField = editButton.previousElementSibling;
-                    var enteredText = textField.value;
-            
-                    var newElement = document.createElement("h3");
-                    newElement.setAttribute("class", "text-lg");
-                    newElement.textContent = enteredText;
-            
-                    if(enteredText.length)
-
-
-
-                    element.replaceChild(newElement, textField);
-
-
-                    
-
-
-
-
-
-
-                    editButton.textContent = "Edit";
-
-                }
-
-
-
-
-
-        })
-*/
-
 
 
     const securityPasswordSection = () => {
@@ -105,11 +59,8 @@ document.addEventListener("DOMContentLoaded", async() => {
                         newElement.textContent = "*".repeat(currentUser.password.length);
 
                         
-                        console.log(currentUser.password);
                         if(currentUser.password === document.querySelector("#password-textfield").value) {
                             currentUser.password = document.querySelector("#password-textfield").value
-                            console.log("TES T " + document.querySelector("#password-textfield"))
-                            console.log(currentUser);
                             localStorage.setItem("currentUser", JSON.stringify(currentUser));
                             console.log("password changed");
 
@@ -127,6 +78,61 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 
         });
+
+
+
+
+    }
+
+
+    const securityPhoneSection = () => {
+        
+
+ editButton = document.querySelector("#edit-phone");
+        editButton.addEventListener("click", () => {
+                if(editButton.textContent === "Edit") {
+                    var element = editButton.parentNode;
+                    var h2 = editButton.previousElementSibling;
+                    var textField = document.createElement("input");
+                    textField.setAttribute("type", "phone");
+                    textField.className = "mr-3.5";
+                    textField.setAttribute("id", "phone-textfield");
+                    element.replaceChild(textField, h2);
+                    editButton.textContent = "Save";
+                } else if (editButton.textContent === "Save") {
+                    var element = editButton.parentNode;
+                    var textField = editButton.previousElementSibling;
+                    var enteredText = textField.value;
+            
+                    var newElement = document.createElement("h3");
+                    newElement.setAttribute("class", "text-lg");
+                    newElement.textContent = enteredText;
+            
+                    if(enteredText.length)
+
+
+
+                    element.replaceChild(newElement, textField);
+                    currentUser.phone = enteredText;
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+
+                    
+
+
+
+
+
+
+                    editButton.textContent = "Edit";
+
+                }
+
+
+
+
+
+        })
 
 
 
@@ -249,8 +255,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             }}
 
         createButton.addEventListener("click", () => {
-            console.log(emailField.value.split("@")[0].slice(emailField.length / 2, emailField.length))
 
+            
             const [firstName, LastName] = emailField.value.split("@")[0].slice(emailField.length / 2, emailField.length)
 
                 const newUser = {
@@ -269,8 +275,200 @@ document.addEventListener("DOMContentLoaded", async() => {
         });
 
     }
-adminSection();
-securityPasswordSection();
+
+
+
+    const securitySection = () => {
+        securityPasswordSection();
+        securityPhoneSection();
+
+    }
+
+    const buyerSection = () => {
+        const buyer = document.createElement('div');
+        buyer.id = 'buyer';
+
+        buyer.classList.add("cols-start-1")
+        const headerDiv = document.createElement('div');
+        headerDiv.id = 'header';
+        headerDiv.classList.add('mb-24');
+
+        const h1Element = document.createElement('h1');
+        h1Element.textContent = 'Balance and Shipping';
+        h1Element.classList.add('font-[500]', 'text-6xl');
+        headerDiv.appendChild(h1Element);
+
+
+        const h2Element = document.createElement('h2');
+        h2Element.textContent = 'chhange your balance/shipping details';
+        h2Element.classList.add('text-3xl', 'mt-4');
+        headerDiv.appendChild(h2Element);
+
+        buyer.appendChild(headerDiv);
+
+        const fieldsDiv = document.createElement('div');
+        fieldsDiv.id = 'fields';
+        fieldsDiv.classList.add('m-4');
+
+
+        const balanceDiv = document.createElement('div');
+        balanceDiv.id = 'balance';
+        balanceDiv.classList.add('grid', 'grid-cols-4', 'cols-span-1', 'mb-8');
+
+
+        const balanceH3Element = document.createElement('h3');
+        balanceH3Element.textContent = 'Balance';
+        balanceH3Element.classList.add('font-semibold', 'text-2xl');
+        balanceDiv.appendChild(balanceH3Element);
+
+        const balanceLabel = document.createElement('h3');
+        balanceLabel.classList.className = "";
+        currentUser.balance = (currentUser.balance ?? 0);
+        balanceLabel.textContent = currentUser.balance
+        balanceDiv.appendChild(balanceLabel);
+
+        const balanceEditButton = document.createElement('button');
+        balanceEditButton.className = "btn col-span-1 w-3/5";
+        balanceEditButton.textContent = "Edit"
+        balanceEditButton.id = "balance-edit";
+        balanceDiv.appendChild(balanceEditButton);
+
+
+        // const balance = document.createElement("h2");
+        // balance.className = "grow"
+        // balance.placeholder = "Email"
+        // balanceLabel.append(balance);
+
+
+        fieldsDiv.appendChild(balanceDiv);
+
+        const shippingAddressDiv = document.createElement('div');
+        shippingAddressDiv.id = 'address';
+        shippingAddressDiv.classList.add('grid', 'grid-cols-4', 'cols-span-3');
+
+        const shippingAddress = document.createElement('h3');
+        shippingAddress.textContent = 'Shipping Address';
+        shippingAddress.classList.add('font-semibold', 'text-2xl');
+        shippingAddressDiv.appendChild(shippingAddress);
+        
+
+        const shippingAddressLabel = document.createElement('h3');
+        shippingAddressLabel.className = "col-start-2"
+        shippingAddressLabel.textContent = currentUser.address.address
+        shippingAddressDiv.appendChild(shippingAddressLabel);
+
+        const shippingAddressCity = document.createElement('h3');
+        shippingAddressCity.className = "col-start-2"
+        shippingAddressCity.textContent =   currentUser.address.city
+        shippingAddressDiv.appendChild(shippingAddressCity);
+
+        const shippingAddressEditButton = document.createElement('button');
+        shippingAddressEditButton.className = "btn col-span-1 w-3/5";
+        shippingAddressEditButton.textContent = "Edit"
+        shippingAddressEditButton.id = "shipping-address-edit";
+        shippingAddressDiv.appendChild(shippingAddressEditButton);
+
+        
+
+
+        fieldsDiv.appendChild(shippingAddressDiv);
+        buyer.appendChild(fieldsDiv);
+
+        document.querySelector("#sections").appendChild(buyer);
+
+
+        console.log(currentUser.balance);
+        const balanceEdit =  document.querySelector("#balance-edit");
+       balanceEdit.addEventListener("click", () => {
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            let users = JSON.parse(localStorage.getItem("user")); // Retrieve users from local storage
+        
+            if (balanceEdit.textContent === "Edit") {
+                var element = balanceEdit.parentNode;
+                var h2 = balanceEdit.previousElementSibling;
+                var textField = document.createElement("input");
+                textField.setAttribute("type", "text");
+                textField.className = "mr-3.5";
+                textField.setAttribute("id", "textField");
+                textField.setAttribute("placeholder", h2.textContent);
+                element.replaceChild(textField, h2);
+        
+                balanceEdit.textContent = "Save";
+            } else if (balanceEdit.textContent === "Save") {
+                var element = balanceEdit.parentNode;
+                var textField = balanceEditButton.previousElementSibling;
+                var enteredText = textField.value;
+        
+                var newElement = document.createElement("h3");
+                newElement.setAttribute("class", "text-lg");
+                newElement.textContent = enteredText;
+        
+                element.replaceChild(newElement, textField);
+        
+                if (balanceEdit.parentNode.id === "balance") {
+                    users.find((user) => user.id == currentUser.id).balance = enteredText;
+                }
+                const newCurrentUser = users.find((user) => user.id == currentUser.id); 
+                localStorage.setItem("currentUser", JSON.stringify(newCurrentUser));
+                currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        
+                // Save the updated users array back to local storage
+                localStorage.setItem('user', JSON.stringify(users));
+                console.log(currentUser);
+
+                console.log(users);
+                balanceEdit.textContent = "Edit";
+            }
+        })
+        
+        shippingAddressEditButton.addEventListener("click", () => {
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            let users = JSON.parse(localStorage.getItem("user")); // Retrieve users from local storage
+        
+            if (shippingAddressEditButton.textContent === "Edit") {
+                var element = shippingAddressEditButton.parentNode;
+                var h2 = shippingAddressEditButton.previousElementSibling;
+                var textField = document.createElement("input");
+                textField.setAttribute("type", "text");
+                textField.className = "mr-3.5";
+                textField.setAttribute("id", "textField");
+                textField.setAttribute("placeholder", h2.textContent);
+                element.replaceChild(textField, h2);
+        
+                shippingAddressEditButton.textContent = "Save";
+            } else if (shippingAddressEditButton.textContent === "Save") {
+                var element = shippingAddressEditButton.parentNode;
+                var textField = shippingAddressEditButton.previousElementSibling;
+                var enteredText = textField.value;
+        
+                var newElement = document.createElement("h3");
+                newElement.setAttribute("class", "text-lg");
+                newElement.textContent = enteredText;
+        
+                element.replaceChild(newElement, textField);
+        
+                if (balanceEdit.parentNode.id === "balance") {
+                    users.find((user) => user.id == currentUser.id).address.address = enteredText;
+                }
+                const newCurrentUser = users.find((user) => user.id == currentUser.id); 
+                localStorage.setItem("currentUser", JSON.stringify(newCurrentUser));
+                currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        
+                // Save the updated users array back to local storage
+                localStorage.setItem('user', JSON.stringify(users));
+                console.log(currentUser);
+
+                console.log(users);
+                balanceEdit.textContent = "Edit";
+            }
+        })
+
+
+
+
+
+
+    }
 
 
 
@@ -283,8 +481,21 @@ securityPasswordSection();
 
 
 
-    console.log(document.querySelector("#security-password-field").textContent)
-    console.log(currentUser.password.length)
+// adminSection();
+buyerSection();
+securitySection();
+
+
+
+
+
+
+
+
+
+
+
+    
     document.querySelector("#security-password-field").textContent = "*".repeat(currentUser.password.length)
     document.querySelector("#security-phone").textContent = currentUser.phone
 
