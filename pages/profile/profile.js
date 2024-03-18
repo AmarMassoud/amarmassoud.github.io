@@ -35,7 +35,6 @@ function switchEdit() {
 
         element.replaceChild(newElement, textField);
 
-        // Update the user's data in the users array
         if (this.parentNode.id === "fname") {
             users.find((user) => user.id == currentUser.id).firstName = enteredText;
         } else if (this.parentNode.id === "lname") {
