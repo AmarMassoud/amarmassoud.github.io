@@ -33,9 +33,14 @@ dropDown.appendChild(option);
 option.textContent= category;
 
 })
+
+if (!categories.find (category=> category==='Other')){
+
 const option= document.createElement('option');
-dropDown.appendChild(option);
 option.textContent= 'Other';
+dropDown.appendChild(option);
+
+}
 
 }
 
@@ -114,7 +119,6 @@ function previewImages() {
 
     // Clear the existing preview
     preview.innerHTML = '';
-    preview.appendChild(addImageBtn);
     let imagesToShow = images.slice(0, maxImagesToShow);
     let remainingImagesCount = Math.max(images.length - maxImagesToShow, 0);
     console.log(imagesToShow);
@@ -145,7 +149,10 @@ function previewImages() {
       ;
   
     //   reader.readAsDataURL(file);
-    });
+    })
+    preview.appendChild(addImageBtn);
+
+    ;
   }
 
 
@@ -270,6 +277,7 @@ const user= JSON.parse(localStorage.getItem('currentUser'));
 const currentProduct= JSON.parse(localStorage.getItem('currentProduct'));
 const allProducts= JSON.parse(localStorage.getItem('products'));
 console.log(currentProduct);
+let categoryProduct=null
 if (imagesUrl){
 const product={
 
@@ -281,11 +289,11 @@ stock: stock,
 category: category,
 discountPercentage: discountPercentage,
 images: imagesUrl,
-seller: user,
+seller: currentProduct? currentProduct.seller : user,
 thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
 rating: currentProduct? currentProduct.rating: rating,
 };
-
+categoryProduct=product;
 if(productId){
     allProducts.splice (allProducts.findIndex((product)=> product.id===productId),1);
 }
@@ -295,9 +303,21 @@ allProducts.push(product)
       localStorage.setItem('products', JSON.stringify(allProducts));
 }
 if (categoryRequest!==''){
-    const categoryRequests= JSON.parse(localStorage.getItem('categoryRequests'));
-    categoryRequests.push(categoryRequest);
+
+
+
+    
+    const categoryRequests= JSON.parse(localStorage.getItem('categoryRequests')) ||[];
+
+    const request={
+    name: categoryRequest,
+    user: currentProduct? currentProduct.seller : user,
+    product: categoryProduct,
+    };
+    
+    categoryRequests.push(request);
     localStorage.setItem('categoryRequest', JSON.stringify(categoryRequests));
+    
 }
 
 localStorage.removeItem('currentProduct');
