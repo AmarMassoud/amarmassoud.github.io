@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const smallScreen=widnowWidth < 600;
     const body=document.querySelector("body")
     body.className="px-7"
-
+    
+// 
 
 let products=[]
     products =JSON.parse( localStorage.getItem('products'));
@@ -200,7 +201,7 @@ const renderProductDetails = () => {
 
     const addToCartButton=document.createElement("button");
     addToCartButton.textContent=(productInStock?'Add to Cart':"Out of Stock");
-    addToCartButton.className="rounded-xl  max-w-fit py-2 px-6  text-center font-bold border   " +(productInStock?'text-white bg-custom-red border-white hover:bg-red-600 hover:animate-spin  transition-all duration-[ease]  ':" border-black bg-custom-gray text-black hover:cursor-default");
+    addToCartButton.className="rounded-xl text-xl  max-w-fit py-2 px-6  text-center font-bold border   " +(productInStock?'text-white bg-custom-red border-white hover:bg-red-600   transition-all duration-[ease]  ':" border-black bg-custom-gray text-black hover:cursor-default");
     addToCartButton.addEventListener("click",()=>{if(productInStock)addToCart(currentProduct)})
 
 
