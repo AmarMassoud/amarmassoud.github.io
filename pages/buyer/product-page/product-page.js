@@ -9,10 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let products=[]
     products =JSON.parse( localStorage.getItem('products'));
-    localStorage.setItem('currentProduct', JSON.stringify(products[0]));
-
-    
     let currentProduct=localStorage.getItem('currentProduct');
+
+    if (!currentProduct) {
+    localStorage.setItem('currentProduct', JSON.stringify(products[0]));
+    }
+    
+     currentProduct=localStorage.getItem('currentProduct');
 
     currentProduct=JSON.parse(currentProduct);
     document.title = currentProduct.title;

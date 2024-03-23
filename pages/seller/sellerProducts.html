@@ -20,12 +20,9 @@
       <seller-nav name="Wardan" id="sellerNav"> </seller-nav>
     </nav>
     <section
-      class="flex justify-around items-center mx-8 my-4"
+      class="flex items-center mx-2 my-4 bg-custom-gray rounded-xl px-20"
       id="top-section"
     >
-      <p class="text-3xl text-bold bg-custom-gray p-4 rounded-2xl">
-        Your Products
-      </p>
       <label class="input input-bordered flex items-center gap-2">
         <input type="text" class="grow" placeholder="Search" id="search" />
         <svg
@@ -41,14 +38,26 @@
           />
         </svg>
       </label>
-      <button class="btn bg-custom-gray">Save</button>
+      <p
+        class="text-3xl text-bold bg-custom-gray p-4 rounded-2xl text-center w-full"
+      >
+        Products
+      </p>
+
+      <!-- <button class="btn bg-custom-gray">Save</button> -->
     </section>
     <section id="products" class="ms-10">
       <div
         id="products-header"
         class="grid grid-cols-10 border-b-2 border-cusotm-gray-500 pb-5 gap-8"
       >
-        <p onclick="" class="cursor-pointer col-span-2 text-center">Product</p>
+        <p
+          onclick=""
+          class="cursor-pointer col-span-2 text-center flex justify-center items-center"
+        >
+          Product
+        </p>
+
         <p onclick="" class="cursor-pointer col-span-1">Price</p>
         <p onclick="" class="cursor-pointer col-span-1">Stock</p>
         <p onclick="" class="cursor-pointer col-span-1">Earnings</p>

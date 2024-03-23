@@ -68,8 +68,16 @@ document.addEventListener('DOMContentLoaded', async() => {
         const password = document.getElementById('password').value;
         let user = users.find((user) => user.email === email && user.password === password);
         if (user != null) {
+            console.log('User:', user);
             localStorage.setItem('currentUser', JSON.stringify(user));
-            window.location.href = '../../pages/seller/seller-dashboard.html';
+            if (user.role === 'CUSTOMER') {
+                window.location.href = '/pages/buyer/landingPage/landingPage.html';
+            } else if (user.role === 'SELLER') {
+                window.location.href = '/pages/seller/seller-dashboard.html';
+            }  if(user.role === 'ADMIN') {
+                window.location.href = '/pages/admin/admin.html';
+            }
+            // window.location.href = '../../pages/seller/seller-dashboard.html';
         } else {
             alert('Invalid email or password');
         }

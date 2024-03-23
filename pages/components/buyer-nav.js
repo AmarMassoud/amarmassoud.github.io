@@ -12,7 +12,7 @@ class BuyerNav extends LitElement {
         flex-direction: row;
         justify-content: space-between;
         padding: 8px;
-        margin: 8px;
+        margin: 8px, 8px, 0px, 8px;
         align-items: center;
         border-bottom: 1px solid #888; /* Add a border at the bottom */
         font-size: 1.1rem;
@@ -82,10 +82,10 @@ class BuyerNav extends LitElement {
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="/"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
+  <a href="/pages/buyer/landingPage/landingPage.html"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
-      <a href="/seller">Home Screen</a>
-      <a href="/seller#products">Categories</a>
+      <a href="/pages/buyer/landingPage/landingPage.html">Home Screen</a>
+      <a href="/">Categories</a>
       <a href="/seller/add-item">Cart</a>
   </div>
   <div id="nav-end">

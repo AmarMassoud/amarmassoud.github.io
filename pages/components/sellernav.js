@@ -91,7 +91,7 @@ class SellerNav extends LitElement {
   <div id="nav-end">
   <a href="/"><img src="../../media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
   
-  <a href="../../pages/profile/profile.html" >
+  <a id="add" href="../../pages/profile/profile.html" >
   <div id="profile-icon">
   <h3>${this.name.charAt(0)}</h3>
    <div></a>
@@ -103,6 +103,14 @@ class SellerNav extends LitElement {
   
 }
 
+// const addBtn= document.querySelector('#add')
+// addBtn.addEventListener('click',()=>{
+
+//     if (localStorage.getItem('currentUser')) {
+//     localStorage.removeItem('currentUser');
+// }
+//     console.log('clicked')
+// })
 customElements.define('seller-nav', SellerNav);
 
 const tag = document.createElement('seller-nav');
