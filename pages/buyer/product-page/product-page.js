@@ -6,9 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     body.className="px-7"
     
 // 
-if (!currentProduct) {
-    localStorage.setItem('currentProduct', JSON.stringify(products[0]));
-    }
+
 
 let products=[]
     products =JSON.parse( localStorage.getItem('products'));
@@ -17,6 +15,9 @@ let products=[]
     
     let currentProduct=localStorage.getItem('currentProduct');
 
+    if (!currentProduct) {
+        localStorage.setItem('currentProduct', JSON.stringify(products[0]));
+        }
     currentProduct=JSON.parse(currentProduct);
     let images=[...currentProduct.images];
     let currentImage=images[0];
@@ -127,8 +128,8 @@ const renderProductDetails = () => {
     category.textContent=` More from ${currentProduct.category.charAt(0).toUpperCase() +currentProduct.category.slice(1)} category`;
     category.className="badge badge-lg badge-outline text-lg px-5 py-4 rounded-xl border-0  bg-custom-red text-white font-bold underline self-end  hover:bg-red-600"
     // hover:cursor-pointer
-    category.addEventListener("",()=>{
-        goToCategoryPage(currentProduct);
+    category.addEventListener("click",()=>{
+        // goToCategoryPage(currentProduct);
     })
 
     // categoriesDiv.appendChild(category)
@@ -274,7 +275,7 @@ const renderProductCard=(product)=>{
     
     const price = document.createElement('p');
     price.textContent = '$'+product.price;
-    price.className="font-bold";
+    price.className="font-bold text-custom-red";
     
     const cardActions = document.createElement('div');
     cardActions.className = 'card-actions justify-end';
