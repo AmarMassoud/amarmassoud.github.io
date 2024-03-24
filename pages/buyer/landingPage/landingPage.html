@@ -19,7 +19,71 @@
   </head>
   <body>
     <nav>
-      <buyer-nav name="Wardan" id="nav"> </buyer-nav>
+      <!-- <buyer-nav name="Wardan" id="nav"> </buyer-nav> -->
+      <div
+        class="flex flex-row justify-between items-center p-4 border-b-1 border-gray-300 text-lg font-serif"
+      >
+        <a href="/pages/buyer/landingPage/landingPage.html">
+          <img
+            src="../../../media/logo.svg"
+            alt="Logo"
+            width="150"
+            height="50"
+          />
+        </a>
+        <div
+          id="nav-buttons"
+          class="flex flex-row justify-between w-1/2 max-w-30"
+        >
+          <a
+            href="/pages/buyer/landingPage/landingPage.html"
+            class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
+            >Home Screen</a
+          >
+          <!-- <a
+            href="/"
+            class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
+            >Categories</a
+          > -->
+          <div id="search-dropdown" class="relative">
+            <label class="input input-bordered flex items-center gap-2">
+              <input
+                type="text"
+                class="grow"
+                placeholder="Search"
+                id="search"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="w-4 h-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </label>
+          </div>
+          <a
+            href="/seller/add-item"
+            class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
+            >Cart</a
+          >
+        </div>
+        <div id="nav-end" class="flex flex-row items-center">
+          <a href="../../index.html" class="flex items-center justify-center">
+            <div
+              id="profile-icon"
+              class="ml-4 w-10 h-10 flex items-center justify-center rounded-full bg-red-500"
+            >
+              <h3 id="nav" class="text-white"></h3>
+            </div>
+          </a>
+        </div>
+      </div>
     </nav>
     <main>
       <section id="main-banner">
@@ -85,24 +149,26 @@
           </div>
         </div>
 
-        <div class="col-span-3 flex justify-center flex-col h-full">
+        <div
+          class="col-span-3 flex justify-around items-center flex-col h-full"
+        >
           <!-- <div class="flex"> -->
           <img src="/media/app-logo.svg" alt="" class="w-96" />
           <!-- <h1 class="text-4xl">App</h1> -->
           <!-- </div> -->
-          <p class="text-2xl mt-4">
-            Download our mobile app to get the best shopping experience
+          <p class="text-3xl mt-4">
+            Download our mobile app to get the best shopping experience!!!
           </p>
-          <div class="grid grid-cols-2 me-40">
+          <div class="grid grid-cols-2 place-items-center w-full">
             <a
               href="https://apps.apple.com/mm/app/market-hub-business-center/id6452802796"
               class=""
-              ><img src="/media/App-Store.svg" alt="" class="w-80" />
+              ><img src="/media/App-Store.svg" alt="" class="w-72" />
             </a>
             <a
               href="https://play.google.com/store/apps/details?id=com.markethub.store&hl=en&gl=US"
             >
-              <img src="/media/Google_Play-Logo.svg" alt="" class="w-80" />
+              <img src="/media/Google_Play-Logo.svg" alt="" class="w-72" />
             </a>
           </div>
         </div>

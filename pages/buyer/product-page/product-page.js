@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let products=[]
     products =JSON.parse( localStorage.getItem('products'));
-    localStorage.setItem('currentProduct', JSON.stringify(products[4]));
+    // localStorage.setItem('currentProduct', JSON.stringify(products[4]));
 
     
     let currentProduct=localStorage.getItem('currentProduct');

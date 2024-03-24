@@ -5,13 +5,36 @@ products=JSON.parse(localStorage.getItem('products'));
 let currentProduct=JSON.parse(localStorage.getItem('currentProduct'));
 let currentUser=JSON.parse(localStorage.getItem('currentUser'));
 const navbar = document.querySelector('#nav');
+navbar.textContent=currentUser? currentUser.firstName.charAt(0):"U";
 navbar.setAttribute('name',currentUser? currentUser.firstName:"User");
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 
 
+// const renderSearchedProducts=()=>{
+// const searchText= document.querySelector('#search');
+// const searchedProducts=products.filter(product=>product.title.toLowerCase().includes(searchText.value.toLowerCase()));
+// const searchDropDown= document.querySelector('#search-dropdown');
+// const select= document.createElement('select');
+// select.className='absolute top-full left-0 w-full border border-gray-300 bg-white rounded-b-md px-4 py-2'
+// searchDropDown.replaceChildren();
+// console.log(searchedProducts)
+// searchedProducts.forEach(product=>{
+//     const option=document.createElement('option');
+//     option.textContent=product.title;
+//     select.appendChild(option);
 
+// })
+// searchDropDown.appendChild(select);
+
+// searchText.addEventListener('change',()=>{
+// renderSearchedProducts();
+// })
+
+
+// }
+// renderSearchedProducts();
 
 
     const renderProductCard=(product)=>{
@@ -56,7 +79,9 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
         card.appendChild(cardActions);
     
         card.addEventListener("click",()=>{
-            addToCart(product)
+            localStorage.setItem('currentProduct',JSON.stringify(product));
+                window.location.href = '/pages/buyer/product-page/product-page.html';
+
         
         });
     

@@ -75,6 +75,9 @@ document.addEventListener("DOMContentLoaded", async() => {
 };
 await getUsers(); //
 
+
+    comments.forEach(comment=>{comment.rating=Math.floor(Math.random() * 5) + 1;});
+    // localStorage.setItem('comments', JSON.stringify(comments));
 // // Loop through comments list
 // comments.forEach(comment => {
 //   // Filter users with the role BUYER
