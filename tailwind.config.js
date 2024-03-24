@@ -19,6 +19,12 @@ module.exports = {
     maxHeight:{
       '45': '35rem'
     },
+    screens: {
+      'sm': {'max':'640px'},  // Small screens and up
+      'md': {'max':'768'},  // Medium screens and up
+      'lg': {'max':'1024px'}, // Large screens and up
+      'xl': {'max':'1208px'}, // Extra large screens and up
+    },
   },
   },
   plugins: [require("daisyui")],

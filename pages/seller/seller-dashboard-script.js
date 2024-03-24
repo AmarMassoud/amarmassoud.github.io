@@ -213,7 +213,9 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
 
     const requestDiv = document.createElement("div");
     requestDiv.classList.add(
-      "flex",
+      "grid",
+      "grid-cols-4",
+      "gap-2",
       "pb-4",
       "border-b-2",
       "border-gray-300",
@@ -221,8 +223,11 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     );
 
     const imgDiv = document.createElement("div");
+    imgDiv.className='col-span-1'
     const commentImg = document.createElement("img");
     commentImg.src = "../../media/grey-cart.svg";
+    // commentImg.className="w-96"
+ 
 
     imgDiv.appendChild(commentImg);
 
@@ -230,7 +235,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     infoDiv.classList.add("mt-4", "ms-3");
 
     const name = document.createElement("h3");
-    name.classList.add("text-xl", "font-bold");
+    name.classList.add("text-xl", "font-semibold");
     name.textContent = comment.user.firstName + " " + comment.user.lastName;
 
     const product = document.createElement("p");
@@ -242,7 +247,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     commentP.textContent = comment.body;
 
     const moreDetails = document.createElement("button");
-    moreDetails.classList.add("text-bs", "font-bold", "text-black-500", "bg-white","py-2", "px-10","rounded-xl", "hover:text-red-700",   "mt-5", "text-nowrap");
+    moreDetails.classList.add("text-bs", "font-semibold", "text-black-500", "bg-white","py-2", "px-10","rounded-xl", "hover:text-red-700",   "mt-5", "text-nowrap");
     moreDetails.textContent = 'More Details';
 
 
@@ -251,7 +256,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     infoDiv.appendChild(product);
     infoDiv.appendChild(commentP);
     infoDiv.appendChild(moreDetails);
-    
+    infoDiv.className='col-span-3'
     requestDiv.appendChild(imgDiv);
     requestDiv.appendChild(infoDiv);
 

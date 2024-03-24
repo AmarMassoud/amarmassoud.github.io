@@ -50,13 +50,24 @@ document.addEventListener('DOMContentLoaded', async() => {
         }
 
         if (!checkExist(email)) {
-            console.log(users)
+            // console.log(users)
         users.push(newUser)
         localStorage.setItem('user', JSON.stringify(users));
         console.log(newUser);
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
-        window.location.href = '../../../pages/seller/seller-dashboard.html';
-        console.log(users)
+        if (newUser != null) {
+            // console.log('User:', user);
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            if (newUser.role === 'CUSTOMER') {
+                window.location.href = '/pages/buyer/landingPage/landingPage.html';
+            } else if (newUser.role === 'SELLER') {
+                window.location.href = '/pages/seller/seller-dashboard.html';
+            }  if(newUser.role === 'ADMIN') {
+                window.location.href = '/pages/admin/admin.html';
+            }
+            // window.location.href = '../../pages/seller/seller-dashboard.html';
+        } else {
+            alert('Invalid email or password');
+        }
     }
         // if () {
             
