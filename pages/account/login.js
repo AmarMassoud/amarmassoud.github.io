@@ -28,6 +28,51 @@ document.addEventListener('DOMContentLoaded', async() => {
         console.error('Failed to fetch users data');
         return;
     }}
+
+    const productsData = localStorage.getItem('products');
+        if (!productsData) {
+            const response = await fetch('../../data/products.json');
+  
+            if (response.ok) {
+                const responseData = await response.json();
+                if (Array.isArray(responseData)) {
+                    localStorage.setItem('products', JSON.stringify(responseData));
+                    products = responseData;
+                    // console.log('products data:', users);
+                } else {
+                    console.error('Invalid products data format:', responseData);
+                }
+            } else {
+                console.error('Failed to fetch products data');
+            }
+        } else {
+            products = JSON.parse(productsData);
+            console.log('products data:', products);
+        }
+        const commentsData = localStorage.getItem('comments');
+        if (!commentsData) {
+            const response = await fetch('../../data/comments.json');
+  
+            if (response.ok) {
+                const responseData = await response.json();
+                responseData.forEach((comment) => {
+                    if(comment.rating===undefined){
+                        comment.rating=Math.floor(Math.random() * 5) + 1;
+                    }
+                });
+                if (Array.isArray(responseData)) {
+
+                    localStorage.setItem('comments', JSON.stringify(responseData));
+                    console.log('comments data:', comments);
+                } else {
+                    console.error('Invalid products data format:', responseData);
+                }
+            } else {
+                console.error('Failed to fetch products data');
+            }
+        } else {
+            console.log('comments data:', comments);
+        }
    console.log('Users data:', users);
 
     // users.forEach((user, index) => {

@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
 // 
 
+const currentUser=JSON.parse(localStorage.getItem('currentUser'));
 
 let products=[]
     products =JSON.parse( localStorage.getItem('products'));
@@ -460,6 +461,7 @@ for (let i = 1; i <= 5; i++) {
     reviewLabel.className="text-lg font-bold"
 
     const reviewInput=document.createElement("textarea");
+    reviewInput.placeholder="Write your review here...";
     reviewInput.className="rounded-lg border-2 border-gray-300 p-2 w-full h-32 max-w-[60rem]";
 
     reviewDiv.appendChild(reviewLabel);
@@ -472,7 +474,7 @@ for (let i = 1; i <= 5; i++) {
         comments.push({
             id:comments.length+1,
             productId:currentProduct.id,
-            user:JSON.parse(localStorage.getItem('currentUser')),
+            user:currentUser,
             rating:ratingValue,
             body:reviewInput.value,
             timestamp:new Date().toISOString()
@@ -556,7 +558,6 @@ const renderComments=()=>{
     commentsDiv.appendChild(commentsFig);
 
 };
-const currentUser=JSON.parse(localStorage.getItem('currentUser'));
 
     const addToCart=(product,quantity=1)=>{
         const cartItems=JSON.parse(localStorage.getItem('cart')) || [];
@@ -578,11 +579,11 @@ const currentUser=JSON.parse(localStorage.getItem('currentUser'));
         
     };
     const rerenderPage=()=>{
-        submitReview=false;
+    localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
+    submitReview=false;
         renderProductDetails();
         renderComments();
     renderMoreProductsByCategory();
-    localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
     };
 
 
