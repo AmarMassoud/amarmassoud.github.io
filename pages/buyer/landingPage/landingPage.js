@@ -69,7 +69,8 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
         button.textContent = (inStock?'Add to Cart':"Out of Stock");
         button.addEventListener("click",()=>{
             if(inStock)
-            addToCart(currentProduct)})
+            
+            addToCart(product)})
         
         cardActions.appendChild(button);
         cardBody.appendChild(title);
@@ -78,7 +79,7 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
         card.appendChild(cardBody);
         card.appendChild(cardActions);
     
-        card.addEventListener("click",()=>{
+        cardBody.addEventListener("click",()=>{
             localStorage.setItem('currentProduct',JSON.stringify(product));
                 window.location.href = '/pages/buyer/product-page/product-page.html';
 
@@ -120,6 +121,8 @@ const addToCart=(product)=>{
 
     const cartItems=JSON.parse(localStorage.getItem('cart')) || [];
     let inCart= cartItems.find(item=>item.product.id===product.id);
+    console.log(product.id)
+    console.log(inCart)
     if(!inCart){
     const cartItem={
         product:product,

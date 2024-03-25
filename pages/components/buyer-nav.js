@@ -86,7 +86,7 @@ class BuyerNav extends LitElement {
   <div id="nav-buttons">
       <a href="/pages/buyer/landingPage/landingPage.html">Home Screen</a>
       <a href="/">Categories</a>
-      <a href="/seller/add-item">Cart</a>
+      <a href="/pages/buyer/cart/cart-checkout.html">Cart</a>
   </div>
   <div id="nav-end">
 

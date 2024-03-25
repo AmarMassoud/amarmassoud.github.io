@@ -169,7 +169,7 @@ const renderProductDetails = () => {
     quantityDiv.className="flex flex-col space-y-0"
 
 
-    const quantity=document.createElement("p");
+    let quantity=document.createElement("p");
     // quantity.textContent=currentProduct.textContent=currentProduct.stock +" items left";
     quantity.textContent="Availability:";
     quantity.className=" text-xl pl-1"
@@ -556,6 +556,7 @@ const renderComments=()=>{
     commentsDiv.appendChild(commentsFig);
 
 };
+const currentUser=JSON.parse(localStorage.getItem('currentUser'));
 
     const addToCart=(product,quantity=1)=>{
         const cartItems=JSON.parse(localStorage.getItem('cart')) || [];
