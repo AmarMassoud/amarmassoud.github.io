@@ -95,7 +95,7 @@ class BuyerNav extends LitElement {
   <div id="nav-end">
 
   
-  <a href="../../index.html" >
+  <a href="/pages/profile/profile.html" >
   <div id="profile-icon">
   <h3>${currnetUser.name.charAt(0).toUpperCase()}</h3>
    <div></a>

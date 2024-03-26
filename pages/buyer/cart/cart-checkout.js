@@ -122,13 +122,35 @@ const cartTotal=()=>{
 
 const renderCartItems=()=>{
 
-    const cartItems= JSON.parse(localStorage.getItem('cart'));
+    const cartItems= JSON.parse(localStorage.getItem('cart'))||[];
     const CartItemsDiv=document.querySelector('#cart-items');
     CartItemsDiv.replaceChildren();
+    if(cartItems.length!==0){
     cartItems.forEach(cartItem=>{
         CartItemsDiv.appendChild(renderCartItem(cartItem));
     })
     cartTotal()
+}
+else {
+
+const emptyCartDiv=document.createElement('div');
+emptyCartDiv.className='flex flex-col items-center justify-center h-full';
+const emptyCartImg=document.createElement('img');
+emptyCartImg.src='/media/shopping-cart.svg';
+emptyCartImg.className='h-40 w-40 opacity-10 '
+const emptyCartText=document.createElement('p');
+emptyCartText.textContent='Your cart is empty';
+emptyCartText.className='text-xl font-bold text-black text-opacity-10'
+emptyCartDiv.appendChild(emptyCartImg);
+emptyCartDiv.appendChild(emptyCartText);
+CartItemsDiv.appendChild(emptyCartDiv);
+
+
+
+    const totalDiv=document.querySelector('#cart-total-h');
+    totalDiv.textContent=''
+
+}
 }
 
 
