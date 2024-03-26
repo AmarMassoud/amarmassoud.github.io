@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         }
         const commentsData = localStorage.getItem('comments');
         if (!commentsData) {
-            const response = await fetch('../../data/comments.json');
+            const response = await fetch('/data/comments.json');
   
             if (response.ok) {
                 const responseData = await response.json();
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                 if (Array.isArray(responseData)) {
 
                     localStorage.setItem('comments', JSON.stringify(responseData));
-                    console.log('comments data:', comments);
+                    // console.log('comments data:', comments);
                 } else {
                     console.error('Invalid products data format:', responseData);
                 }
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                 console.error('Failed to fetch products data');
             }
         } else {
-            console.log('comments data:', comments);
+            // console.log('comments data:', comments);
         }
    console.log('Users data:', users);
 
