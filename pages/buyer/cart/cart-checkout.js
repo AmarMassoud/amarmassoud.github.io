@@ -238,12 +238,166 @@ loginButton.href='/index.html';
 const addAddressButton=document.createElement('img');
 addAddressButton.src='/media/add-address-btn.svg';
 addAddressButton.className='h-20 w-20 my-auto mx-auto cursor-pointer hover:scale-105 absolute bottom-0 right-0 mb-4 ml-4 px-4 py-2'
+addAddressButton.addEventListener('click',()=>{
+    shippingInfoDiv.replaceChildren();
+    shippingInfoDiv.appendChild(renderAddAddress());
+})
 
 shippingInfoDiv.appendChild(addAddressButton);
 
 return shippingInfoDiv;
 
 }
+
+const renderAddAddress=()=>{
+    const addAddressForm=document.createElement('form');
+    addAddressForm.className='flex flex-col gap-4 text-white mt-8';
+
+
+    const addressNicknameContainer=document.createElement('div');
+const addressNicknameDiv=document.createElement('div');
+addressNicknameDiv.className='flex flex-col gap-1 ';
+
+const addressNicknameLabel=document.createElement('label');
+
+const addressNickname=document.createElement('input');
+addressNickname.id='addressNickname';
+addressNickname.placeholder='Home';
+addressNickname.className='input  placeholder-white placeholder-opacity-50 outline-none  focus:outline-none focus:border-none  required';
+addressNicknameLabel.className='text-sm font-semibold  ';
+addressNicknameLabel.textContent='Address Nickname';
+addressNicknameContainer.appendChild(addressNickname);
+addressNicknameContainer.className='border-b border-white grid grid-cols-1 ';
+addressNicknameDiv.appendChild(addressNicknameLabel);
+addressNicknameDiv.appendChild(addressNicknameContainer);
+
+
+
+const streetAddressContainer=document.createElement('div');
+const streetAddressDiv=document.createElement('div');
+addressNicknameDiv.className='flex flex-col gap-1 ';
+
+const streetAddressLabel=document.createElement('label');
+
+const streetAddress=document.createElement('input');
+streetAddress.id='street-address';
+streetAddress.placeholder='123 Main St.';
+streetAddress.className='input  placeholder-white placeholder-opacity-50 outline-none  focus:outline-none focus:border-none  ';
+streetAddressLabel.className='text-sm font-semibold ';
+streetAddressLabel.textContent='Street Address';
+streetAddressContainer.appendChild(streetAddress);
+streetAddressContainer.className='border-b border-white grid grid-cols-1 ';
+streetAddressDiv.appendChild(streetAddressLabel);
+streetAddressDiv.appendChild(streetAddressContainer)
+
+
+
+
+
+const stateContainer=document.createElement('div');
+const stateDiv=document.createElement('div');
+stateDiv.className='flex flex-col gap-1 ';
+
+const stateLabel=document.createElement('label');
+
+const state=document.createElement('input');
+state.id='street-address';
+state.placeholder='Florida';
+state.className='input  placeholder-white  placeholder-opacity-50 outline-none  focus:outline-none focus:border-none  ';
+stateLabel.className='text-sm  font-semibold';
+stateLabel.textContent='Street Address';
+stateContainer.appendChild(state);
+stateContainer.className='border-b border-white grid grid-cols-1 ';
+stateDiv.appendChild(stateLabel);
+stateDiv.appendChild(stateContainer)
+
+
+
+
+
+const zipAndCityDiv=document.createElement('div');
+zipAndCityDiv.className='grid grid-cols-2 gap-4';
+
+
+
+const zipContainer=document.createElement('div');
+const zipDiv=document.createElement('div');
+zipDiv.className='flex flex-col gap-1 ';
+
+const zipLabel=document.createElement('label');
+
+const zip=document.createElement('input');
+zip.id='zip';
+zip.placeholder='postal code';
+zip.className='input  placeholder-white placeholder-opacity-50 outline-none  focus:outline-none focus:border-none  ';
+zipLabel.className='text-sm  font-semibold';
+zipLabel.textContent='Zip / Postal Code';
+zipContainer.appendChild(zip);
+zipContainer.className='border-b border-white grid grid-cols-1 ';
+zipDiv.appendChild(zipLabel);
+zipDiv.appendChild(zipContainer)
+
+
+
+const cityContainer=document.createElement('div');
+const cityDiv=document.createElement('div');
+cityDiv.className='flex flex-col gap-1 ';
+
+const cityLabel=document.createElement('label');
+
+const city=document.createElement('input');
+city.id='city';
+city.placeholder='City';
+city.className='input  placeholder-white placeholder-opacity-50 outline-none  focus:outline-none focus:border-none  ';
+cityLabel.className='text-sm  font-semibold';
+cityLabel.textContent='City';
+cityContainer.appendChild(city);
+cityContainer.className='border-b border-white grid grid-cols-1 ';
+cityDiv.appendChild(cityLabel);
+cityDiv.appendChild(cityContainer)
+
+zipAndCityDiv.appendChild(zipDiv);
+zipAndCityDiv.appendChild(cityDiv);
+
+
+
+
+
+
+addAddressForm.appendChild(addressNicknameDiv);
+addressNickname.required=true;
+
+addAddressForm.appendChild(streetAddressDiv);
+addAddressForm.appendChild(stateDiv);
+addAddressForm.appendChild(zipAndCityDiv);
+
+const submitButton=document.createElement('button');
+submitButton.textContent='Add Address';
+submitButton.className='bg-white text-custom-red font-semibold py-2 rounded-3xl hover:bg-opacity-90 disabled:bg-[#F36A6B] mt-10';
+submitButton.disabled = false; // Initially disable the button
+
+
+// const validateAndToggleAdd = () => {
+//     const isValid = validateCardPaymentForm();
+//     submitButton.disabled = !isValid; // Disable button if form is invalid
+//     if(isValid===true){
+// submitButton.textContent='Pay';        
+//     }
+// };
+// addAddressForm.addEventListener('input', validateAndToggleAdd); // Re-validate on input change
+
+submitButton.addEventListener('click',()=>{
+    // if(validateCardPaymentForm()){
+       
+    // }
+    onCheckout();
+    window.location.href='/pages/buyer/landingPage/landingPage.html';
+})
+addAddressForm.appendChild(submitButton);
+
+return addAddressForm;
+}
+
 
 
 const renderCardPayment=()=>{

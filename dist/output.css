@@ -1348,14 +1348,6 @@ html {
   --alert-bg-mix: var(--fallback-b1,oklch(var(--b1)/1));
 }
 
-.alert-success {
-  border-color: var(--fallback-su,oklch(var(--su)/0.2));
-  --tw-text-opacity: 1;
-  color: var(--fallback-suc,oklch(var(--suc)/var(--tw-text-opacity)));
-  --alert-bg: var(--fallback-su,oklch(var(--su)/1));
-  --alert-bg-mix: var(--fallback-b1,oklch(var(--b1)/1));
-}
-
 .badge-outline {
   border-color: currentColor;
   --tw-border-opacity: 0.5;
@@ -2381,6 +2373,10 @@ html:has(.drawer-toggle:checked) {
   bottom: 0px;
 }
 
+.bottom-4 {
+  bottom: 1rem;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -2391,6 +2387,10 @@ html:has(.drawer-toggle:checked) {
 
 .right-0 {
   right: 0px;
+}
+
+.right-4 {
+  right: 1rem;
 }
 
 .right-5 {
@@ -2407,18 +2407,6 @@ html:has(.drawer-toggle:checked) {
 
 .top-full {
   top: 100%;
-}
-
-.bottom-4 {
-  bottom: 1rem;
-}
-
-.left-4 {
-  left: 1rem;
-}
-
-.right-4 {
-  right: 1rem;
 }
 
 .z-50 {
@@ -2680,10 +2668,6 @@ html:has(.drawer-toggle:checked) {
   margin-top: 2rem;
 }
 
-.mb-10 {
-  margin-bottom: 2.5rem;
-}
-
 .block {
   display: block;
 }
@@ -2748,8 +2732,8 @@ html:has(.drawer-toggle:checked) {
   height: 1.25rem;
 }
 
-.h-6 {
-  height: 1.5rem;
+.h-52 {
+  height: 13rem;
 }
 
 .h-96 {
@@ -2800,18 +2784,6 @@ html:has(.drawer-toggle:checked) {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-24 {
-  height: 6rem;
-}
-
-.h-36 {
-  height: 9rem;
-}
-
-.h-52 {
-  height: 13rem;
 }
 
 .max-h-16 {
@@ -2882,10 +2854,6 @@ html:has(.drawer-toggle:checked) {
   width: 1.25rem;
 }
 
-.w-6 {
-  width: 1.5rem;
-}
-
 .w-72 {
   width: 18rem;
 }
@@ -2950,10 +2918,6 @@ html:has(.drawer-toggle:checked) {
 
 .flex-shrink {
   flex-shrink: 1;
-}
-
-.shrink-0 {
-  flex-shrink: 0;
 }
 
 .grow {
@@ -3345,9 +3309,19 @@ html:has(.drawer-toggle:checked) {
   background-color: rgb(242 14 15 / var(--tw-bg-opacity));
 }
 
+.bg-gray-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+}
+
 .bg-gray-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(158 158 158 / var(--tw-bg-opacity));
+}
+
+.bg-green-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(165 214 167 / var(--tw-bg-opacity));
 }
 
 .bg-green-800 {
@@ -3375,26 +3349,12 @@ html:has(.drawer-toggle:checked) {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-green-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(165 214 167 / var(--tw-bg-opacity));
-}
-
-.bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity));
-}
-
 .bg-center {
   background-position: center;
 }
 
 .fill-\[rgba\(75\2c _85\2c _99\2c _1\)\] {
   fill: rgba(75, 85, 99, 1);
-}
-
-.stroke-current {
-  stroke: currentColor;
 }
 
 .object-contain {
@@ -3748,6 +3708,11 @@ html:has(.drawer-toggle:checked) {
   color: rgb(97 97 97 / var(--tw-text-opacity));
 }
 
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(33 33 33 / var(--tw-text-opacity));
+}
+
 .text-green-500 {
   --tw-text-opacity: 1;
   color: rgb(76 175 80 / var(--tw-text-opacity));
@@ -3761,11 +3726,6 @@ html:has(.drawer-toggle:checked) {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-900 {
-  --tw-text-opacity: 1;
-  color: rgb(33 33 33 / var(--tw-text-opacity));
 }
 
 .text-opacity-10 {
@@ -3788,6 +3748,14 @@ html:has(.drawer-toggle:checked) {
 .placeholder-white::placeholder {
   --tw-placeholder-opacity: 1;
   color: rgb(255 255 255 / var(--tw-placeholder-opacity));
+}
+
+.placeholder-opacity-50::-moz-placeholder {
+  --tw-placeholder-opacity: 0.5;
+}
+
+.placeholder-opacity-50::placeholder {
+  --tw-placeholder-opacity: 0.5;
 }
 
 .opacity-10 {
@@ -4066,37 +4034,8 @@ html:has(.drawer-toggle:checked) {
 }
 
 @media (min-width: 960px) {
-  .lg\:mx-0 {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-
-  .lg\:mt-0 {
-    margin-top: 0px;
-  }
-
-  .lg\:flex {
-    display: flex;
-  }
-
-  .lg\:grid {
-    display: grid;
-  }
-
   .lg\:hidden {
     display: none;
-  }
-
-  .lg\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lg\:flex-col {
-    flex-direction: column;
-  }
-
-  .lg\:gap-8 {
-    gap: 2rem;
   }
 }
 
