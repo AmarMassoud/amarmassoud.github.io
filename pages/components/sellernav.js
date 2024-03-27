@@ -2,8 +2,9 @@ import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core
 
 let currnetUser = JSON.parse(localStorage.getItem('currentUser'));
 if(currnetUser===null){
-    currnetUser={name: "Guest"};
+    currnetUser={firstName: "Guest"};
 }
+
 
 class SellerNav extends LitElement {
     static properties = {
@@ -91,14 +92,14 @@ class SellerNav extends LitElement {
   <div id="nav-buttons">
       <a href="../seller/seller-dashboard.html">Dashboard</a>
       <a href="../seller/sellerProducts.html">Products</a>
-      <a href="../seller/addProduct.html">Add Item</a>
+      <a href="../seller/addProduct.html" id="add" >Add Item</a>
   </div>
   <div id="nav-end">
   <a href="/"><img src="../../media/Mail.svg" alt="notificaiton logo" width="25" height="25"></a>
   
   <a id="add" href="../../pages/profile/profile.html" >
   <div id="profile-icon">
-  <h3>${currnetUser.name.charAt(0).toUpperCase()}</h3>
+  <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>
    </div>
   </div>

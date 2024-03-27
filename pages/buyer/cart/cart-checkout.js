@@ -2,10 +2,18 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 let cartItems= JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser= JSON.parse(localStorage.getItem('currentUser')) || {};
-const select = document.getElementById("nav");
+
+if(cartItems.length!==0){
+    cartItems.forEach(item=>{
+        item.customer=currentUser.id;
+    })
+localStorage.setItem('cart',JSON.stringify(cartItems));
+}
+// const select = document.getElementById("nav");
 console.log(currentUser.firstName)
-select.setAttribute("name",currentUser.firstName)
+// select.setAttribute("name",currentUser.firstName)
 let checkoutStepNumber=1;
+let paymentMethod=1;
 let selectedAddress=null;
 
 const renderCartItem= (cartItem)=>{
@@ -63,7 +71,7 @@ const renderCartItem= (cartItem)=>{
         if(cartItem.quantity>1)
         cartItems.find(item=>item.product.id===cartItem.product.id).quantity-=1;
         localStorage.setItem('cart',JSON.stringify(cartItems));
-
+        renderCheckout()
         renderCartItems()
 
         }
@@ -72,6 +80,8 @@ const renderCartItem= (cartItem)=>{
             if(cartItem.quantity<cartItem.product.stock)
             cartItems.find(item=>item.product.id===cartItem.product.id).quantity+=1;
         localStorage.setItem('cart',JSON.stringify(cartItems));
+        renderCheckout()
+
         renderCartItems()
             })
         
@@ -117,7 +127,7 @@ const cartTotal=()=>{
     const totalDiv=document.querySelector('#cart-total');
     const total=cartItems.reduce((acc,item)=>acc+item.product.price*item.quantity,0);
     totalDiv.textContent='$'+total;
-    
+
 }
 
 const renderCartItems=()=>{
@@ -194,7 +204,8 @@ const renderShippingInfo=()=>{
     console.log(shippingAddresses)
 const shippingInfoDiv=document.createElement('div');
 // shippingInfoDiv.className='relative h-full'
-
+if(currentUser.id!==-1){
+    console.log(currentUser,'user id')
 if(shippingAddresses.length!==0){
     
 shippingAddresses.forEach(address=>{
@@ -205,6 +216,22 @@ shippingAddresses.forEach(address=>{
     noAddresses.className="text-xl font-bold text-center mx-auto mt-20 my-auto text-white text-opacity-75";
     // shippingInfoDiv.className='h-full'
     shippingInfoDiv.appendChild(noAddresses);
+
+}}else{
+
+    const noAddresses=document.createElement('p');
+    noAddresses.textContent="Please Login to continue";
+    noAddresses.className="text-xl font-bold text-center mx-auto mt-20 my-auto text-white text-opacity-75";
+    // shippingInfoDiv.className='h-full'
+const loginButton=document.createElement('a');
+loginButton.textContent='Login';
+loginButton.className='bg-white text-custom-red font-semibold py-2 rounded-3xl hover:bg-opacity-90 mt-10 px-5';
+loginButton.href='/index.html';
+    shippingInfoDiv.className='flex flex-col items-center justify-center';
+    shippingInfoDiv.appendChild(noAddresses);
+    shippingInfoDiv.appendChild(loginButton);
+
+
 
 }
 
@@ -219,6 +246,293 @@ return shippingInfoDiv;
 }
 
 
+const renderCardPayment=()=>{
+    
+const cardPaymentDiv=document.createElement('div');
+// cardPaymentDiv.className='flex flex-col gap-4 text-white mt-16';
+const cardPaymentForm=document.createElement('form');
+cardPaymentForm.className='flex flex-col gap-4 text-white mt-16 relative h-full';
+
+
+const cardNameContainer=document.createElement('div');
+const cardNameDiv=document.createElement('div');
+cardNameDiv.className='flex flex-col gap-1 ';
+
+const cardNameLabel=document.createElement('label');
+
+const cardName=document.createElement('input');
+cardName.id='cardName';
+// cardName.placeholder='Card Name';
+cardName.className='input  placeholder-white outline-none  focus:outline-none focus:border-none  ';
+cardNameLabel.className='text-sm  ';
+cardNameLabel.textContent='Card Name';
+cardNameContainer.appendChild(cardName);
+cardNameContainer.className='border-b border-white grid grid-cols-1 ';
+cardNameDiv.appendChild(cardNameLabel);
+cardNameDiv.appendChild(cardNameContainer);
+
+
+const cardNumberContainer=document.createElement('div');
+const cardNumberDiv=document.createElement('div');
+cardNumberDiv.className='text-sm flex flex-col gap-1 ';
+
+const cardNumberLabel=document.createElement('label');
+cardNumberLabel.className='text-sm';
+cardNumberLabel.textContent='Card Number';
+const cardNumber=document.createElement('input');
+cardNumber.id='cardNumber';
+// cardNumber.placeholder='Card Number';
+cardNumber.className='input  placeholder-white outline-none  focus:outline-none focus:border-none ';
+
+cardNumberDiv.appendChild(cardNumberLabel);
+cardNumberContainer.appendChild(cardNumber);
+cardNumberContainer.className='border-b border-white grid grid-cols-1';
+cardNumberDiv.appendChild(cardNumberContainer);
+
+
+
+const cardExpiryContainer=document.createElement('div');
+cardExpiryContainer.className='border-b border-white grid grid-cols-1';
+const cardExpiryDiv=document.createElement('div');
+const cardExpiryLabel=document.createElement('label');
+cardExpiryLabel.textContent='Card Expiry';
+cardExpiryLabel.className='text-sm';
+
+
+const cardExpiry=document.createElement('input');
+cardExpiry.id='cardExpiry';
+// cardExpiry.placeholder='Card Expiry';
+cardExpiry.className='input  placeholder-white outline-none  focus:outline-none focus:border-none ';
+
+cardExpiryContainer.appendChild(cardExpiry);
+cardExpiryDiv.appendChild(cardExpiryLabel);
+cardExpiryDiv.appendChild(cardExpiryContainer);
+cardExpiryDiv.className='text-sm flex flex-col gap-1 ';
+
+const cardCVVDiv=document.createElement('div');
+const cardCVVLabel=document.createElement('label');
+cardCVVLabel.textContent='Card CVV';
+cardCVVLabel.className='text-sm';
+
+const cardCvv=document.createElement('input');
+cardCvv.id='cardCVV';
+// cardCvv.placeholder='Card CVV';
+const cardCVVContainer=document.createElement('div');
+cardCvv.className='input  placeholder-white outline-none  focus:outline-none focus:border-none ';
+
+cardCVVContainer.appendChild(cardCvv);
+cardCVVContainer.className='border-b border-white grid grid-cols-1';
+
+cardCVVDiv.className='text-sm flex flex-col gap-1 ';
+cardCVVDiv.appendChild(cardCVVLabel);
+cardCVVDiv.appendChild(cardCVVContainer);
+
+
+const cardExpiryAndCVVDiv=document.createElement('div');
+cardExpiryAndCVVDiv.className='grid grid-cols-2 gap-4';
+cardExpiryAndCVVDiv.appendChild(cardExpiryDiv);
+cardExpiryAndCVVDiv.appendChild(cardCVVDiv);
+
+
+cardPaymentForm.appendChild(cardNameDiv);
+
+cardPaymentForm.appendChild(cardNumberDiv);
+cardPaymentForm.appendChild(cardExpiryAndCVVDiv);
+// cardPaymentForm.appendChild(cardCVVDiv);
+
+// cardPaymentDiv.appendChild(cardPaymentForm);
+const submitButton=document.createElement('button');
+submitButton.textContent='Please fill in all fields correctly';
+submitButton.className='bg-white text-custom-red font-semibold py-2 rounded-3xl hover:bg-opacity-90 disabled:bg-[#F36A6B] mt-10';
+submitButton.disabled = true; // Initially disable the button
+
+
+const validateAndToggleSubmit = () => {
+    const isValid = validateCardPaymentForm();
+    submitButton.disabled = !isValid; // Disable button if form is invalid
+    if(isValid===true){
+submitButton.textContent='Pay';        
+    }
+};
+cardPaymentForm.addEventListener('input', validateAndToggleSubmit); // Re-validate on input change
+
+submitButton.addEventListener('click',()=>{
+    if(validateCardPaymentForm()){
+        onCheckout();
+        window.location.href='/pages/buyer/landingPage/landingPage.html';
+    }
+})
+// cardPaymentForm.appendChild();
+cardPaymentForm.appendChild(submitButton);
+
+return cardPaymentForm;
+}
+const renderBalancePayment=()=>{
+    const paymentDiv=document.createElement('div');
+    const balanceDiv=document.createElement('div');
+    balanceDiv.className='flex flex-col  text-white mt-16';
+    const balanceLabel=document.createElement('label');
+    balanceLabel.textContent='Your balance is';
+    balanceLabel.className='text-xs font-semibold text-white';
+    const balance= document.createElement('p');
+    balance.textContent='$'+currentUser.balance;
+    balance.className='text-3xl font-semibold mt-2 text-white border-b-[.001rem] ';
+    balanceDiv.appendChild(balanceLabel);
+    balanceDiv.appendChild(balance);
+    paymentDiv.appendChild(balanceDiv);
+
+
+    const submitButton=document.createElement('button');
+    submitButton.textContent= validateBalancePayment()?'Checkout':'Insufficient balance';
+    submitButton.className='bg-white text-custom-red font-semibold w-full py-2 rounded-3xl hover:bg-opacity-90 disabled:bg-[#F36A6B] mt-10';
+    submitButton.disabled = !validateBalancePayment(); // Initially disable the button
+    console.log(currentUser.balance);
+    console.log(validateBalancePayment());
+    paymentDiv.appendChild(submitButton);
+
+    submitButton.addEventListener('click',()=>{
+        if(validateBalancePayment()){
+            onCheckout();
+            window.location.href='/pages/buyer/landingPage/landingPage.html';
+        }});
+
+
+
+    return paymentDiv;
+
+}
+
+const validateBalancePayment=()=>{
+    const balance= currentUser.balance;
+    if(balance<cartItems.reduce((acc,item)=>acc+item.product.price*item.quantity,0)){
+        return false;
+    }
+    return true;
+}
+
+const validateCardPaymentForm = () => {
+    const cardName = document.getElementById('cardName').value.trim();
+    const cardNumber = document.getElementById('cardNumber').value.trim();
+    const cardExpiry = document.getElementById('cardExpiry').value.trim();
+    const cardCVV = document.getElementById('cardCVV').value.trim();
+
+    if (cardName === '' || cardNumber === '' || cardExpiry === '' || cardCVV === '') {
+        // alert('All fields are required');
+        return false;
+    }
+
+    if (!/^\d{16}$/.test(cardNumber)) {
+        // alert('Invalid card number. Please enter a 16-digit card number');
+        return false;
+    }
+
+    if (!/^\d{2}\/\d{2}$/.test(cardExpiry)) {
+        // alert('Invalid card expiry. Please enter a valid expiry date (MM/YY)');
+        return false;
+    }
+
+    if (!/^\d{3}$/.test(cardCVV)) {
+        // alert('Invalid card CVV. Please enter a 3-digit CVV');
+        return false;
+    }
+
+    return true;
+};
+
+
+const renderPayment=()=>{
+    const paymentDiv=document.createElement('div');
+    const paymentOptionsDiv= document.createElement('div');
+    paymentOptionsDiv.className='flex gap-4 flex-col mt-5 border-b-2 border-gray-300 pb-4 text-white h-full';
+//     // Create a new radio button element
+const radioCardDiv=document.createElement('div');
+    const radioCard = document.createElement('input');
+
+//     // Set the type and name attributes
+    radioCard.setAttribute('type', 'radio');
+    radioCard.setAttribute('name', 'radio-10');
+    radioCard.setAttribute('value', 'card');
+    // radioCard.selected=true;
+    if(paymentMethod===2){
+        radioCard.setAttribute('checked',true);
+    }
+radioCard.className='radio checked:bg-white'
+
+const radioCardLabel=document.createElement('label');
+radioCardLabel.textContent='Pay with Card';
+radioCardLabel.className='text-lg font-semibold'
+radioCardDiv.appendChild(radioCard);
+radioCardDiv.appendChild(radioCardLabel);
+radioCardDiv.className='flex gap-4 items-center'
+    // radioCard.classList.add('radio')
+
+    const radioBalanceDiv=document.createElement('div');
+
+    const radioBalance = document.createElement('input');
+    // Set the type and name attributes
+    radioBalance.setAttribute('type', 'radio');
+    radioBalance.setAttribute('name', 'radio-10');
+    radioBalance.setAttribute('value', 'balance');
+    if(paymentMethod===1){
+    radioBalance.setAttribute('checked',true);
+    }
+    radioBalance.className= 'radio checked:bg-white'
+    const radioBalanceLabel=document.createElement('label');
+    radioBalanceLabel.textContent='Pay with Balance';
+    radioBalanceLabel.className='text-lg font-semibold'
+    radioBalanceDiv.appendChild(radioBalance);
+    radioBalanceDiv.appendChild(radioBalanceLabel);
+    radioBalanceDiv.className='flex gap-4 items-center'
+
+paymentOptionsDiv.appendChild(radioCardDiv);
+paymentOptionsDiv.appendChild(radioBalanceDiv);
+paymentDiv.appendChild(paymentOptionsDiv);
+const paymentDetailsDiv=document.createElement('div');
+paymentDiv.appendChild(paymentDetailsDiv);
+paymentDetailsDiv.className='h-full'
+
+if(checkoutStepNumber===2){
+    switch (paymentMethod){
+    case 1:
+        paymentDetailsDiv.appendChild(renderBalancePayment());
+        break;
+    case 2:
+        paymentDetailsDiv.appendChild(renderCardPayment());
+        break;
+        
+}
+
+
+}
+paymentDiv.addEventListener('change', (event) => {
+    if (event.target.tagName === 'INPUT' && event.target.type === 'radio') {
+        if (event.target.value === 'card') {
+            paymentDetailsDiv.replaceChildren();
+            paymentDetailsDiv.className='h-full'
+            paymentMethod=2;
+
+            paymentDetailsDiv.appendChild(renderCardPayment());
+            console.log('Card payment selected');
+        } else if (event.target.value === 'balance') {
+            paymentDetailsDiv.replaceChildren();
+            paymentDetailsDiv.appendChild(renderBalancePayment());
+            paymentMethod=1;
+            // Render balance payment method
+            console.log('Balance payment selected');
+        }
+    }
+});
+
+
+return paymentDiv;
+
+
+}
+
+
+
+
+
 const renderCheckout=()=>{
 const checkoutStepNo= document.querySelector('#checkout-step-no');
 checkoutStepNo.textContent=checkoutStepNumber;
@@ -229,6 +543,7 @@ checkoutStep.replaceChildren();
 checkoutStep.className='text-2xl font-semibold text-white mt-4 border-b-2 border-gray-300 pb-6';
 
 const checkoutDiv=document.querySelector('#checkout-div');
+checkoutDiv.className='h-full'
 checkoutDiv.replaceChildren();
 switch (checkoutStepNumber){
     case 1:
@@ -237,6 +552,7 @@ switch (checkoutStepNumber){
         break;
     case 2:
         checkoutStep.textContent='Payment Info'
+        checkoutDiv.appendChild(renderPayment());
         break;
  
 }
@@ -255,6 +571,45 @@ if(checkoutStepNumber===2){
 }
 
 }
+
+
+const onCheckout=()=>{
+    
+
+      const purchaseDeals = [];
+      let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
+      const groupedItems = Object.groupBy(cartItems, (item) => item.product.seller.id);
+      
+      Object.values(groupedItems).forEach((items) => {
+        const deal = {
+          seller: items[0].product.seller, // Assuming product.user is the seller object
+          items: items,
+          customer: currentUser,
+        };
+        purchaseDeals.push(deal);
+      });
+const purchase={
+   deals: purchaseDeals,
+   totalPrice: cartItems.reduce((acc,item)=>acc+item.product.price*item.quantity,0),
+   timeStamp: new Date(), 
+}
+purchasedItems.push(purchase);
+    localStorage.setItem('purchasedItems',JSON.stringify(purchasedItems));
+    localStorage.setItem('cart',JSON.stringify([]));
+if(paymentMethod===1){
+    currentUser.balance-=purchase.totalPrice;
+    localStorage.setItem('currentUser',JSON.stringify(currentUser));
+    const users= JSON.parse(localStorage.getItem('user'));
+    users.find(user=>user.id===currentUser.id).balance=currentUser.balance;
+    localStorage.setItem('users',JSON.stringify(users));
+}
+    
+}
+
+
+
+
+
 
 renderCheckout();
 

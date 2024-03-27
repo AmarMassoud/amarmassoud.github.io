@@ -124,9 +124,25 @@ document.addEventListener('DOMContentLoaded', async() => {
             }
             // window.location.href = '../../pages/seller/seller-dashboard.html';
         } else {
-            alert('Invalid email or password');
+            showToast('Invalid email or password','bg-custom-red')
+            email.value="";
+            password.value="";
         }
     });
+
+
+    const showToast=(message, color)=>{
+        const toastContainer = document.getElementById('toast-container');
+        toastContainer.classList.remove('hidden');
+        const toastAlert= document.querySelector('#toast-alert');
+        toastAlert.textContent=message;
+        toastAlert.classList.remove('bg-gray-100');
+        toastAlert.classList.add(color);
+    
+        setTimeout(() => {
+          toastContainer.classList.add('hidden');
+        }, 3000);
+    }
 
 
 

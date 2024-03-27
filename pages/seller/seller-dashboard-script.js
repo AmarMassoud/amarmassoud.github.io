@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 };
 await getUsers(); //
 
-
+localStorage.removeItem('currentProduct')
     comments.forEach(comment=>{comment.rating=Math.floor(Math.random() * 5) + 1;});
     // localStorage.setItem('comments', JSON.stringify(comments));
 // // Loop through comments list
@@ -137,7 +137,9 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
       "pb-8",
       "border-b-2",
       "border-gray-300",
-      "mt-4"
+      "mt-4",
+      "h-52",
+      
     );
 
     const imgDiv = document.createElement("div");
@@ -150,7 +152,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     infoDiv.classList.add("mt-4", "ms-3");
 
     const name = document.createElement("h3");
-    name.classList.add("text-xl", "font-bold");
+    name.classList.add("text-xl", "font-bold","no-wrap");
     name.textContent = comment.user.firstName + " " + comment.user.lastName;
 
     const product = document.createElement("p");
@@ -219,7 +221,8 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
       "pb-4",
       "border-b-2",
       "border-gray-300",
-      "mt-4"
+      "mt-4",
+      "h-52"
     );
 
     const imgDiv = document.createElement("div");

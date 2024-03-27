@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 .grid-background-squared{
     background-image:
       linear-gradient(to right, #e4e1e1 1px, transparent 1px),

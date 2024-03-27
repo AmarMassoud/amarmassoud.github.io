@@ -1,5 +1,8 @@
+const withMT = require("@material-tailwind/html/utils/withMT");
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+module.exports =withMT( {
   content: ["./pages/**/*.{html,js}"],
   theme: {
     extend: {
@@ -19,12 +22,12 @@ module.exports = {
     maxHeight:{
       '45': '35rem'
     },
-    // screens: {
-    //   // '-sm': {'max':'640px'},  // Small screens and up
-    //   // '-md': {'max':'768'},  // Medium screens and up
-    //   // '-lg': {'max':'1024px'}, // Large screens and up
-    //   // '-xl': {'max':'1208px'}, // Extra large screens and up
-    // },
+    screens: {
+      '-sm': {'max':'640px'},  // Small screens and up
+      '-md': {'max':'768'},  // Medium screens and up
+      '-lg': {'max':'1024px'}, // Large screens and up
+      '-xl': {'max':'1208px'}, // Extra large screens and up
+    },
   },
   },
   plugins: [require("daisyui")],
@@ -41,4 +44,4 @@ module.exports = {
     ]
   }
 }
-
+);

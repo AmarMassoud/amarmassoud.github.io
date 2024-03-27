@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async() => {
 
-
+localStorage.removeItem('currentProduct')
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 let allProducts = JSON.parse(localStorage.getItem('products'));
 let  products = allProducts.filter(product => product.seller.id === currentUser.id);

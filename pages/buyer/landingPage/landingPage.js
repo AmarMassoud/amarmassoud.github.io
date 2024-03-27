@@ -4,6 +4,11 @@ let products = [];
 products=JSON.parse(localStorage.getItem('products'));
 let currentProduct=JSON.parse(localStorage.getItem('currentProduct'));
 let currentUser=JSON.parse(localStorage.getItem('currentUser'));
+
+if(currentUser===null){
+    currentUser={firstName: "Guest" , id:-1};
+    localStorage.setItem('currentUser',JSON.stringify(currentUser));
+}
 const navbar = document.querySelector('#nav');
 navbar.textContent=currentUser? currentUser.firstName.charAt(0):"U";
 navbar.setAttribute('name',currentUser? currentUser.firstName:"User");
@@ -35,6 +40,28 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // }
 // renderSearchedProducts();
+
+
+
+{/* <div class="toast">
+        <div class="alert alert-info bg-green-200">
+          <span>New message arrived.</span>
+        </div>
+      </div> */}
+
+const showToast=(message, color)=>{
+    const toastContainer = document.getElementById('toast-container');
+    toastContainer.classList.remove('hidden');
+    const toastAlert= document.querySelector('#toast-alert');
+    toastAlert.textContent=message;
+    toastAlert.classList.remove('bg-gray-100');
+    toastAlert.classList.add(color);
+
+    setTimeout(() => {
+      toastContainer.classList.add('hidden');
+    }, 3000);
+}
+
 
 
     const renderProductCard=(product)=>{
@@ -133,8 +160,11 @@ const addToCart=(product)=>{
     
     }
     cartItems.push(cartItem);
+ showToast('Product added to cart','bg-green-200');
 }else{
     inCart.quantity++;
+    showToast('Product added to cart','bg-green-200');
+
 }
     localStorage.setItem('cart',JSON.stringify(cartItems));
 
