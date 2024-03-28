@@ -5,27 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/dist/output.css" />
     <script type="module" src="../../../pages/components/footer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.9/lottie.min.js"></script>
+
     <title>Order Confirmed</title>
   </head>
   <body>
     <main>
       <img src="/media/logo.svg" alt="" />
-      <section id="confirmation"></section>
-      <section id="status" class="grid grid-cols-4">
-        <div class="col-span-3 border border-t-2">
-          <div id="status-preparing" class="flex items-center">
-            <img src="/media/status-red.svg" alt="" class="m-2" />
-            <img src="/media/preparing-order.svg" alt="" class="m-2" />
-            <div class="m-2">
-              <h1>Almost There!</h1>
+      <section
+        id="confirmation"
+        class="m-auto bg-custom-gray rounded-3xl mx-40 my-10"
+      >
+        <h1 class="text-5xl text-center pt-5 font-bold text-green-600">
+          Order Confirmed!
+        </h1>
+        <div id="animation" class="max-w-[30rem] m-auto"></div>
+      </section>
+      <section
+        id="status"
+        class="flex justify-around mx-10 -md:flex -sm:flex-col gap-16"
+      >
+        <div class="border-t-2 border-custom-gray">
+          <div
+            id="status-preparing"
+            class="flex items-center border-b-2 border-custom-gray grid grid-cols-10"
+          >
+            <img src="/media/status-red.svg" alt="" class="m-2 ms-4" />
+            <img
+              src="/media/preparing-order.svg"
+              alt=""
+              class="place-items-center"
+            />
+            <div class="m-2 col-start-3 col-end-11">
+              <h1 class="text-3xl">Almost There!</h1>
               <p>Preparing Order</p>
             </div>
           </div>
+          <div
+            id="status-preparing"
+            class="flex items-center border-b-2 border-custom-gray grid grid-cols-10 gap-2"
+          >
+            <img src="/media/status-gray.svg" alt="" class="m-2 ms-4" />
+            <img src="/media/truck-delivery.svg" alt="" class="col-span-1" />
+            <div class="m-2 col-start-3 col-end-11">
+              <h1 class="text-3xl">Out For Delivery</h1>
+              <p>Stay tuned</p>
+            </div>
+          </div>
+          <div
+            id="status-preparing"
+            class="flex items-center border-b-2 border-custom-gray grid grid-cols-10"
+          >
+            <img src="/media/status-gray.svg" alt="" class="m-2 ms-4" />
+            <img
+              src="/media/circle-check.svg"
+              alt=""
+              class="col-span-1 place-items-center"
+            />
+            <div class="m-2 col-start-3 col-end-11">
+              <h1 class="text-3xl">Delivered</h1>
+              <p>Order has been delivered</p>
+            </div>
+          </div>
         </div>
-        <div class=""></div>
+        <div class="flex justify-center flex-col r">
+          <div class="mb-[-1.5rem] z-10 mx-auto">
+            <h1
+              class="text-white text-2xl bg-custom-red py-14 px-3 rounded-2xl w-fit"
+            >
+              Track Order
+            </h1>
+          </div>
+          <div class="bg-custom-gray p-10 w-fit rounded-3xl z-0 mx-auto">
+            <a href="https://example.com">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?data=HelloWorld&size=150x150"
+                alt="QR Code"
+                class="hover:scale-110"
+            /></a>
+          </div>
+        </div>
       </section>
     </main>
 
     <web-footer></web-footer>
+    <script>
+      // Load the animation
+      var animation = bodymovin.loadAnimation({
+        container: document.getElementById("animation"),
+        renderer: "svg",
+        loop: false,
+        autoplay: true,
+        path: "/media/confirmation-animation.json", // Path to your Lottie JSON file,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid meet",
+        },
+        animationSpeed: 0.1,
+      });
+    </script>
   </body>
 </html>
