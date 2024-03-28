@@ -569,8 +569,10 @@ cardPaymentForm.addEventListener('input', validateAndToggleSubmit); // Re-valida
 
 submitButton.addEventListener('click',()=>{
     if(validateCardPaymentForm()){
-        onCheckout();
+       if( onCheckout()){
         window.location.href='/pages/buyer/landingPage/landingPage.html';
+    }else {
+        alert('please add items to your cart')}
     }
 })
 // cardPaymentForm.appendChild();
@@ -603,8 +605,11 @@ const renderBalancePayment=()=>{
 
     submitButton.addEventListener('click',()=>{
         if(validateBalancePayment()){
-            onCheckout();
+            if(onCheckout()){
             window.location.href='/pages/buyer/landingPage/landingPage.html';
+            }else {
+            alert('please add items to your cart')}
+
         }});
 
 
@@ -792,7 +797,9 @@ if(checkoutStepNumber===2 || addAddress){
 
 
 const onCheckout=()=>{
-
+    console.log('checking out', cartItems.length)
+    if(cartItems.length===0)
+    return false;
     const products=JSON.parse(localStorage.getItem('products')) || [];
     cartItems.forEach(cartItem => {
         const product = products.find(p => p.id === cartItem.product.id);
@@ -833,7 +840,8 @@ if(paymentMethod===1){
     users.find(user=>user.id===currentUser.id).balance=currentUser.balance;
     localStorage.setItem('users',JSON.stringify(users));
 }
-    
+return true;
+   
 }
 
 
