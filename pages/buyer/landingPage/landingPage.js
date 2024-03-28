@@ -1,7 +1,39 @@
 document.addEventListener("DOMContentLoaded", async() => {
 
 let products = [];
+const getProducts = async () => {
+const productsData = localStorage.getItem('products');
+        if (!productsData) {
+            const response = await fetch('/data/products.json');
+  
+            if (response.ok) {
+                const responseData = await response.json();
+                if (Array.isArray(responseData)) {
+                    localStorage.setItem('products', JSON.stringify(responseData));
+                    products = responseData;
+                    // console.log('products data:', users);
+                } else {
+                    console.error('Invalid products data format:', responseData);
+                }
+            } else {
+                console.error('Failed to fetch products data');
+            }
+        } else {
+            products = JSON.parse(productsData);
+            console.log('products data:', products);
+        }}
+
+
+        
 products=JSON.parse(localStorage.getItem('products'));
+
+if(products.length===0){
+    await getProducts();
+    products=JSON.parse(localStorage.getItem('products'));
+
+}
+
+
 let currentProduct=JSON.parse(localStorage.getItem('currentProduct'));
 let currentUser=JSON.parse(localStorage.getItem('currentUser'));
 
@@ -131,7 +163,7 @@ const renderProducts=(divId, filter)=>{
         filteredProduct=products.filter(product=>product.stock>0 && product.category==='smartphones');
     }
     // const displayBestSelling= []
-    const displaySize= filteredProduct.length>8?7:filteredProduct.length;
+    const displaySize= filteredProduct.length>8?8:filteredProduct.length;
         // console.log(displaySize);
 
     for (let i = 0; i < displaySize; i++) {

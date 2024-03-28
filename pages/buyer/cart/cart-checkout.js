@@ -14,6 +14,7 @@ console.log(currentUser.firstName)
 // select.setAttribute("name",currentUser.firstName)
 let checkoutStepNumber=1;
 let paymentMethod=1;
+let addAddress=false;
 let selectedAddress=null;
 
 const renderCartItem= (cartItem)=>{
@@ -205,19 +206,23 @@ const renderShippingInfo=()=>{
 const shippingInfoDiv=document.createElement('div');
 // shippingInfoDiv.className='relative h-full'
 if(currentUser.id!==-1){
-    console.log(currentUser,'user id')
-if(shippingAddresses.length!==0){
     
-shippingAddresses.forEach(address=>{
-    shippingInfoDiv.appendChild(renderShippingAddress(address));
-})}else{
-    const noAddresses=document.createElement('p');
-    noAddresses.textContent="you don't have any saved addresses, please add one to continue";
-    noAddresses.className="text-xl font-bold text-center mx-auto mt-20 my-auto text-white text-opacity-75";
-    // shippingInfoDiv.className='h-full'
-    shippingInfoDiv.appendChild(noAddresses);
+        console.log(currentUser,'user id')
+    if(shippingAddresses.length!==0){
 
-}}else{
+    shippingAddresses.forEach(address=>{
+        shippingInfoDiv.appendChild(renderShippingAddress(address));
+    })}else{
+        const noAddresses=document.createElement('p');
+        noAddresses.textContent="you don't have any saved addresses, please add one to continue";
+        noAddresses.className="text-xl font-bold text-center mx-auto mt-20 my-auto text-white text-opacity-75";
+        // shippingInfoDiv.className='h-full'
+        shippingInfoDiv.appendChild(noAddresses);
+
+    }
+
+
+}else{
 
     const noAddresses=document.createElement('p');
     noAddresses.textContent="Please Login to continue";
@@ -234,16 +239,27 @@ loginButton.href='/index.html';
 
 
 }
+if(addAddress){
+    shippingInfoDiv.replaceChildren();
+    shippingInfoDiv.appendChild(renderAddAddress());
+
+}
+
 
 const addAddressButton=document.createElement('img');
 addAddressButton.src='/media/add-address-btn.svg';
 addAddressButton.className='h-20 w-20 my-auto mx-auto cursor-pointer hover:scale-105 absolute bottom-0 right-0 mb-4 ml-4 px-4 py-2'
 addAddressButton.addEventListener('click',()=>{
-    shippingInfoDiv.replaceChildren();
-    shippingInfoDiv.appendChild(renderAddAddress());
-})
+    // shippingInfoDiv.replaceChildren();
+    // shippingInfoDiv.appendChild(renderAddAddress());
+    addAddress=true;
+    renderCheckout();
 
-shippingInfoDiv.appendChild(addAddressButton);
+})
+if(!addAddress){
+    shippingInfoDiv.appendChild(addAddressButton);
+}
+
 
 return shippingInfoDiv;
 
@@ -261,7 +277,7 @@ addressNicknameDiv.className='flex flex-col gap-1 ';
 const addressNicknameLabel=document.createElement('label');
 
 const addressNickname=document.createElement('input');
-addressNickname.id='addressNickname';
+addressNickname.id='address-nickname';
 addressNickname.placeholder='Home';
 addressNickname.className='input  placeholder-white placeholder-opacity-50 outline-none  focus:outline-none focus:border-none  required';
 addressNicknameLabel.className='text-sm font-semibold  ';
@@ -301,11 +317,11 @@ stateDiv.className='flex flex-col gap-1 ';
 const stateLabel=document.createElement('label');
 
 const state=document.createElement('input');
-state.id='street-address';
+state.id='state';
 state.placeholder='Florida';
 state.className='input  placeholder-white  placeholder-opacity-50 outline-none  focus:outline-none focus:border-none  ';
 stateLabel.className='text-sm  font-semibold';
-stateLabel.textContent='Street Address';
+stateLabel.textContent='State';
 stateContainer.appendChild(state);
 stateContainer.className='border-b border-white grid grid-cols-1 ';
 stateDiv.appendChild(stateLabel);
@@ -372,32 +388,73 @@ addAddressForm.appendChild(stateDiv);
 addAddressForm.appendChild(zipAndCityDiv);
 
 const submitButton=document.createElement('button');
-submitButton.textContent='Add Address';
+submitButton.textContent='Please fill in all fields correctly';
 submitButton.className='bg-white text-custom-red font-semibold py-2 rounded-3xl hover:bg-opacity-90 disabled:bg-[#F36A6B] mt-10';
-submitButton.disabled = false; // Initially disable the button
+submitButton.disabled = true; // Initially disable the button
 
 
-// const validateAndToggleAdd = () => {
-//     const isValid = validateCardPaymentForm();
-//     submitButton.disabled = !isValid; // Disable button if form is invalid
-//     if(isValid===true){
-// submitButton.textContent='Pay';        
-//     }
-// };
-// addAddressForm.addEventListener('input', validateAndToggleAdd); // Re-validate on input change
+const validateAndToggleAdd = () => {
+    const isValid = validateAddAddressForm();
+    console.log(isValid);
+    submitButton.disabled = !isValid; // Disable button if form is invalid
+    if(isValid===true){
+submitButton.textContent='Add Address';        
+    }
+};
+addAddressForm.addEventListener('input', validateAndToggleAdd); // Re-validate on input change
 
 submitButton.addEventListener('click',()=>{
-    // if(validateCardPaymentForm()){
-       
-    // }
-    onCheckout();
-    window.location.href='/pages/buyer/landingPage/landingPage.html';
+    if(validateAddAddressForm()){
+        // onCheckout();
+
+        const address={
+            name:document.getElementById('address-nickname').value,
+            address:{
+                address:document.getElementById('street-address').value,
+                city:document.getElementById('city').value,
+                state:document.getElementById('state').value,
+            postalCode:document.getElementById('zip').value,
+                
+            },
+            
+        }
+        currentUser.addresses.push(address);
+        const users=JSON.parse(localStorage.getItem('user'));
+        const userIndex=users.findIndex(user=>user.id===currentUser.id);
+        users[userIndex]=currentUser;
+        localStorage.setItem('currentUser',JSON.stringify(currentUser));
+        localStorage.setItem('user',JSON.stringify(users));
+
+        addAddress=false;
+        renderCheckout();
+    }
+    
 })
 addAddressForm.appendChild(submitButton);
+
+
+
+
 
 return addAddressForm;
 }
 
+const validateAddAddressForm = () => {
+    const addressNickname = document.getElementById('address-nickname').value.trim();
+    const streetAddress = document.getElementById('street-address').value.trim();
+    const state = document.getElementById('state').value.trim();
+    const zip = document.getElementById('zip').value.trim();
+    const city = document.getElementById('city').value.trim();
+  
+    // Check if any of the fields are empty
+    if (!addressNickname || !streetAddress || !state || !zip || !city) {
+      return false;
+    }
+  
+    // Add more specific validation if needed
+  
+    return true;
+  };
 
 
 const renderCardPayment=()=>{
@@ -715,21 +772,40 @@ backButton.src='/media/back-btn.svg';
 backButton.className='h-16 w-16 my-auto mx-auto cursor-pointer hover:scale-105 absolute top-0 right-0 mb-4 ml-4 px-4 py-2'
 
 backButton.addEventListener('click',()=>{
-checkoutStepNumber-=1;
+if(checkoutStepNumber===2){
+    checkoutStepNumber-=1;}else if(addAddress){
+        addAddress=false;
+    
+    }
+
 renderCheckout();
 
 })
-
-if(checkoutStepNumber===2){
+console.log(addAddress)
+if(checkoutStepNumber===2 || addAddress){
     checkoutDiv.appendChild(backButton);
+    // checkoutDiv.appendChild(backButton);
+    // addAddress=false;
 }
 
 }
 
 
 const onCheckout=()=>{
-    
 
+    const products=JSON.parse(localStorage.getItem('products')) || [];
+    cartItems.forEach(cartItem => {
+        const product = products.find(p => p.id === cartItem.product.id);
+        if (product && product.stock >= cartItem.quantity) {
+          product.stock -= cartItem.quantity;
+        } else {
+          console.log(`Not enough quantity for product with ID ${cartItem.product.id}`);
+          alert(`Not enough quantity for product  ${cartItem.product.title}`);
+          return;
+
+        }
+      });
+        localStorage.setItem('products', JSON.stringify(products));
       const purchaseDeals = [];
       let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
       const groupedItems = Object.groupBy(cartItems, (item) => item.product.seller.id);
