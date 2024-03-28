@@ -2465,6 +2465,14 @@ html:has(.drawer-toggle:checked) {
   margin: auto;
 }
 
+.m-1 {
+  margin: 0.25rem;
+}
+
+.m-2 {
+  margin: 0.5rem;
+}
+
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -3232,6 +3240,10 @@ html:has(.drawer-toggle:checked) {
 
 .border-b-\[\.01rem\] {
   border-bottom-width: .01rem;
+}
+
+.border-t-2 {
+  border-top-width: 2px;
 }
 
 .border-solid {

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/dist/output.css" />
+    <script type="module" src="../../../pages/components/footer.js"></script>
+    <title>Order Confirmed</title>
+  </head>
+  <body>
+    <main>
+      <img src="/media/logo.svg" alt="" />
+      <section id="confirmation"></section>
+      <section id="status" class="grid grid-cols-4">
+        <div class="col-span-3 border border-t-2">
+          <div id="status-preparing" class="flex items-center">
+            <img src="/media/status-red.svg" alt="" class="m-2" />
+            <img src="/media/preparing-order.svg" alt="" class="m-2" />
+            <div class="m-2">
+              <h1>Almost There!</h1>
+              <p>Preparing Order</p>
+            </div>
+          </div>
+        </div>
+        <div class=""></div>
+      </section>
+    </main>
+
+    <web-footer></web-footer>
+  </body>
+</html>
