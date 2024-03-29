@@ -55,7 +55,7 @@ overlay.classList.add('fixed', 'top-0', 'left-0', 'w-full', 'h-full', 'hidden', 
 
 const overlayContent = document.createElement('div');
 overlayContent.setAttribute('id', 'overlayContent');
-overlayContent.classList.add('bg-white', 'p-4', 'm-auto', 'mt-20', 'w-4/4', 'max-w-4xl', 'rounded-md', 'overflow-auto');
+overlayContent.classList.add('bg-white', 'p-4', 'm-auto', 'mt-20', 'w-4/4', 'max-w-4xl', 'rounded-md', 'overflow-auto',  'shadow-2xl');
 
 overlay.appendChild(overlayContent);
 const parentDiv = document.querySelector("#search-dropdown");

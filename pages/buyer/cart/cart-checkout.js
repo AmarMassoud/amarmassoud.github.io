@@ -26,7 +26,7 @@ const renderCartItem= (cartItem)=>{
 
 
     const productDetailsDiv=document.createElement('div');
-    productDetailsDiv.className='col-start-1 col-end-6 flex gap-10  items-center wrap '
+    productDetailsDiv.className='col-start-1 col-end-6 flex gap-10  items-center wrap -sm:flex -sm:flex-col  -sm:items-start -sm:justify-center -sm:gap-2 -sm:col-start-1 -sm:col-end-5'
     const productName=document.createElement('p');
     productName.textContent=cartItem.product.title
     productName.className='text-lg font-semibold';
@@ -102,7 +102,7 @@ const renderCartItem= (cartItem)=>{
 
     const totalPrice= document.createElement('p');
     totalPrice.textContent='$' + cartItem.product.price*cartItem.quantity;
-    totalPrice.className="text-lg font-semibold col-span-2 text-center m-auto "
+    totalPrice.className="text-lg font-semibold col-span-2 text-center m-auto -sm:col-start-7 -sm:col-end-9"
     const removeButton=document.createElement('img');
     removeButton.src="/media/deleteXIcon.svg";
     removeButton.className="h-5 w-5 cursor-pointer  m-auto hover:scale-110"

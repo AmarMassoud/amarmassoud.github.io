@@ -14,8 +14,12 @@
       src="https://kit.fontawesome.com/056ea1a590.js"
       crossorigin="anonymous"
     ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <title>Document</title>
+    <title>MarketHub</title>
   </head>
   <body>
     <nav>
@@ -31,13 +35,10 @@
             height="50"
           />
         </a>
-        <div
-          id="nav-buttons"
-          class="flex flex-row justify-between w-1/2 max-w-50"
-        >
+        <div id="nav-buttons" class="grid grid-cols-4 w-[50rem]">
           <a
             href="/pages/buyer/landingPage/landingPage.html"
-            class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
+            class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2 text-center"
             >Home</a
           >
           <!-- <a
@@ -45,8 +46,8 @@
             class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
             >Categories</a
           > -->
-          <div id="search-dropdown" class="relative">
-            <label class="input input-bordered w-screen  max-w-4xl flex items-center gap-2">
+          <div id="search-dropdown" class="relative col-span-2">
+            <label class="input input-bordered w-full flex items-center gap-4">
               <input
                 type="text"
                 class="grow"
@@ -69,12 +70,15 @@
           </div>
           <a
             href="/pages/buyer/cart/cart-checkout.html"
-            class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
+            class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2 text-center"
             >Cart</a
           >
         </div>
         <div id="nav-end" class="flex flex-row items-center">
-          <a href="../../profile/profile.html" class="flex items-center justify-center">
+          <a
+            href="../../profile/profile.html"
+            class="flex items-center justify-center"
+          >
             <div
               id="profile-icon"
               class="ml-4 w-10 h-10 flex items-center justify-center rounded-full bg-red-500"
@@ -115,7 +119,7 @@
         <h1 class="text-4xl font-bold">Our Best Selling</h1>
         <div
           id="best-selling-products"
-          class="grid grid-cols-4 justify-center gap-4 wrap my-10"
+          class="flex flex-wrap justify-center gap-4 wrap my-10"
         ></div>
       </section>
       <section id="smartphones-category" class="my-10">
@@ -131,11 +135,14 @@
           <h1 class="text-4xl font-bold">Smart Phones</h1>
           <div
             id="smartphones-products"
-            class="grid grid-cols-4 justify-center gap-4 wrap my-10"
+            class="flex flex-wrap justify-center gap-4 wrap my-10"
           ></div>
         </div>
       </section>
-      <section id="mobile-app" class="grid grid-cols-4">
+      <section
+        id="mobile-app"
+        class="grid grid-cols-4 -xl:flex -xl:flex-col -xl:gap-10"
+      >
         <div class="mockup-phone w-fit">
           <div class="camera"></div>
           <div class="display">
@@ -153,13 +160,13 @@
           class="col-span-3 flex justify-around items-center flex-col h-full"
         >
           <!-- <div class="flex"> -->
-          <img src="/media/app-logo.svg" alt="" class="w-96" />
+          <img src="/media/app-logo.svg" alt="" class="w-96 -xl:hidden" />
           <!-- <h1 class="text-4xl">App</h1> -->
           <!-- </div> -->
           <p class="text-3xl mt-4">
             Download our mobile app to get the best shopping experience!!!
           </p>
-          <div class="grid grid-cols-2 place-items-center w-full">
+          <div class="grid grid-cols-2 place-items-center w-full -xl:mt-10">
             <a
               href="https://apps.apple.com/mm/app/market-hub-business-center/id6452802796"
               class=""

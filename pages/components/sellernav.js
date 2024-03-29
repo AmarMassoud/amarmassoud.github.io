@@ -30,7 +30,8 @@ class SellerNav extends LitElement {
     #nav-buttons a:hover {
         // font-size: 1.2rem;
         font-weight: 600;
-        background: #F0F0F0;      
+        background: #F20E0F;     
+        color: white; 
     border-radius: 0.5rem;
     }
     #nav-buttons {
@@ -90,7 +91,7 @@ class SellerNav extends LitElement {
   <div  class="seller-navbar">
   <a href="/"><img src="../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
-      <a href="../seller/seller-dashboard.html">Dashboard</a>
+      <a href="../seller/seller-dashboard.html" class="hover:bg-custom-red">Dashboard</a>
       <a href="../seller/sellerProducts.html">Products</a>
       <a href="../seller/addProduct.html" id="add" >Add Item</a>
   </div>

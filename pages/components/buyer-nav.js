@@ -28,7 +28,8 @@ class BuyerNav extends LitElement {
     #nav-buttons a:hover {
         // font-size: 1.2rem;
         font-weight: 600;
-        background: #F0F0F0;      
+        background: #F20E0F;     
+        color: white; 
     border-radius: 0.5rem;
     }
     #nav-buttons {

@@ -9,13 +9,13 @@
     background-size: 2.5rem 2.5rem;
     background-position: center center;
   }
-  @media screen and (max-width: 1208px) {
+  @media screen and (max-width: 1280px) {
     :root{
       font-size: 12px;
     }
   }
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 768px) {
     :root{
-      font-size: 12px;
+      font-size: 10px;
     }
   }

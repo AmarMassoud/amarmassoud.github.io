@@ -77,54 +77,59 @@ await getUsers(); //
 
 localStorage.removeItem('currentProduct')
     comments.forEach(comment=>{comment.rating=Math.floor(Math.random() * 5) + 1;});
-    // localStorage.setItem('comments', JSON.stringify(comments));
-// // Loop through comments list
-// comments.forEach(comment => {
-//   // Filter users with the role BUYER
-//   const buyers = users.filter(user => user.role === "BUYER");
-  
-//   // Get a random index for the buyers list
-//   const randomIndex = Math.floor(Math.random() * buyers.length);
-  
-//   // Assign a random buyer to the comment
-//   comment.user = buyers[randomIndex];
-  
-//   // Add a random product id from 0 to 29
-//   comment.productId = Math.floor(Math.random() * 30);
-  
-//   // Generate a random timestamp for yesterday
-//   const randomOffsetSeconds = Math.floor(Math.random() * 86400); // Random number of seconds between 0 and 86400 (24 hours)
-//   const yesterday = new Date(Date.now() - 86400 * 1000); // Yesterday's date
-//   const randomTimestamp = new Date(yesterday.getTime() + randomOffsetSeconds * 1000); // Random timestamp between yesterday and now
-//   comment.timestamp = randomTimestamp.toISOString(); // Convert timestamp to string
-// });
-
-// Sort comments by timestamp in descending order (newest first)
+ 
 comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-// //     console.log('Users with IDs:', users[15]);
-//   // Convert the list to JSON format
-// const jsonData = JSON.stringify(comments, null, 2);
-
-// // Create a Blob object from the JSON data
-// const blob = new Blob([jsonData], { type: 'application/json' });
-
-// // Create a download link
-// const url = URL.createObjectURL(blob);
-// const a = document.createElement('a');
-// a.href = url;
-// a.download = 'users.json';
-// a.textContent = 'Download users.json';
-// document.body.appendChild(a);
-
-
-
-
-
-
-
-
 const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+
+const getTotalSales = () => {
+  console.log('purchases',JSON.parse(localStorage.getItem('purchasedItems')))
+  const purchases= JSON.parse(localStorage.getItem('purchasedItems'))
+  const userPurchase= purchases.filter(purchase=> purchase.deals.some(deal=>deal.seller.id===currentUser.id));
+  const userDeals = [];
+
+  userPurchase.forEach((purchase) => {
+  purchase.deals.forEach((deal) => {
+  
+    if (deal.seller.id === currentUser.id)
+    userDeals.push(deal);
+  });
+})
+
+  console.log('ID',currentUser.id)
+  // console.log('deals',deals)
+  console.log('deal',userDeals)
+
+  const totalPrice = userDeals.reduce((acc, deal) => {
+    return acc + deal.items.reduce((itemAcc, item) => {
+      return itemAcc + (item.product.price * item.quantity);
+    }, 0);
+  }, 0);
+  
+  return totalPrice;
+}
+
+
+const getTotalCustomers = () => {
+  const purchases = JSON.parse(localStorage.getItem('purchasedItems'));
+  const customerIds = new Set();
+
+  purchases.forEach((purchase) => {
+    purchase.deals.forEach((deal) => {
+      if (deal.seller.id === currentUser.id) {
+        customerIds.add(deal.customer.id);
+      }
+    });
+  });
+
+  return customerIds.size;
+}
+
+console.log(getTotalCustomers())
+
+
+
+
+
   const select = document.getElementById("sellerNav");
   console.log(currentUser.firstName)
     select.setAttribute("name",currentUser.firstName)
@@ -193,19 +198,21 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
 
     const totalSales = document.createElement("h3");
     totalSales.classList.add("text-5xl", "font-bold", "ms-3");
-    totalSales.textContent = 1000;
+    totalSales.textContent =  '$'+ getTotalSales() ;
 
     totalSalesDiv.appendChild(totalSales);
     
   };
 
   const totalCustomers=() =>{
+  
 
+    // const purchases= JSON.parse(localStorage.getItem('purchases')).find(purchase=>purchase.sellerId===currentUser.id);
     const totalCustomersDiv = document.querySelector("#total-customers-div");
 
     const totalCustomers=document.createElement("h3");
     totalCustomers.classList.add("text-5xl", "font-bold", "ms-3");
-    totalCustomers.textContent=105;
+    totalCustomers.textContent=getTotalCustomers();
 
     totalCustomersDiv.appendChild(totalCustomers);
 

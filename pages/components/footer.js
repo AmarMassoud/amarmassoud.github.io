@@ -43,6 +43,7 @@ class Footer1 extends LitElement {
       }
   
       div {
+        
         margin-top: 4rem;
         margin-bottom: 3rem;
         border-top: .05rem solid #888;
