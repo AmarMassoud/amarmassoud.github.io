@@ -3,7 +3,7 @@ const withMT = require("@material-tailwind/html/utils/withMT");
 /** @type {import('tailwindcss').Config} */
 
 module.exports =withMT( {
-  content: ["./pages/**/*.{html,js}"],
+  content: ["./pages/**/*.{html,js}", "/index.html"],
   theme: {
     extend: {
       colors: {
