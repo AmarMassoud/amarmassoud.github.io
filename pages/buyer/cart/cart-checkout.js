@@ -206,7 +206,7 @@ const renderShippingInfo=()=>{
 const shippingInfoDiv=document.createElement('div');
 // shippingInfoDiv.className='relative h-full'
 if(currentUser.id!==-1){
-    
+
         console.log(currentUser,'user id')
     if(shippingAddresses.length!==0){
 
@@ -256,7 +256,7 @@ addAddressButton.addEventListener('click',()=>{
     renderCheckout();
 
 })
-if(!addAddress){
+if(!addAddress && currentUser.id!==-1){
     shippingInfoDiv.appendChild(addAddressButton);
 }
 
@@ -570,7 +570,7 @@ cardPaymentForm.addEventListener('input', validateAndToggleSubmit); // Re-valida
 submitButton.addEventListener('click',()=>{
     if(validateCardPaymentForm()){
        if( onCheckout()){
-        window.location.href='/pages/buyer/landingPage/landingPage.html';
+        window.location.href='/pages/buyer/cart/confirmation.html';
     }else {
         alert('please add items to your cart')}
     }
@@ -606,7 +606,7 @@ const renderBalancePayment=()=>{
     submitButton.addEventListener('click',()=>{
         if(validateBalancePayment()){
             if(onCheckout()){
-            window.location.href='/pages/buyer/landingPage/landingPage.html';
+            window.location.href='/pages/buyer/cart/confirmation.html';
             }else {
             alert('please add items to your cart')}
 

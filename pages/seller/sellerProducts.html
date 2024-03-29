@@ -46,28 +46,69 @@
 
       <!-- <button class="btn bg-custom-gray">Save</button> -->
     </section>
-    <section id="products" class="ms-10">
-      <div
-        id="products-header"
-        class="grid grid-cols-10 border-b-2 border-cusotm-gray-500 pb-5 gap-8"
-      >
-        <p
-          onclick=""
-          class="cursor-pointer col-span-2 text-center flex justify-center items-center"
+    <div class="">
+      <section id="products" class="ms-10 -lg:overflow-x-scroll">
+        <div
+          id="products-header"
+          class="grid grid-cols-10 border-b-2 border-cusotm-gray-500 pb-5 gap-8"
         >
-          Product
-        </p>
+          <p
+            onclick=""
+            class="cursor-pointer col-span-2 text-center flex justify-center items-center hover:bg-custom-red hover:text-white rounded-md text-center mx-10"
+            id="product-header"
+          >
+            Product
+          </p>
 
-        <p onclick="" class="cursor-pointer col-span-1">Price</p>
-        <p onclick="" class="cursor-pointer col-span-1">Stock</p>
-        <p onclick="" class="cursor-pointer col-span-1">Earnings</p>
-        <p onclick="" class="cursor-pointer col-span-1">Sales</p>
-        <p onclick="" class="cursor-pointer col-span-1">Category</p>
-        <p onclick="" class="cursor-pointer col-span-1">Rating</p>
-        <p onclick="" class="cursor-pointer col-span-2">Actions</p>
-      </div>
-      <div id="products-table" class=""></div>
-    </section>
+          <p
+            onclick=""
+            class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            id="price-header"
+          >
+            Price
+          </p>
+          <p
+            onclick=""
+            class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            id="stock-header"
+          >
+            Stock
+          </p>
+          <p
+            onclick=""
+            class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            id="earnings-header"
+          >
+            Earnings
+          </p>
+          <p
+            onclick=""
+            class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            id="sales-header"
+          >
+            Sales
+          </p>
+          <p
+            onclick=""
+            class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            id="category-header"
+          >
+            Category
+          </p>
+          <p
+            onclick=""
+            class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            id="rating-header"
+          >
+            Rating
+          </p>
+          <p onclick="" class="cursor-pointer col-span-2 text-center">
+            Actions
+          </p>
+        </div>
+        <div id="products-table" class="-lg:overflow-x-scroll"></div>
+      </section>
+    </div>
     <footer>
       <web-footer></web-footer>
     </footer>

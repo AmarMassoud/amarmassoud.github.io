@@ -58,6 +58,7 @@ const onEdit=(product) =>{
     document.querySelector("#category").value=product.category;
     document.querySelector("#discount-percentage").value=product.discountPercentage;
     images=product.images;
+    document.querySelector("#submit-btn").value='Update Product';
     
     // onDelete(product);
     previewImages();
@@ -68,59 +69,13 @@ if (productId){
 
 
 
-    
-// function previewImages() {
-//     const maxImagesToShow = 2;
-
-//     // Clear the existing preview
-//     preview.innerHTML = '';
-//     preview.appendChild(addImageBtn);
-//     let imagesToShow = images.slice(0, maxImagesToShow);
-//     let remainingImagesCount = Math.max(images.length - maxImagesToShow, 0);
-  
-//     imagesToShow.forEach((file, index) => {
-//         let count=0;
-//         count+=1
-//         console.log(count);
-//       const reader = new FileReader();
-  
-//       reader.onload = function(e) {
-//         const imgSrc = e.target.result;
-//         const img = document.createElement('img');
-//         img.src = imgSrc;
-//         img.style.width = '150px';
-//         img.style.marginRight = '10px';
-//         img.addEventListener('click', function(){
-//             deleteImage(index)
-//         });
-//         preview.appendChild(img);
-        
-//         if (index === imagesToShow.length - 1 && remainingImagesCount > 0) {
-//           const remainingImagesDiv = document.createElement('div');
-//           remainingImagesDiv.className = 'bg-gray-500 shadow-md w-40 h-40 grid grid-cols place-items-center rounded-xl';
-//           const remainingImagesNo = document.createElement('p');
-//           remainingImagesNo.className = 'font-bold text-lg ';
-//           remainingImagesNo.textContent = `+${remainingImagesCount} `;
-//             remainingImagesDiv.appendChild(remainingImagesNo);
-//           preview.appendChild(remainingImagesDiv);
-//         }
-//       };
-  
-//       reader.readAsDataURL(file);
-//     });
-//   }
-  
-
-
-
-
 function previewImages() {
-    const maxImagesToShow = 2;
+    const maxImagesToShow = 3;
 
     // Clear the existing preview
     preview.innerHTML = '';
     let imagesToShow = images.slice(0, maxImagesToShow);
-    let remainingImagesCount = Math.max(images.length - maxImagesToShow, 0);
+    let remainingImagesCount = Math.max(images.length - maxImagesToShow, 0) ;
     console.log(imagesToShow);
     imagesToShow.forEach((url, index) => {
         // let count=0;
@@ -132,17 +87,20 @@ function previewImages() {
         img.src = imgSrc;
         img.style.width = '150px';
         img.style.marginRight = '10px';
+        img.classList.add('hover:scale-110', 'hover:cursor-pointer');
+
         img.addEventListener('click', function(){
             deleteImage(index)
         });
         preview.appendChild(img);
         
         if (index === imagesToShow.length - 1 && remainingImagesCount > 0) {
+          preview.removeChild((preview.lastChild))
           const remainingImagesDiv = document.createElement('div');
           remainingImagesDiv.className = 'bg-gray-500 shadow-md w-40 h-40 grid grid-cols place-items-center rounded-xl';
           const remainingImagesNo = document.createElement('p');
           remainingImagesNo.className = 'font-bold text-lg ';
-          remainingImagesNo.textContent = `+${remainingImagesCount} `;
+          remainingImagesNo.textContent = `+${remainingImagesCount +1}  `;
             remainingImagesDiv.appendChild(remainingImagesNo);
           preview.appendChild(remainingImagesDiv);
         }
@@ -321,21 +279,23 @@ if (categoryRequest!==''){
 }
 
 localStorage.removeItem('currentProduct');
+window.location.href = '/pages/seller/sellerProducts.html';
+
 
 }
+const handleSubmit = async (event) => {
+  const form= document.querySelector('#add-product');
+      event.preventDefault(); // Prevent default form submission
 
+    if (form.checkValidity()) {
+    await onSave()
+
+}
+}
     
 const submitBtn= document.querySelector("#submit-btn");
-submitBtn.addEventListener('click', function(){
-    const form= document.querySelector('#add-product');
-    if (form.checkValidity()) {
-    onSave()
-    window.location.href = './sellerProducts.html';
-}
-    // window.location.href = '../seller/seller-dashboard.html';
-    
+submitBtn.addEventListener('click', handleSubmit);
 
-});
 previewImages();
 // saveImages();
 

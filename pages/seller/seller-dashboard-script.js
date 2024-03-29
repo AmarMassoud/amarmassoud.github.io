@@ -250,7 +250,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     commentP.textContent = comment.body;
 
     const moreDetails = document.createElement("button");
-    moreDetails.classList.add("text-bs", "font-semibold", "text-black-500", "bg-white","py-2", "px-10","rounded-xl", "hover:text-red-700",   "mt-5", "text-nowrap");
+    moreDetails.className = "text-bs font-semibold text-black-500 bg-white py-2 px-10 rounded-xl hover:text-white  hover:bg-custom-red mt-5 text-nowrap ";
     moreDetails.textContent = 'More Details';
 
 

@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/dist/output.css" />
     <script type="module" src="../../../pages/components/footer.js"></script>
+    <script type="module" src="../../components/buyer-nav.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.9/lottie.min.js"></script>
 
     <title>Order Confirmed</title>
   </head>
   <body>
-    <main>
-      <img src="/media/logo.svg" alt="" />
+    <nav>
+      <buyer-nav name="Wardan"> </buyer-nav>
+    </nav>
+    <main class="mx-20">
       <section
         id="confirmation"
-        class="m-auto bg-custom-gray rounded-3xl mx-40 my-10"
+        class="m-auto bg-custom-gray rounded-3xl my-10 min-w-fit px-4"
       >
         <h1 class="text-5xl text-center pt-5 font-bold text-green-600">
           Order Confirmed!
@@ -37,7 +41,7 @@
               class="place-items-center"
             />
             <div class="m-2 col-start-3 col-end-11">
-              <h1 class="text-3xl">Almost There!</h1>
+              <h1 class="text-3xl font-bold">Almost There!</h1>
               <p>Preparing Order</p>
             </div>
           </div>
@@ -48,7 +52,7 @@
             <img src="/media/status-gray.svg" alt="" class="m-2 ms-4" />
             <img src="/media/truck-delivery.svg" alt="" class="col-span-1" />
             <div class="m-2 col-start-3 col-end-11">
-              <h1 class="text-3xl">Out For Delivery</h1>
+              <h1 class="text-3xl font-bold">Out For Delivery</h1>
               <p>Stay tuned</p>
             </div>
           </div>
@@ -63,7 +67,7 @@
               class="col-span-1 place-items-center"
             />
             <div class="m-2 col-start-3 col-end-11">
-              <h1 class="text-3xl">Delivered</h1>
+              <h1 class="text-3xl font-bold">Delivered</h1>
               <p>Order has been delivered</p>
             </div>
           </div>
@@ -100,7 +104,7 @@
         rendererSettings: {
           preserveAspectRatio: "xMidYMid meet",
         },
-        animationSpeed: 0.1,
+        animationSpeed: 0.001,
       });
     </script>
   </body>

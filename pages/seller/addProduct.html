@@ -21,7 +21,7 @@
         id="add-product"
         class="my-8 mx-16 bg-custom-gray rounded-3xl pt-10 pb-5 px-4 flex flex-col"
       >
-        <div class="grid grid-cols-2 gap-4 h-min">
+        <div class="grid grid-cols-2 gap-4 h-min -md:flex -md:flex-col">
           <div class="grid grid-rows-2">
             <div class="bg-white rounded-3xl px-8 py-4 w-full">
               <h3 class="text-2xl font-bold">General Information</h3>
@@ -50,7 +50,7 @@
                 ></textarea>
               </div>
             </div>
-            <div class="bg-white rounded-3xl px-8 py-4 w-full mt-16">
+            <div class="bg-white rounded-3xl px-8 py-4 w-full mt-16 -lg:mt-4">
               <h3 class="text-2xl font-bold">Pricing</h3>
               <div class="mt-7">
                 <label for="base-price" class="block mb-2 ms-1"
@@ -58,6 +58,7 @@
                 >
                 <input
                   type="number"
+                  step="0.01"
                   placeholder="price "
                   class="input w-full max-w-xs bg-custom-gray"
                   id="base-price"
@@ -72,6 +73,7 @@
                   >
                   <input
                     type="number"
+                    step="0.01"
                     placeholder="discount percentage "
                     class="input w-full max-w-xs bg-custom-gray"
                     id="discount-percentage"
@@ -98,11 +100,11 @@
             >
               <h3 class="text-2xl font-bold mb-4">Product Media</h3>
               <div
-                class="bg-custom-gray border-4 border-dashed border-slate-300 grid grid-cols-2 p-5 gap-4 place-items-center"
+                class="bg-custom-gray rounded-3xl border-4 border-dashed border-slate-300 grid grid-cols-2 p-5 gap-4 place-items-center"
                 id="preview"
               >
                 <label
-                  class="flex flex-col gap-[10px] cursor-pointer items-center justify-center border-[2px] border-[dashed] border-[#cacaca] bg-[rgba(255,_255,_255,_1)] p-6 rounded-[10px] [box-shadow:0px_48px_35px_-48px_rgba(0,0,0,0.1)]"
+                  class="flex flex-col hover:scale-110 gap-[10px] cursor-pointer items-center justify-center border-[2px] border-[dashed] border-[#cacaca] bg-[rgba(255,_255,_255,_1)] p-6 rounded-[10px] [box-shadow:0px_48px_35px_-48px_rgba(0,0,0,0.1)]"
                   for="file"
                   id="add-file"
                 >
@@ -140,7 +142,7 @@
                 <div id="even-image" class="grid grid-rows-2"></div> -->
               </div>
             </div>
-            <div class="bg-white rounded-3xl px-8 py-4 w-full mt-16">
+            <div class="bg-white rounded-3xl px-8 py-4 w-full mt-16 -lg:mt-4">
               <h3 class="text-2xl font-bold">Category</h3>
               <div class="mt-7 w-full">
                 <label for="category" class="block mb-2 ms-1">Category</label>
@@ -183,7 +185,7 @@
           <input
             type="submit"
             value="Add Product"
-            class="bg-custom-red text-white p-2 rounded-xl w-1/5 cursor-pointer hover:text-black"
+            class="bg-custom-red text-white p-2 rounded-xl w-1/5 min-w-fit cursor-pointer hover:scale-110 hover:opacity-90"
             id="submit-btn"
           />
         </div>
