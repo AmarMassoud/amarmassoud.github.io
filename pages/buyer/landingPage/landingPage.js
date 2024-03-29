@@ -47,39 +47,129 @@ navbar.setAttribute('name',currentUser? currentUser.firstName:"User");
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+const searchInput = document.querySelector('#search');
+
+const overlay = document.createElement('div');
+overlay.setAttribute('id', 'overlay');
+overlay.classList.add('fixed', 'top-0', 'left-0', 'w-full', 'h-full', 'hidden', 'z-50');
+
+const overlayContent = document.createElement('div');
+overlayContent.setAttribute('id', 'overlayContent');
+overlayContent.classList.add('bg-white', 'p-4', 'm-auto', 'mt-20', 'w-4/4', 'max-w-4xl', 'rounded-md', 'overflow-auto');
+
+overlay.appendChild(overlayContent);
+const parentDiv = document.querySelector("#search-dropdown");
+parentDiv.classList.add('grid', 'grid-cols-1');
+parentDiv.appendChild(overlay);
+
+function showOverlay(products) {
+    console.log(products)
+    overlayContent.innerHTML = '';
+    const productsAmount = products.length;
+    if (products.length > 0 && products.length <= 4) {
+        products.forEach(product => {
+            overlayContent.appendChild(renderSearchedProductCard(product));
+        });
+    } else if (products.length > 4) { 
+        const firstFourProducts = products.slice(0, 4);
+        firstFourProducts.forEach(product => {
+            overlayContent.appendChild(renderSearchedProductCard(product));
+        });
+
+        const viewAll = document.createElement('h1');
+        viewAll.textContent = `View all ${productsAmount} results`;
+        viewAll.className = 'text-center text-sm text-custom-red cursor-pointer';
+        viewAll.addEventListener('click', () => {
+            console.log(products)
+            localStorage.setItem("searchedProducts", JSON.stringify(products))
+            window.location.href = '/pages/buyer/search/searched-products.html';
+
+        });
+        overlayContent.appendChild(viewAll);
+    
+    
+    } else {
+        const noResults = document.createElement('div');
+        noResults.textContent = 'No results found.';
+        overlayContent.appendChild(noResults);
+    }
+
+    overlay.classList.remove('hidden');
+}
+
+function hideOverlay() {
+    overlay.classList.add('hidden');
+}
+
+function searchProducts(query) {
+    const products = JSON.parse(localStorage.getItem('products'));
+    let filteredProducts = products.filter(product => product.title.toLowerCase().includes(query.toLowerCase()));
 
 
-// const renderSearchedProducts=()=>{
-// const searchText= document.querySelector('#search');
-// const searchedProducts=products.filter(product=>product.title.toLowerCase().includes(searchText.value.toLowerCase()));
-// const searchDropDown= document.querySelector('#search-dropdown');
-// const select= document.createElement('select');
-// select.className='absolute top-full left-0 w-full border border-gray-300 bg-white rounded-b-md px-4 py-2'
-// searchDropDown.replaceChildren();
-// console.log(searchedProducts)
-// searchedProducts.forEach(product=>{
-//     const option=document.createElement('option');
-//     option.textContent=product.title;
-//     select.appendChild(option);
+    
+    return filteredProducts;
+}
 
-// })
-// searchDropDown.appendChild(select);
+searchInput.addEventListener('input', function () {
+    const query = this.value.trim();
 
-// searchText.addEventListener('change',()=>{
-// renderSearchedProducts();
-// })
+    if (query.length > 0) {
+        const searchResults = searchProducts(query);
+        showOverlay(searchResults);
+    } else {
+        hideOverlay();
+    }
+});
+
+const renderSearchedProductCard = (product) => {
+    const searchedProductDiv = document.createElement('div');
+    searchedProductDiv.id = 'searched-product-card';
+    searchedProductDiv.className = "flex p-4 border-b border-gray-200 hover:bg-gray-100 cursor-pointer";
+
+    const img = document.createElement('img');
+    img.src = product.thumbnail;
+    img.alt = product.title;
+    img.className = 'w-16 h-16 object-cover rounded-md';
+
+    const productInfo = document.createElement('div');
+    productInfo.className = 'flex flex-col ml-4';
+
+    const title = document.createElement('h3');
+    title.textContent = product.title;
+    title.className = 'text-lg font-semibold';
+
+    const description = document.createElement('p');
+    description.textContent = product.description;
+    description.className = 'text-sm text-gray-600';
+
+    productInfo.appendChild(title);
+    productInfo.appendChild(description);
+
+    searchedProductDiv.appendChild(img);
+    searchedProductDiv.appendChild(productInfo);
+
+    searchedProductDiv.addEventListener('click', () => {
+        localStorage.setItem('currentProduct', JSON.stringify(product));
+        window.location.href = '/pages/buyer/product-page/product-page.html';
 
 
-// }
-// renderSearchedProducts();
+    });
+
+    return searchedProductDiv;
+}
+
+document.addEventListener('scroll', (e) => {
+        hideOverlay();
+    
+});
 
 
 
-{/* <div class="toast">
-        <div class="alert alert-info bg-green-200">
-          <span>New message arrived.</span>
-        </div>
-      </div> */}
+
+
+
+
+
 
 const showToast=(message, color)=>{
     const toastContainer = document.getElementById('toast-container');

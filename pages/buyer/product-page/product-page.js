@@ -72,11 +72,11 @@ const renderProductDetails = () => {
 
     const producDetailsDiv= document.querySelector("#product-details");
     producDetailsDiv.replaceChildren();
-    producDetailsDiv.className = "w-full px-10 py-20 flex  " + (smallScreen ?"flex-col space-y-16": "flex-row justify-start space-x-32" );
+    producDetailsDiv.className = "w-full px-10 py-20 flex  " + (smallScreen ?"flex-col space-y-16": "flex-row justify-start space-x-32 items-center" );
 
 
     const imagesColumn=document.createElement("div")
-    imagesColumn.className="flex flex-col bg-custom-gray px-[5rem] py-[2.8rem] rounded-[1.5rem] content-center min-w-[32rem]";
+    imagesColumn.className="flex flex-col bg-custom-gray px-[5rem] py-[2.8rem] rounded-[1.5rem] content-center min-w-[32rem] h-fit ";
 
     const displayedImg= document.createElement("img");
     displayedImg.src=currentImage;
@@ -90,7 +90,7 @@ const renderProductDetails = () => {
     imageBackground.appendChild(displayedImg);
 
 
-    imagesDiv=document.createElement("div");
+    const imagesDiv=document.createElement("div");
     imagesDiv.className="flex flex-row justify-center w-full mt-10 h-[5rem] space-x-5";
     images.forEach((image) => {
         if(image != currentImage){
@@ -230,7 +230,7 @@ const renderProductDetails = () => {
 
     const addToCartButton=document.createElement("button");
     addToCartButton.textContent=(productInStock?'Add to Cart':"Out of Stock");
-    addToCartButton.className="rounded-xl text-xl  max-w-fit py-2 px-6  text-center font-bold border   " +(productInStock?'text-white bg-custom-red border-white hover:bg-red-600   transition-all duration-[ease]  ':" border-black bg-custom-gray text-black hover:cursor-default");
+    addToCartButton.className="rounded-xl text-xl  max-w-fit py-2 px-6  text-center font-bold border   " +(productInStock?'text-white bg-custom-red border-white hover:bg-red-600 hover:scale-110  transition-all duration-[ease]  ':" border-black bg-custom-gray text-black hover:cursor-default");
     addToCartButton.addEventListener("click",()=>{if(productInStock)addToCart(currentProduct,quantity=desiredQuanitiy)})
 
 

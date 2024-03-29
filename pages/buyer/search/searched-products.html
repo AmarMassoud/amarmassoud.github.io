@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="searched-products.js"></script>
+    <link rel="stylesheet" href="../../../dist/output.css" />
+
+
+</head>
+<body>
+
+    <nav>
+        <div
+          class="flex flex-row justify-between items-center p-4 border-b-1 border-gray-300 text-lg font-serif"
+        >
+          <a href="/pages/buyer/landingPage/landingPage.html">
+            <img
+              src="../../../media/logo.svg"
+              alt="Logo"
+              width="150"
+              height="50"
+            />
+          </a>
+          <div
+            id="nav-buttons"
+            class="flex flex-row justify-between w-1/2 max-w-30"
+          >
+            <a
+              href="/pages/buyer/landingPage/landingPage.html"
+              class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
+              >Home Screen</a
+            >
+      
+            <div id="search-dropdown" class="relative">
+              <label class="input input-bordered w-screen max-w-4xl flex items-center gap-2">
+                <input
+                  type="text"
+                  class="grow"
+                  placeholder="Search"
+                  id="search"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="w-4 h-4 opacity-70"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </label>
+            </div>
+            <a
+              href="/pages/buyer/cart/cart-checkout.html"
+              class="hover:font-semibold hover:bg-gray-200 rounded-md px-8 py-2"
+              >Cart</a
+            >
+          </div>
+          <div id="nav-end" class="flex flex-row items-center">
+            <a href="../../profile/profile.html" class="flex items-center justify-center">
+              <div
+                id="profile-icon"
+                class="ml-4 w-10 h-10 flex items-center justify-center rounded-full bg-red-500"
+              >
+                <h3 id="nav" class="text-white"></h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </nav>
+    
+
+      <main>
+        <div id="search-results" class="flex flex-col">
+            <h1 class="text-4xl font-semibold text-center mb-20 m-8">Search results</h1>
+
+            
+
+            <div id="search-container" class="grid grid-cols-10 justify-between  -md:flex -md:flex-col">
+                <div id="filters" class="bg-custom-gray p-8 min-h-screen max-h-full col-span-2 -md:hidden ">
+                    <h1 class="text-2xl font-semibold text-center mb-4">Filters</h1>
+                    
+                </div>
+
+            <div id="test" class="col-span-8">
+                <div id="sort" class=" w-full bg-custom-gray p-2 mb-16 flex justify-between gap-20 ">
+                    <h1 id="sort-products" class="my-auto"></h1>    
+                    <div class="dropdown">
+                        <div tabindex="0" role="button" class="btn m-1 bg-white hover:bg-white">
+                        <p id="sort-by">Sort by:</p>    
+                        <img src="/media/chevron-down.svg">
+                        
+                        </div>
+        
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box">
+                          <li id="title" class="hover:scale-110 hover:bg-custom-gray"><a>Title: A-Z</a></li>
+                          <li id="title-reverse" class="hover:scale-110 hover:bg-custom-gray"><a>Title: Z-A</a></li>
+                          <li id="price" class="hover:scale-110 hover:bg-custom-gray"><a>Price: High to low</a></li>
+                          <li id="price-reverse" class="hover:scale-110 hover:bg-custom-gray"><a>Price: Low to high</a></li>
+                          <li id="rating" class="hover:scale-110 hover:bg-custom-gray"><a>Rating: High to Low</a></li>
+                          <li id="rating-reverse" class="hover:scale-110 hover:bg-custom-gray"><a>Rating: Low to High</a></li>
+                        </ul>
+                      </div>
+                    
+                    </div>
+                    <div id="products" class="flex gap-20 flex-wrap justify-center ">
+
+                    </div>
+            </div>
+        
+        </div>
+        
+
+
+
+
+
+        </div>
+
+
+
+      </main>
+
+
+
+
+      <div id="toast-container" class="fixed bottom-4 right-4 z-50 hidden">
+        <div
+          class="bg-gray-100 text-gray-900 px-4 py-2 rounded-md shadow-md"
+          id="toast-alert"
+        >
+          New message arrived.
+        </div>
+      </div>
+</body>
+</html>
