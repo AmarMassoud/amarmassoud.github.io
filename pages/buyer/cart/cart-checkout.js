@@ -23,7 +23,7 @@ const renderCartItem= (cartItem)=>{
 
     const itemDiv= document.createElement('div');
     itemDiv.className='grid grid-cols-10  border-b-2  border-gray-300 py-5 ';
-    const productInStock=cartItem.product.stock>1;
+    const productInStock=cartItem.product.stock>=1;
 
 
     const productDetailsDiv=document.createElement('div');
