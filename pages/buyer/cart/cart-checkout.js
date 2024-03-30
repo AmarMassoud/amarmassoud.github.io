@@ -829,6 +829,7 @@ const purchase={
    deals: purchaseDeals,
    totalPrice: cartItems.reduce((acc,item)=>acc+item.product.price*item.quantity,0),
    timeStamp: new Date(), 
+   id: purchasedItems.length+1
 }
 purchasedItems.push(purchase);
     localStorage.setItem('purchasedItems',JSON.stringify(purchasedItems));
