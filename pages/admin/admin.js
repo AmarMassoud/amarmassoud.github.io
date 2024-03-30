@@ -77,14 +77,27 @@ document.addEventListener("DOMContentLoaded", async() => {
   
   comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   
+  const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+
+  if(currentUser.role === "ADMIN") {
+    document.querySelector("#nav").innerHTML = "<admin-nav name=\"Wardan\" id=\"nav\"> </admin-nav>"
+    // document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
+} else if(currentUser.role === "SELLER") {
+    document.querySelector("#nav").innerHTML = "<seller-nav name=\"Wardan\" id=\"nav\"> </seller-nav>"
+    document.querySelector("#history").href = "../seller/seller-history.html"
+}
+
+
+const getTotalSales=()=>{
+  const purchases=JSON.parse(localStorage.getItem('purchasedItems')) || [];
+  const totalSales=purchases.reduce((acc,curr)=>acc+curr.totalPrice,0);
+return totalSales;
+}
 
   
-  
-  
-  const currentUser=JSON.parse(localStorage.getItem("currentUser"));
-    const select = document.getElementById("sellerNav");
-    console.log(currentUser.firstName)
-      select.setAttribute("name",currentUser.firstName)
+    // const select = document.getElementById("sellerNav");
+    // console.log(currentUser.firstName)
+    //   select.setAttribute("name",currentUser.firstName)
   
     const renderComment = (comment) => {
   
@@ -147,8 +160,10 @@ document.addEventListener("DOMContentLoaded", async() => {
       const totalSalesDiv = document.querySelector("#total-sales-div");
   
       const totalSales = document.createElement("h3");
+      totalSales.replaceChildren();
+
       totalSales.classList.add("text-5xl", "font-bold", "ms-3");
-      totalSales.textContent = 1000;
+      totalSales.textContent = '$' + getTotalSales();
   
       totalSalesDiv.appendChild(totalSales);
       
@@ -162,6 +177,7 @@ document.addEventListener("DOMContentLoaded", async() => {
       const totalCustomersDiv = document.querySelector("#total-customers-div");
   
       const totalCustomers=document.createElement("h3");
+      totalCustomers.replaceChildren();
       totalCustomers.classList.add("text-5xl", "font-bold", "ms-3");
       totalCustomers.textContent=noOfCustomers;
   
@@ -357,7 +373,7 @@ categories.forEach(category => {
   
 const renderProduct= (product) =>{
     const productDiv =document.createElement('div');
-    productDiv.className = 'grid grid-cols-10 border-b-2 border-custom-gray-500 pb-2 pt-2 gap-8 text-slate-600';
+    productDiv.className = 'grid grid-cols-10 border-b-2 border-custom-gray-500 pb-2 pt-2 gap-8 text-slate-600 -sm:grid-cols-8 -sm:me-1  ';
 
     const productImg=document.createElement('img');
     productImg.src=product.thumbnail  || product.images[0];
@@ -365,7 +381,7 @@ const renderProduct= (product) =>{
     const productName=document.createElement('p');
     productName.textContent=product.title;
     const productInfo=document.createElement('div');
-    productInfo.className='col-span-3 grid grid-cols-2 gap-4  ';
+    productInfo.className='col-span-2 grid grid-cols-2 gap-4  -md:flex -md:flex-col -sm:col-span-1 ';
     const productPrice=document.createElement('p');
     productPrice.textContent=product.price + '$';
 
@@ -385,9 +401,11 @@ const renderProduct= (product) =>{
 
     const productRating=document.createElement('p');
     productRating.textContent=product.rating ;
+    productRating.className='text-center';
+
 
     const productActions=document.createElement('div');
-    productActions.className='col-span-1  ';
+    productActions.className='col-span-2 flex justify-center items-center -sm:col-span-1 -sm:flex-col -sm:gap-2 -sm:justify-start';
     
 
     const editButton=document.createElement('button');

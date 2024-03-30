@@ -1,32 +1,34 @@
 document.addEventListener("DOMContentLoaded", async() => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    
+    if(currentUser.role === "ADMIN") {
+        document.querySelector("#history-icon").className = "hidden"
+    }
+
+
 
     if(currentUser.role === "CUSTOMER") {
         document.querySelector("#nav").innerHTML = "<buyer-nav name=\"Wardan\" id=\"nav\"> </buyer-nav>"
-        console.log("buyer")
+        document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
     } else if(currentUser.role === "SELLER") {
         document.querySelector("#nav").innerHTML = "<seller-nav name=\"Wardan\" id=\"nav\"> </seller-nav>"
-        console.log("seller")
-
+        document.querySelector("#history").href = "../seller/seller-history.html"
     }
     // document.getElementById("nav").setAttribute("name", currentUser.firstName.charAt(0));
     document.getElementById("name2").textContent = currentUser.firstName.charAt(0);  
 
 
+    // const navEnd = document.querySelector("#nav-end");
+
+    // const img = document.createElement("img");
+    // img.src = "../../media/history.svg";
+    // img.className = "w-6 h-6";
+    // img.id = "history-icon";
+    // navEnd.appendChild(img);
 
 
 
-
-    const securityPasswordSection = () => {
-        const passwordField = document.querySelector("#security-password-field")
-        const phoneField = document.querySelector("#phone-password")
-        const editButton = document.querySelector("#edit-password");
-        editButton.addEventListener("click", () => passwordPopup(currentUser));
-
-
-
-
-    }
+ 
 
 
     const securityPhoneSection = () => {
@@ -38,8 +40,8 @@ document.addEventListener("DOMContentLoaded", async() => {
                     var element = editButton.parentNode;
                     var h2 = editButton.previousElementSibling;
                     var textField = document.createElement("input");
-                    textField.setAttribute("type", "phone");
-                    textField.className = "mr-3.5";
+                    textField.className = "input input-bordered w-full focus:outline-none text-center";
+                    textField.value = currentUser.phone;
                     textField.setAttribute("id", "phone-textfield");
                     element.replaceChild(textField, h2);
                     editButton.textContent = "Save";
@@ -49,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                     var enteredText = textField.value;
             
                     var newElement = document.createElement("h3");
-                    newElement.setAttribute("class", "text-lg");
+                    newElement.className =  "text-lg text-center";
                     newElement.textContent = enteredText;
             
                     if(enteredText.length)
@@ -59,7 +61,10 @@ document.addEventListener("DOMContentLoaded", async() => {
                     element.replaceChild(newElement, textField);
                     currentUser.phone = enteredText;
                     localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
+                    let users = JSON.parse(localStorage.getItem("user"));
+                    users.splice(users.findIndex(user => user.id === currentUser.id), 1)
+                    users.push(currentUser) 
+                    localStorage.setItem("user", JSON.stringify(users));
 
                     
 
@@ -168,6 +173,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 
         const passwordField = document.createElement("input");
+        passwordField.type = "password";
         passwordField.className = "grow"
         passwordField.placeholder = "Password"
         passwordLabel.append(passwordField);
@@ -220,8 +226,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     }
 
-
-
     const securitySection = () => {
         securityPasswordSection();
         securityPhoneSection();
@@ -257,7 +261,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
         const balanceDiv = document.createElement('div');
         balanceDiv.id = 'balance';
-        balanceDiv.classList.add('grid', 'grid-cols-4', 'cols-span-1', 'mb-8');
+        balanceDiv.className = "grid grid-cols-3 cols-span-1 mb-8 gap-4";
 
 
         const balanceH3Element = document.createElement('h3');
@@ -272,7 +276,7 @@ document.addEventListener("DOMContentLoaded", async() => {
         balanceDiv.appendChild(balanceLabel);
 
         const balanceEditButton = document.createElement('button');
-        balanceEditButton.className = "btn col-span-1 w-3/5";
+        balanceEditButton.className = "font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-24 hover:bg-red-700 hover:scale-110";
         balanceEditButton.textContent = "Edit"
         balanceEditButton.id = "balance-edit";
         balanceDiv.appendChild(balanceEditButton);
@@ -295,10 +299,12 @@ document.addEventListener("DOMContentLoaded", async() => {
                 var h2 = balanceEditButton.previousElementSibling;
                 var textField = document.createElement("input");
                 textField.setAttribute("type", "text");
-                textField.className = "mr-3.5";
+                textField.className = "mr-3.5 input input-bordered w-full max-w-xs focus:outline-none text-center";
                 textField.setAttribute("id", "textField");
                 textField.setAttribute("placeholder", h2.textContent);
+                textField.value = currentUser.balance;
                 element.replaceChild(textField, h2);
+                
         
                 balanceEditButton.textContent = "Save";
             } else if (balanceEditButton.textContent === "Save") {
@@ -319,8 +325,9 @@ document.addEventListener("DOMContentLoaded", async() => {
                 localStorage.setItem("currentUser", JSON.stringify(newCurrentUser));
                 currentUser = JSON.parse(localStorage.getItem("currentUser"));
         
-                // Save the updated users array back to local storage
-                localStorage.setItem('user', JSON.stringify(users));
+                users.splice(users.findIndex(user => user.id === currentUser.id), 1)
+                users.push(currentUser) 
+                localStorage.setItem("user", JSON.stringify(users));
 
                 balanceEditButton.textContent = "Edit";
             }
@@ -331,7 +338,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
         const addressDiv = document.createElement("div")
         addressDiv.id = "address-div"
-        addressDiv.className = "bg-custom-gray w-fit border-4 border-dashed border-slate-300 p-4 gap-2 place-items-center rounded-2xl"
+        addressDiv.className = "bg-custom-gray min-w-fit border-4 border-dashed border-slate-300 p-4 gap-2 place-items-center rounded-2xl -md:w-full "
         
        const shippingAddress = document.createElement('h3');
         shippingAddress.textContent = 'Shipping Address';
@@ -342,7 +349,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
         const addressesDiv = document.createElement("div")
         addressesDiv.id = "addresses-div"
-        addressesDiv.className = "grid grid-cols-2 gap-4 -xl:flex -xl:flex-col"
+        addressesDiv.className = "flex flex-wrap gap-2 -xl:flex -xl:flex-col items-center justify-center overflow-auto max-h-96 my-6"
 
         fieldsDiv.appendChild(addressDiv);
         addressDiv.appendChild(addressesDiv)
@@ -367,13 +374,113 @@ document.addEventListener("DOMContentLoaded", async() => {
     addAddressDiv.className = "flex justify-center"
     const addAddressButton = document.createElement('button');
     addAddressButton.textContent = 'Add Address';
-    addAddressButton.classList.add('font-semibold', 'text-2xl', 'text-center', 'btn', 'btn-wide', 'bg-custom-red', 'text-white', 'hover:text-white', 'w-60', 'hover:bg-red-700', 'hover:scale-110');
+    addAddressButton.className = 'font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-60 hover:bg-red-700 hover:scale-110';
     addAddressDiv.appendChild(addAddressButton);
     addressDiv.appendChild(addAddressDiv);
     addAddressButton.addEventListener("click", () => { addressPopup(null) })
 
     }
 
+    const sellerSection = () => {
+        const seller = document.createElement('div');
+        seller.id = 'seller';
+
+        seller.className = "cols-start-1 w-full"
+        const headerDiv = document.createElement('div');
+        headerDiv.id = 'header';
+        headerDiv.classList.add('mb-24');
+
+        const h1Element = document.createElement('h1');
+        h1Element.textContent = 'Bank Account';
+        h1Element.classList.add('font-[500]', 'text-6xl');
+        headerDiv.appendChild(h1Element);
+
+
+        const h2Element = document.createElement('h2');
+        h2Element.textContent = 'change your Bank account details';
+        h2Element.classList.add('text-3xl', 'mt-4');
+        headerDiv.appendChild(h2Element);
+
+        seller.appendChild(headerDiv);
+
+        const fieldsDiv = document.createElement('div');
+        fieldsDiv.id = 'fields';
+        fieldsDiv.classList.add('m-4');
+
+
+        const ibanDiv = document.createElement('div');
+        ibanDiv.id = 'iban';
+        ibanDiv.classList.add('grid', 'grid-cols-4', 'cols-span-1', 'mb-8');
+
+
+        const ibanH3Element = document.createElement('h3');
+        ibanH3Element.textContent = 'IBAN';
+        ibanH3Element.classList.add('font-semibold', 'text-2xl');
+        ibanDiv.appendChild(ibanH3Element);
+
+        const IBANLabel = document.createElement('h3');
+        IBANLabel.classList.className = "";
+        IBANLabel.textContent = currentUser.bank.iban
+        ibanDiv.appendChild(IBANLabel);
+
+        const IbanEditButton = document.createElement('button');
+        IbanEditButton.className = "font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-24 hover:bg-red-700 hover:scale-110";
+        IbanEditButton.textContent = "Edit"
+        IbanEditButton.id = "iban-edit";
+        ibanDiv.appendChild(IbanEditButton);
+
+
+        
+
+
+        fieldsDiv.appendChild(ibanDiv);
+        seller.appendChild(fieldsDiv)
+        
+        
+
+       IbanEditButton.addEventListener("click", () => {
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            let users = JSON.parse(localStorage.getItem("user")); // Retrieve users from local storage
+        
+            if (IbanEditButton.textContent === "Edit") {
+                var element = IbanEditButton.parentNode;
+                var h2 = IbanEditButton.previousElementSibling;
+                var textField = document.createElement("input");
+                textField.setAttribute("type", "text");
+                textField.className = "mr-3.5";
+                textField.setAttribute("id", "textField");
+                textField.setAttribute("placeholder", h2.textContent);
+                element.replaceChild(textField, h2);
+        
+                IbanEditButton.textContent = "Save";
+            } else if (IbanEditButton.textContent === "Save") {
+                var element = IbanEditButton.parentNode;
+                var textField = IbanEditButton.previousElementSibling;
+                var enteredText = textField.value;
+        
+                var newElement = document.createElement("h3");
+                newElement.setAttribute("class", "text-lg");
+                newElement.textContent = enteredText;
+        
+                element.replaceChild(newElement, textField);
+        
+                if (IbanEditButton.parentNode.id === "iban") {
+                    users.find((user) => user.id == currentUser.id).bank.iban = enteredText;
+                }
+                const newCurrentUser = users.find((user) => user.id == currentUser.id); 
+                localStorage.setItem("currentUser", JSON.stringify(newCurrentUser));
+                currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        
+                // Save the updated users array back to local storage
+                localStorage.setItem('user', JSON.stringify(users));
+
+                IbanEditButton.textContent = "Edit";
+            }
+        })
+
+        document.querySelector("#sections").appendChild(seller);
+
+    }
 
 
     
@@ -383,12 +490,12 @@ document.addEventListener("DOMContentLoaded", async() => {
 const renderAddress = (userAddress) => {
     const addressCard = document.createElement("div");
     addressCard.id = "address-card"
-    addressCard.className = "drop-shadow-lg bg-white w-80 rounded-2xl p-8 m-8 cursor-pointer"
+    addressCard.className = "drop-shadow-lg bg-white min-w-fit max-w-64 w-1/2 rounded-2xl p-8 m-4 cursor-pointer"
 
 
     const titleDiv = document.createElement("div")
     titleDiv.id = "title-div"
-    titleDiv.className = "grid grid-cols-5"
+    titleDiv.className = "grid grid-cols-4 "
     
     const locationImg = document.createElement("img")
     locationImg.src = '../../media/location-black.svg'
@@ -396,7 +503,7 @@ const renderAddress = (userAddress) => {
 
     const title = document.createElement("h1")
     title.id = "title"
-    title.className = "font-bold text-2xl"
+    title.className = "font-bold text-2xl col-span-3"
     title.textContent = userAddress.name
     
 
@@ -669,6 +776,10 @@ if(editMode)
     postalCodeInput.addEventListener("input", () => { console.log(postalCodeInput.value) })
 
     confirmButton.addEventListener("click", () => {
+        if(!nicknameInput.value || !addressInput.value || !cityInput.value || !stateInput.value || !postalCodeInput.value) {
+            alert("Please fill in all fields")
+            return
+        }
         let users = JSON.parse(localStorage.getItem("user")); 
 
         const addressIndex = currentUser.addresses.findIndex(address => address.name === addressName);
@@ -694,8 +805,9 @@ if(editMode)
             }
             currentUser.addresses.push(newAddress);
             localStorage.setItem("currentUser", JSON.stringify(currentUser));
-            users.splice(users.findIndex(user => user.id === currentUser.id), 1, currentUser);
-            localStorage.setItem("user", JSON.stringify(users));
+            users.splice(users.findIndex(user => user.id === currentUser.id), 1)
+                    users.push(currentUser) 
+                    localStorage.setItem("user", JSON.stringify(users));
         }
 
 
@@ -709,13 +821,6 @@ if(editMode)
 
         
     })
-
-
-
-
-
-
-
 
 
 
@@ -761,89 +866,159 @@ function passwordPopup(address) {
 
 
 
-    const editAddressDiv = document.createElement("div")
-    editAddressDiv.id = "edit-address-div"
-    editAddressDiv.className = "flex justify-between max-w-2xl"
-    const editAddressLabel = document.createElement("h1")
-    editAddressLabel.id = "edit-address-label"
-    editAddressLabel.textContent = editMode ? "Edit Address" : "Add Address";
-    editAddressLabel.className = "font-bold text-2xl "
+    const editPasswordDiv = document.createElement("div")
+    editPasswordDiv.id = "edit-password-div"
+    editPasswordDiv.className = "flex justify-between max-w-2xl"
+    const editPasswordLabel = document.createElement("h1")
+    editPasswordLabel.id = "edit-password-label"
+    editPasswordLabel.textContent = "Change Password"
+    editPasswordLabel.className = "font-bold text-2xl "
 
     const closeImg = document.createElement("img")
     closeImg.src = "../../media/x-close.svg"
     closeImg.className = "cursor-pointer cols-start-2"
     closeImg.id = "closePopup"
 
-    const editAddressDetail = document.createElement("h1")
-    editAddressDetail.id = "edit-address-detail"
-    editAddressDetail.textContent = editMode ? "Edit your shipping Address" : "Add a new shipping Address";
-    editAddressDetail.className = "font-medium text-lg"
+    const editPasswordDetail = document.createElement("h1")
+    editPasswordDetail.id = "edit-password-detail"
+    editPasswordDetail.textContent =  "Change your password" 
+    editPasswordDetail.className = "font-medium text-lg"
 
 
-    editAddressDiv.appendChild(editAddressLabel)
-    editAddressDiv.appendChild(closeImg)
+    editPasswordDiv.appendChild(editPasswordLabel)
+    editPasswordDiv.appendChild(closeImg)
 
-    popup.appendChild(editAddressDiv)
-    popup.appendChild(editAddressDetail)
+    popup.appendChild(editPasswordDiv)
+    popup.appendChild(editPasswordDetail)
 
 
 
     const form = document.createElement('form');
     form.className = 'py-4 max-w-2xl min-w-[30rem]';
     
-    const nicknameLabel = document.createElement('label');
-    nicknameLabel.textContent = 'Nickname';
-    nicknameLabel.className = 'block';
-    const nicknameInput = document.createElement('input');
-    nicknameInput.type = 'text';
-    nicknameInput.value = "";
-    nicknameInput.className = 'input input-bordered input-md w-full w-md';
+    const CurrentPasswordLabel = document.createElement('label');
+    CurrentPasswordLabel.textContent = 'Current Password';
+    CurrentPasswordLabel.className = 'block';
+    const currentPasswordInput = document.createElement('input');
+    currentPasswordInput.type = 'password';
+    currentPasswordInput.value = "";
+    currentPasswordInput.className = 'input input-bordered input-md w-full w-md';
+
     
-    const addressLabel = document.createElement('label');
-    addressLabel.textContent = 'Address Street';
-    addressLabel.className = 'block mt-4';
-    const addressInput = document.createElement('input');
-    addressInput.type = 'text';
-    addressInput.value = "";
-    addressInput.className = 'input input-bordered input-md w-full max-w-2xl';
+    const newPaswordLabel = document.createElement('label');
+    newPaswordLabel.textContent = 'New Password';
+    newPaswordLabel.className = 'block mt-4';
+    const newPasswordInput = document.createElement('input');
+    newPasswordInput.type = 'password';
+    newPasswordInput.value = "";
+    newPasswordInput.className = 'input input-bordered input-md w-full max-w-2xl';
   
 
-    const deleteButton = document.createElement("button")
-    deleteButton.textContent = "Delete"
-    deleteButton.className = " btn btn-wide mt-4 bg-red-600 text-white w-60 hover:bg-red-600 hover:scale-105 hover:opacity-75 w-full"
+    const newPasswordLabelAgain = document.createElement('label');
+    newPasswordLabelAgain.textContent = 'Re-enter new Password';
+    newPasswordLabelAgain.className = 'block mt-4';
+    const newPasswordInputAgain = document.createElement('input');
+    newPasswordInputAgain.type = 'password';
+    newPasswordInputAgain.value = "";
+    newPasswordInputAgain.className = 'input input-bordered input-md w-full max-w-2xl';
+
+    const cancelButton = document.createElement("button")
+    cancelButton.textContent = "Cancel"
+    cancelButton.className = " btn btn-wide mt-4 bg-red-600 text-white w-60 hover:bg-red-600 hover:scale-105 hover:opacity-75 w-full"
 
 
     const confirmButton = document.createElement("button")
-    confirmButton.textContent = editMode ? "Confirm" : "Add"
+    confirmButton.textContent = "Confirm"
     confirmButton.className = "btn btn-wide mt-4 bg-green-600 text-white w-60 hover:bg-green-600 hover:scale-105 hover:opacity-75 w-full"
     confirmButton.type = "submit"
 
 
-    form.appendChild(nicknameLabel);
-    form.appendChild(nicknameInput);
+    closeImg.addEventListener('click', () => {
+        overlay.remove();
+        popup.remove();
+    });
+    cancelButton.addEventListener('click', () => {
+        overlay.remove();
+        popup.remove();
+    });
+
+
+    confirmButton.addEventListener("click", () => {
+
+        if(!currentPasswordInput.value || !newPasswordInput.value || !newPasswordInputAgain.value) {
+            alert("Please fill in all fields")
+
+            return
+
+    
+        }
+        if(currentUser.password !== currentPasswordInput.value) {
+            alert("Incorrect current password")
+            return
+        }
+        if(newPasswordInput.value !== newPasswordInputAgain.value) {
+            alert("new Passwords do not match")
+            return
+        }
+        currentUser.password = newPasswordInput.value;
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        let users = JSON.parse(localStorage.getItem("user"));
+        users.splice(users.findIndex(user => user.id === currentUser.id), 1)
+        users.push(currentUser)
+        localStorage.setItem("user", JSON.stringify(users));
+
+
+    });
+
+    form.appendChild(CurrentPasswordLabel);
+    form.appendChild(currentPasswordInput);
     form.appendChild(document.createElement('br'));
-    form.appendChild(addressLabel);
-    form.appendChild(addressInput);
+    form.appendChild(newPaswordLabel);
+    form.appendChild(newPasswordInput);
+    form.appendChild(newPasswordLabelAgain);
+    form.appendChild(newPasswordInputAgain);
+
     form.appendChild(document.createElement('br'));
 
 
 
+    form.appendChild(cancelButton);
     form.appendChild(confirmButton);
-    form.appendChild(deleteButton);
 
     popup.appendChild(form)
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+}
+const securityPasswordSection = () => {
+    const passwordField = document.querySelector("#security-password-field")
+    const phoneField = document.querySelector("#phone-password")
+    const editButton = document.querySelector("#edit-password");
+    
+    editButton.addEventListener("click", () => {
+        
+        passwordPopup(currentUser)
+        
+        
+    });
+    
+
+
+
 }
 
 
 
 
 
-
-
-// adminSection();
+if(currentUser.role === "ADMIN")
+adminSection();
+if(currentUser.role === "CUSTOMER")
 buyerSection();
-securitySection();
+if(currentUser.role === "SELLER")
+sellerSection();
 
+
+securitySection();
 
 
 

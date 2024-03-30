@@ -89,11 +89,12 @@ class BuyerNav extends LitElement {
   <div  class="seller-navbar">
   <a href="/pages/buyer/landingPage/landingPage.html"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
-      <a href="/pages/buyer/landingPage/landingPage.html">Home Screen</a>
-      <a href="/">Categories</a>
+      <a href="/pages/buyer/landingPage/landingPage.html">Home</a>
+      <a id="products" href="/pages/buyer/search/searched-products.html">Products</a>
       <a href="/pages/buyer/cart/cart-checkout.html">Cart</a>
   </div>
   <div id="nav-end">
+  
 
   
   <a href="/pages/profile/profile.html" >
