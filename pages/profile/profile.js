@@ -1,15 +1,14 @@
 document.addEventListener("DOMContentLoaded", async() => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
+    if(currentUser.id === -1) window.location.href = "/";
     if(currentUser.role === "CUSTOMER") {
         document.querySelector("#nav").innerHTML = "<buyer-nav name=\"Wardan\" id=\"nav\"> </buyer-nav>"
-        console.log("buyer")
+        document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
     } else if(currentUser.role === "SELLER") {
         document.querySelector("#nav").innerHTML = "<seller-nav name=\"Wardan\" id=\"nav\"> </seller-nav>"
-        console.log("seller")
-
+        document.querySelector("#history").href = "../seller/seller-history.html"
     }
-        document.getElementById("name").textContent = currentUser.firstName.charAt(0);
+    document.getElementById("name").textContent = currentUser.firstName.charAt(0);
     document.getElementById("name2").textContent = currentUser.firstName.charAt(0);
     document.getElementById("first-name").textContent = currentUser.firstName;
     document.getElementById("last-name").textContent = currentUser.lastName;
