@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const smallScreen=window.innerWidth < 600;
     
     const purchasedItems = JSON.parse(localStorage.getItem("purchasedItems")) || [];
-    const currnetUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+    const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
 
     const body=document.querySelector("body")
     body.className="px-7"
@@ -109,7 +109,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const priceValue = document.createElement("p");
         priceValue.className = "text-3xl font-bold";
-        priceValue.textContent = `$${purchase.totalPrice}`;
+        const totalPrice=
+        purchase.deals.reduce((total, deal) => {
+          if (deal.seller.id === currentUser.id) { 
+            return total + deal.items.reduce((dealTotal, cartItem) => 
+            
+              dealTotal + (cartItem.quantity * cartItem.product.price), 0);
+          }
+          return total;
+        }, 0);
+        priceValue.textContent = `$${totalPrice}`;
 
         price.appendChild(priceText);
         price.appendChild(priceValue);
@@ -175,7 +184,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         card.appendChild(grayLineShort);
 
         let purchaseSeller=purchase.deals
-        purchaseSeller=purchaseSeller.find((deal)=>deal.seller.id===currnetUser.id) 
+        purchaseSeller=purchaseSeller.find((deal)=>deal.seller.id===currentUser.id) 
             if(purchaseSeller){
             card.appendChild(renderDealCard(purchaseSeller));}
 
@@ -204,7 +213,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cardsDiv = document.querySelector("#card-div");
     cardsDiv.className="flex flex-col space-y-4 my-5";
     
-    const sellerPurchasedItems=purchasedItems.filter((purchase)=>purchase.deals[0].seller.id===currnetUser.id)
+    const sellerPurchasedItems=purchasedItems.filter((purchase)=>purchase.deals[0].seller.id===currentUser.id)
     sellerPurchasedItems.forEach((purchase) => {
         cardsDiv.appendChild(renderCard(purchase));
     
