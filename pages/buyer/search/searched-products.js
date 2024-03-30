@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+if (currentUser.id === -1) {
+    const profileButton = document.querySelector('#profile-link');
+    profileButton.href = '/pages/account/login.html';
+}
 
 
 

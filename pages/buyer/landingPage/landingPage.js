@@ -24,6 +24,7 @@ const productsData = localStorage.getItem('products');
         }}
 
 
+
         
 products=JSON.parse(localStorage.getItem('products')) || [];
 
@@ -37,9 +38,13 @@ if(products.length===0){
 let currentProduct=JSON.parse(localStorage.getItem('currentProduct'));
 let currentUser=JSON.parse(localStorage.getItem('currentUser'));
 
-if(currentUser===null){
+if(currentUser===null || currentUser.id===-1){
     currentUser={firstName: "Guest" , id:-1};
+    const profileButton = document.querySelector('#profile-link');
+    profileButton.href = '/pages/account/login.html';
+
     localStorage.setItem('currentUser',JSON.stringify(currentUser));
+
 }
 const navbar = document.querySelector('#nav');
 navbar.textContent=currentUser? currentUser.firstName.charAt(0):"U";

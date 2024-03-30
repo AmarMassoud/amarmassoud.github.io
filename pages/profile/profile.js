@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", async() => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     
+
+
     if(currentUser.role === "CUSTOMER") {
         document.querySelector("#nav").innerHTML = "<buyer-nav name=\"Wardan\" id=\"nav\"> </buyer-nav>"
         document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
