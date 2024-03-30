@@ -4,17 +4,6 @@ import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core
 class Footer1 extends LitElement {
     static styles = css`
 
-    @media screen and (max-width: 1280px) {
-      :root{
-        font-size: 12px;
-      }
-    }
-    @media screen and (max-width: 768px) {
-      :root{
-        font-size: 10px;
-      }
-    }
-    
     h1 {
         color: #000;
         font-family: Inter;
@@ -22,8 +11,8 @@ class Footer1 extends LitElement {
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        max-width: 23.08006rem;
-        max-height: 9.86813rem;
+        width: 23.08006rem;
+        height: 9.86813rem;
         margin-right: 1rem;
       }
       h2 {
@@ -79,6 +68,18 @@ class Footer1 extends LitElement {
         }
       }
       }
+      @media screen and (max-width: 1280px) {
+        :root{
+          font-size: 12px;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        :root{
+          font-size: 10px;
+      }
+      div {
+        flex-direction: column;
+    }
     
   `;
 
