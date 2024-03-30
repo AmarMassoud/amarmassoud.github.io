@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 let cartItems= JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser= JSON.parse(localStorage.getItem('currentUser')) || {};
-cartItems=cartItems.filter(item=>item.customer===currentUser.id);
 
-if(cartItems.length!==0){
+if(cartItems.length!==0 && cartItems[0].customer===-1){
+    
     cartItems.forEach(item=>{
         item.customer=currentUser.id;
     })
@@ -134,7 +134,10 @@ const cartTotal=()=>{
 
 const renderCartItems=()=>{
 
-    const cartItems= JSON.parse(localStorage.getItem('cart'))||[];
+    let  cartItems= JSON.parse(localStorage.getItem('cart'))||[];
+    cartItems=cartItems.filter(item=>item.customer===currentUser.id);
+
+    
     const CartItemsDiv=document.querySelector('#cart-items');
     CartItemsDiv.replaceChildren();
     if(cartItems.length!==0){

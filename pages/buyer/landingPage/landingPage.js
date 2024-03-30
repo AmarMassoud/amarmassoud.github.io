@@ -187,7 +187,7 @@ const showToast=(message, color)=>{
 
 
     const renderProductCard=(product)=>{
-        const inStock=product.stock>1;
+        const inStock=product.stock>=1;
         const card = document.createElement('div');
         card.className = 'card w-[20rem] bg-base-100 shadow-xl hover:bg-white hover:cursor-pointer';
         
@@ -218,7 +218,6 @@ const showToast=(message, color)=>{
         button.textContent = (inStock?'Add to Cart':"Out of Stock");
         button.addEventListener("click",()=>{
             if(inStock)
-            
             addToCart(product)})
         
         cardActions.appendChild(button);
