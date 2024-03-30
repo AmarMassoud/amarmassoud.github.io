@@ -62,6 +62,18 @@ let products=[]
         desiredQuanitiy+=1;
         renderProductDetails();
     };
+    const showToast=(message, color)=>{
+        const toastContainer = document.getElementById('toast-container');
+        toastContainer.classList.remove('hidden');
+        const toastAlert= document.querySelector('#toast-alert');
+        toastAlert.textContent=message;
+        toastAlert.classList.remove('bg-gray-100');
+        toastAlert.classList.add(color);
+    
+        setTimeout(() => {
+          toastContainer.classList.add('hidden');
+        }, 3000);
+    }
 
 
 const renderProductDetails = () => {
@@ -125,7 +137,7 @@ const renderProductDetails = () => {
 
     const category=document.createElement("a");
     category.textContent=`${currentProduct.category.charAt(0).toUpperCase() +currentProduct.category.slice(1)} category`;
-    category.className="badge badge-lg badge-outline text-lg px-5 py-4 rounded-xl border-0  bg-custom-red text-white font-bold underline self-start  hover:bg-red-600"
+    category.className="badge badge-lg badge-outline text-lg px-5 py-4 rounded-xl border-0  bg-custom-red text-white font-bold underline self-start "
     // hover:cursor-pointer
     category.addEventListener("click",()=>{
         // goToCategoryPage(currentProduct);
@@ -228,7 +240,7 @@ const renderProductDetails = () => {
 
     const addToCartButton=document.createElement("button");
     addToCartButton.textContent=(productInStock?'Add to Cart':"Out of Stock");
-    addToCartButton.className="rounded-xl text-xl  max-w-fit py-2 px-6  text-center font-bold border   " +(productInStock?'text-white bg-custom-red border-white hover:bg-red-600 hover:scale-110  transition-all duration-[ease]  ':" border-black bg-custom-gray text-black hover:cursor-default");
+    addToCartButton.className="btn rounded-xl text-xl  max-w-fit py-2 px-6  text-center font-bold border   " +(productInStock?'text-white bg-custom-red border-white hover:bg-red-600   transition-all duration-[ease]  ':" border-black bg-custom-gray text-black hover:cursor-default");
     addToCartButton.addEventListener("click",()=>{if(productInStock)addToCart(currentProduct,quantity=desiredQuanitiy)})
 
 
@@ -567,6 +579,7 @@ const renderComments=()=>{
             dealId:null
         }
         cartItems.push(cartItem);
+        showToast('Product added to cart','bg-green-200');
     }else{
         inCart.quantity+=quantity;
     }
