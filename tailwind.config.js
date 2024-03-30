@@ -3,7 +3,7 @@ const withMT = require("@material-tailwind/html/utils/withMT");
 /** @type {import('tailwindcss').Config} */
 
 module.exports =withMT( {
-  content: ["./pages/**/*.{html,js}", "/index.html"],
+  content: ["./pages/**/*.{html,js}", "./index.html.{html,js}"],
   theme: {
     extend: {
       colors: {
@@ -18,6 +18,7 @@ module.exports =withMT( {
     },
     fontFamily: {
       inter: ['Inter', 'sans-serif'],
+      
     },
     maxHeight:{
       '45': '35rem'

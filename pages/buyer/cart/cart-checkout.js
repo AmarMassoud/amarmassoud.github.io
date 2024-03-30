@@ -609,10 +609,15 @@ const renderBalancePayment=()=>{
 
     submitButton.addEventListener('click',()=>{
         if(validateBalancePayment()){
+            // console.log('checking out', onCheckout()    )
             if(onCheckout()){
+                // console.log('checked out', onCheckout()    )
+
             window.location.href='/pages/buyer/cart/confirmation.html';
             }else {
-            alert('please add items to your cart')}
+                // console.log('failed out', onCheckout()    )
+
+        }
 
         }});
 
@@ -802,8 +807,13 @@ if(checkoutStepNumber===2 || addAddress){
 
 const onCheckout=()=>{
     console.log('checking out', cartItems.length)
-    if(cartItems.length===0)
-    return false;
+    if(cartItems.length===0){
+                alert('please add items to your cart')
+
+    return false;}
+
+
+    let InsufficientStock=false;
     const products=JSON.parse(localStorage.getItem('products')) || [];
     cartItems.forEach(cartItem => {
         const product = products.find(p => p.id === cartItem.product.id);
@@ -811,11 +821,16 @@ const onCheckout=()=>{
           product.stock -= cartItem.quantity;
         } else {
           console.log(`Not enough quantity for product with ID ${cartItem.product.id}`);
-          alert(`Not enough quantity for product  ${cartItem.product.title}`);
-          return;
+
+            InsufficientStock=true;
+            return;
 
         }
       });
+      if (InsufficientStock) {
+        alert(`Not enough quantity for one of the products selected`);
+
+      return false;}
         localStorage.setItem('products', JSON.stringify(products));
       const purchaseDeals = [];
       let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];

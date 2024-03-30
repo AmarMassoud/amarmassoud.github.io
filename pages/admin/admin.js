@@ -98,7 +98,8 @@ return totalSales;
     // const select = document.getElementById("sellerNav");
     // console.log(currentUser.firstName)
     //   select.setAttribute("name",currentUser.firstName)
-  
+    console.log(comments)
+
     const renderComment = (comment) => {
   
       const commentDiv = document.createElement("div");
@@ -125,7 +126,9 @@ return totalSales;
   
       const product = document.createElement("p");
       product.classList.add("text-sm");
-      product.textContent = products.find((product) => product.id===comment.productId).title;
+      console.log(products, 'products');
+      console.log(comment);
+      product.textContent =products.find((product) => product.id===comment.productId)? products.find((product) => product.id===comment.productId).title : null;
   
       const commentP = document.createElement("p");
       commentP.classList.add("mt-3");
@@ -145,15 +148,14 @@ return totalSales;
   
       const commentsDiv = document.querySelector("#latest-comments");
       commentsDiv.replaceChildren();
-  
+  if(comments.length>0){
       let displayComments=[]
       for (let i = 0; i < 3; i++) {
-        displayComments.push(comments[i]);
-      }
-  
+        displayComments.push(comments[i]); 
+    }
       displayComments.forEach((comment) =>
         commentsDiv.appendChild(renderComment(comment))
-      );
+      );}
     };
   
     const rednderTotalSales = () => {
@@ -200,6 +202,7 @@ return totalSales;
         const totalProductsDiv = document.querySelector("#total-products-div");
 
         const totalProducts=document.createElement("h3");
+        // totalProducts.replaceChildren();
         totalProducts.classList.add("text-5xl", "font-bold", "ms-3");
         totalProducts.textContent=noOfProducts;
 
@@ -444,6 +447,7 @@ const renderProduct= (product) =>{
 
     deleteButton.addEventListener('click',()=>{
         deleteProduct(product.id);
+        totalProducts()
         renderProducts()
     })
     editButton.addEventListener('click',()=>{
@@ -461,6 +465,11 @@ const deleteProduct=(id)=>{
     localStorage.setItem('products',JSON.stringify(allProducts));
     products = allProducts
     console.log(id);
+
+    comments=comments.filter(comment=>comment.productId!==id);
+    localStorage.setItem('comments',JSON.stringify(comments));
+
+
     
     renderProducts();
 }

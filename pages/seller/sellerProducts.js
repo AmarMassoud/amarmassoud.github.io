@@ -92,12 +92,18 @@ const renderProduct= (product) =>{
 return productDiv;
 }
 
+
 const deleteProduct=(id)=>{
     let allProducts = JSON.parse(localStorage.getItem('products'));
     allProducts=allProducts.filter(product=>product.id!==id);
     localStorage.setItem('products',JSON.stringify(allProducts));
-    products = allProducts.filter(product => product.seller.id === currentUser.id);
+    products = allProducts
     console.log(id);
+
+    comments=comments.filter(comment=>comment.productId!==id);
+    localStorage.setItem('comments',JSON.stringify(comments));
+
+
     
     renderProducts();
 }

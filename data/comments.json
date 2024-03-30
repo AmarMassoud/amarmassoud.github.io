@@ -195,21 +195,6 @@
     "timestamp": "2024-03-14T17:17:36.101Z"
   },
   {
-    "id": 17,
-    "body": "I love your neat work!",
-    "postId": 68,
-    "user": {
-      "id": 31,
-      "firstName": "Mohanad",
-      "lastName": "Ahmad",
-      "email": "mohanedwalid05@gmail.com",
-      "password": "mohaned0000",
-      "role": "BUYER"
-    },
-    "productId": 0,
-    "timestamp": "2024-03-14T16:52:48.101Z"
-  },
-  {
     "id": 5,
     "body": "Nice idea!",
     "postId": 62,

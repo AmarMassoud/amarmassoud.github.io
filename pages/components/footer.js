@@ -4,6 +4,7 @@ import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core
 class Footer1 extends LitElement {
     static styles = css`
 
+
     h1 {
         color: #000;
         font-family: Inter;
@@ -11,7 +12,7 @@ class Footer1 extends LitElement {
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        width: 23.08006rem;
+        
         height: 9.86813rem;
         margin-right: 1rem;
       }
@@ -79,14 +80,18 @@ class Footer1 extends LitElement {
       }
       div {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
+      
+   
     
   `;
 
 
   render() {
     return html`
-    <div>
+    <div id="column">
     <h1>Discover MarketHub</h1>
     <section id="links">
       <section class="column">
