@@ -13,24 +13,32 @@ document.addEventListener("DOMContentLoaded", async() => {
     document.getElementById("first-name").textContent = currentUser.firstName;
     document.getElementById("last-name").textContent = currentUser.lastName;
     document.getElementById("email").textContent = currentUser.email;
+
+
+
 });
 
 function switchEdit() {
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     let users = JSON.parse(localStorage.getItem("user")); // Retrieve users from local storage
-
+    console.log("works")
+    console.log(this.textContent)
     if (this.textContent === "Edit") {
+        console.log("edit")
         var element = this.parentNode;
         var h2 = this.previousElementSibling;
         var textField = document.createElement("input");
         textField.setAttribute("type", "text");
-        textField.className = "mr-3.5";
+        textField.className = "mr-3.5 input input-bordered w-full focus:outline-none text-center";
         textField.setAttribute("id", "textField");
-        textField.setAttribute("placeholder", h2.textContent);
+        textField.setAttribute("value", h2.textContent);
         element.replaceChild(textField, h2);
+        
 
         this.textContent = "Save";
     } else if (this.textContent === "Save") {
+        console.log("save")
+
         var element = this.parentNode;
         var textField = this.previousElementSibling;
         var enteredText = textField.value;

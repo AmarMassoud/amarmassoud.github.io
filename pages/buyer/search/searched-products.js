@@ -2,8 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { firstName: "Guest", id: -1 };
     document.querySelector("#nav").textContent = currentUser.firstName.charAt(0);
 
-    var searchedProducts = JSON.parse(localStorage.getItem('searchedProducts')) || [];
+    var searchedProducts = JSON.parse(localStorage.getItem('searchedProducts')) || JSON.parse(localStorage.getItem('products'));
     document.querySelector("#sort-products").textContent = "Products ("+searchedProducts.length+")";
+
+
+
+
+
+
+
 
     var productsContainer = document.querySelector('#products');
 
@@ -328,9 +335,17 @@ const showToast=(message, color)=>{
 const renderProducts = (products) => {
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = '';
+    if(products.length!==0)
     products.forEach(product => {
         productsContainer.appendChild(renderProductCard(product));
     });
+    else {
+        const noProducts = document.createElement('h2');
+        noProducts.textContent = "No products found";
+        noProducts.className = "text-2xl text-gray-600";
+        productsContainer.appendChild(noProducts);
+    
+    }
 }
 const renderProductCard=(product)=>{
     const inStock=product.stock>1;
