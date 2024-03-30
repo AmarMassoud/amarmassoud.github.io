@@ -27,8 +27,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 function switchEdit() {
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     let users = JSON.parse(localStorage.getItem("user")); // Retrieve users from local storage
-    console.log("works")
-    console.log(this.textContent)
     if (this.textContent === "Edit") {
         console.log("edit")
         var element = this.parentNode;
@@ -47,7 +45,7 @@ function switchEdit() {
 
         var element = this.parentNode;
         var textField = this.previousElementSibling;
-        var enteredText = textField.value;
+        var enteredText = textField.value.split(" ")[0];
 
         var newElement = document.createElement("h3");
         newElement.setAttribute("class", "text-lg");
@@ -66,10 +64,7 @@ function switchEdit() {
         console.log(currentUser);
         localStorage.setItem("currentUser", JSON.stringify(newCurrentUser));
          currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        document.getElementById("nav").setAttribute("name", (users.find((user) => user.id == currentUser.id)).firstName)
-        document.getElementById("name").textContent = currentUser.firstName.charAt(0);
-        document.getElementById("name2").textContent = currentUser.firstName.charAt(0);
-
+         window.location.reload();
 
         // Save the updated users array back to local storage
         localStorage.setItem('user', JSON.stringify(users));
