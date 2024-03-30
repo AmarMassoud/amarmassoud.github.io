@@ -4046,6 +4046,10 @@ html {
   --tw-placeholder-opacity: 0.5;
 }
 
+.accent-custom-red {
+  accent-color: #F20E0F;
+}
+
 .opacity-10 {
   opacity: 0.1;
 }
@@ -4095,6 +4099,10 @@ html {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.outline-custom-red {
+  outline-color: #F20E0F;
 }
 
 .drop-shadow-lg {
@@ -4509,6 +4517,10 @@ html {
 
   .-lg\:flex-col {
     flex-direction: column;
+  }
+
+  .-lg\:justify-center {
+    justify-content: center;
   }
 
   .-lg\:gap-8 {

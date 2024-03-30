@@ -9,8 +9,9 @@ document.addEventListener("DOMContentLoaded", async() => {
         document.querySelector("#history").href = "../seller/seller-history.html"
     }else if(currentUser.role === "ADMIN") {
         document.querySelector("#nav").innerHTML = "<admin-nav name=\"Wardan\" id=\"nav\"> </admin-nav>"
-    }
+        document.querySelector("#history-icon").className = "hidden"
 
+    }
 
     
     document.getElementById("name").textContent = currentUser.firstName.charAt(0);

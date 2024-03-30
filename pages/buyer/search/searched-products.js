@@ -46,14 +46,14 @@ const minPriceLabel = document.createElement('label');
     minPriceLabel.textContent = 'Min Price:';
     minPriceLabel.classList.add('text-gray-600');
     priceSliderContainer.appendChild(minPriceLabel);
- const minPriceInput = document.createElement('input');
- minPriceInput.setAttribute('type', 'range');
- minPriceInput.setAttribute('id', 'minPrice');
- minPriceInput.setAttribute('min', '0');
- minPriceInput.setAttribute('max', '5000');
- minPriceInput.setAttribute('value', '0');
- minPriceInput.classList.add('w-full', 'mr-2');
- minPriceInput.addEventListener('input', () => updateValue('min'));
+    const minPriceInput = document.createElement('input');
+    minPriceInput.type = 'range';
+    minPriceInput.id = 'minPrice';
+    minPriceInput.className = 'min-price-input w-full mr-2 accent-custom-red';
+    minPriceInput.min = '0';
+    minPriceInput.max = '5000';
+    minPriceInput.value = '0';
+    minPriceInput.addEventListener('input', () => updateValue('min'));
  
  const minValueSpan = document.createElement('span');
  minValueSpan.setAttribute('id', 'minValue');
@@ -66,14 +66,14 @@ const minPriceLabel = document.createElement('label');
     maxPriceLabel.classList.add('text-gray-600');
     
 
- const maxPriceInput = document.createElement('input');
- maxPriceInput.setAttribute('type', 'range');
- maxPriceInput.setAttribute('id', 'maxPrice');
- maxPriceInput.setAttribute('min', '0');
- maxPriceInput.setAttribute('max', '5000');
- maxPriceInput.setAttribute('value', '5000');
- maxPriceInput.classList.add('w-full', 'ml-2');
- maxPriceInput.addEventListener('input', () => updateValue('max'));
+    const maxPriceInput = document.createElement('input');
+    maxPriceInput.type = 'range';
+    maxPriceInput.id = 'maxPrice';
+    maxPriceInput.className = 'max-price-input w-full ml-2 accent-custom-red';
+    maxPriceInput.min = '0';
+    maxPriceInput.max = '5000';
+    maxPriceInput.value = '5000';
+    maxPriceInput.addEventListener('input', () => updateValue('max'));
  
  const maxValueSpan = document.createElement('span');
  maxValueSpan.setAttribute('id', 'maxValue');
@@ -211,7 +211,7 @@ categoryContainer.appendChild(categoryLabel);
 document.querySelector("#filters").appendChild(categoryContainer);
 
 
-const products = JSON.parse(localStorage.getItem('searchedProducts'))|| JSON.parse(localStorage.getItem('products'));
+const products = JSON.parse(localStorage.getItem('products'))|| JSON.parse(localStorage.getItem('products'));
 let categories = products.map(product => product.category);
 categories = [...new Set(categories)];
 categories.forEach(category => {

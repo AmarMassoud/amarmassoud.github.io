@@ -2,12 +2,10 @@ document.addEventListener("DOMContentLoaded", async() => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     
     if(currentUser.role === "ADMIN") {
+        console.log("admin")
+        document.querySelector("#nav").innerHTML = "<admin-nav name=\"Wardan\" id=\"nav\"> </admin-nav>"
         document.querySelector("#history-icon").className = "hidden"
-    }
-
-
-
-    if(currentUser.role === "CUSTOMER") {
+    } else if(currentUser.role === "CUSTOMER") {
         document.querySelector("#nav").innerHTML = "<buyer-nav name=\"Wardan\" id=\"nav\"> </buyer-nav>"
         document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
     } else if(currentUser.role === "SELLER") {
@@ -95,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     const adminSection = () => {
         
-        const adminDiv = document.createElement('div');
+        const adminDiv = document.createElement('form');
         adminDiv.id = 'admin';
 
         adminDiv.classList.add("cols-start-1")
@@ -123,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
         const emailDiv = document.createElement('div');
         emailDiv.id = 'email';
-        emailDiv.classList.add('grid', 'grid-cols-4', 'cols-span-1', 'mb-8');
+        emailDiv.className = "grid grid-cols-4 cols-span-1 mb-8 gap-4 -lg:flex -lg:flex-col justify-center items-center";
 
 
         const emailH3Element = document.createElement('h3');
@@ -142,6 +140,7 @@ document.addEventListener("DOMContentLoaded", async() => {
         `;
 
         const emailField = document.createElement("input");
+        emailField.type = "email";
         emailField.className = "grow"
         emailField.placeholder = "Email"
         emailLabel.append(emailField);
@@ -152,7 +151,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
         const passwordDiv = document.createElement('div');
         passwordDiv.id = 'password';
-        passwordDiv.classList.add('grid', 'grid-cols-4', 'cols-span-3');
+        passwordDiv.className = "grid grid-cols-4 cols-span-1 mb-8 gap-8 -lg:flex -lg:flex-col justify-center items-center";
 
         const passwordH3Element = document.createElement('h3');
         passwordH3Element.textContent = 'Password';
@@ -182,12 +181,12 @@ document.addEventListener("DOMContentLoaded", async() => {
         fieldsDiv.appendChild(passwordDiv);
 
         const buttonDiv = document.createElement('div');
-        buttonDiv.classList.add('grid', 'grid-cols-4', 'mt-10');
+        buttonDiv.className = "grid grid-cols-4 cols-span-1 mb-8 gap-8 -lg:flex -lg:flex-col justify-center items-center";
 
         const buttonCol = document.createElement('div');
         buttonCol.classList.add('col-start-2', 'col-span-2');
         const createButton = document.createElement('button');
-        createButton.classList.add('btn', 'btn-wide', 'max-w-sm');
+        createButton.className = "font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white hover:bg-red-700 hover:scale-110 -lg:justify-center";
         createButton.textContent = 'Create Account';
         buttonCol.appendChild(createButton);
         buttonDiv.appendChild(buttonCol);
@@ -202,25 +201,27 @@ document.addEventListener("DOMContentLoaded", async() => {
         const checkExist =(email) =>{
             if (users.find((user) => user.email === email)) {
                 return true;
-            }}
+            } return false;}
 
         createButton.addEventListener("click", () => {
-
+                console.log("test")
             
             const [firstName, LastName] = emailField.value.split("@")[0].slice(emailField.length / 2, emailField.length)
 
                 const newUser = {
                     id: users.length + 1,
                     firstName,
-                    LastName: "ADMIN",
+                    LastName: LastName,
                     email: emailField.value,
                     password: passwordField.value,
                     role: "Admin"
-
                 }
-                if (!checkExist(email)) {
+                if (!checkExist(emailField.value) && emailField.value.length !== 0 && passwordField.value.length !== 0){
+                    console.log("email not found")
                     users.push(newUser)
                     localStorage.setItem('user', JSON.stringify(users));
+                } else {
+                    console.log("email found")
                 }
         });
 
