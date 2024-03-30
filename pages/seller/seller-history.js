@@ -16,14 +16,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         deal.items.forEach((cartItem) => {
             const proudct=cartItem.product;
             const card = document.createElement("div");
-            card.className = "grid items-center w-full  " + (smallScreen ? "grid-row-4 grid-cols-2" : "grid-cols-4 h-52");
+            card.className = "grid items-center w-full  -sm:grid-row-4 -sm:grid-cols-2 grid-cols-4 ";
 
             const image = document.createElement("img");
             image.src = proudct.images[0];
             image.className = "w-48 object-cover ";
 
             const details = document.createElement("div");
-            details.className = "flex flex-col  col-span-2 py-4 " + (smallScreen ? "space-y-2" : "space-y-5");
+            details.className = "flex flex-col  col-span-2 py-4 -sm:space-y-2 -sm:order-last space-y-5";
 
             const title = document.createElement("h1");
             title.className = "text-2xl font-bold";
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             details.appendChild(description);
 
             const quantityPriceDiv = document.createElement("div");
-            quantityPriceDiv.className = "flex flex-col   items-end h-40 " + (smallScreen ? "justify-around" : "justify-between");
+            quantityPriceDiv.className = "flex flex-col justify-between items-end h-40 -sm:justify-around -sm:order-2";
 
             const quantity = document.createElement("p");
             quantity.className = "text-xl font-bold";
@@ -64,14 +64,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             quantityPriceDiv.appendChild(priceDiv);
 
             card.appendChild(image);
-            if(smallScreen){
-                card.appendChild(quantityPriceDiv);
-                card.appendChild(details);
-            }
-            else{
+
                 card.appendChild(details);
                 card.appendChild(quantityPriceDiv);
-            }
+            
 
             cartItems.appendChild(card);
         });
