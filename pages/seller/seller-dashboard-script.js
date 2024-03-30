@@ -380,7 +380,7 @@ const deleteDeal = (purchaseId) => {
       rejectButton.addEventListener("click",()=>{
         const refundRequests=JSON.parse(localStorage.getItem("refundRequests"));
         const index=refundRequests.findIndex(request=>request.id===refundReuqest.id);
-        // refundRequests.splice(index,1);
+        refundRequests.splice(index,1);
         localStorage.setItem("refundRequests",JSON.stringify(refundRequests));
         closePopUp();
         renderRequests();

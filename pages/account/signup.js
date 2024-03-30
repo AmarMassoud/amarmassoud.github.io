@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', async() => {
     let users = [];
 
@@ -104,17 +105,20 @@ document.addEventListener('DOMContentLoaded', async() => {
         if (newUser != null) {
             // console.log('User:', user);
             localStorage.setItem('currentUser', JSON.stringify(newUser));
-            if (newUser.role === 'CUSTOMER') {
-                window.location.href = '/pages/buyer/landingPage/landingPage.html';
-            } else if (newUser.role === 'SELLER') {
+            const role = document.querySelector('#role').value;
+            if (role === 'CUSTOMER') {
+                window.location.href = '/';
+            } else if (role === 'SELLER') {
                 window.location.href = '/pages/seller/seller-dashboard.html';
-            }  if(newUser.role === 'ADMIN') {
+            }  if(role === 'ADMIN') {
                 window.location.href = '/pages/admin/admin.html';
             }
             // window.location.href = '../../pages/seller/seller-dashboard.html';
         } else {
             alert('Invalid email or password');
         }
+    } else {
+        showToast("User already exists", 'bg-custom-red')
     }
         // if () {
             
@@ -123,11 +127,20 @@ document.addEventListener('DOMContentLoaded', async() => {
         // }
     });
 
+    const showToast=(message, color)=>{
+        const toastContainer = document.getElementById('toast-container');
+        toastContainer.classList.remove('hidden');
+        const toastAlert= document.querySelector('#toast-alert');
+        toastAlert.textContent=message;
+        toastAlert.classList.remove('bg-gray-100');
+        toastAlert.classList.add(color);
+    
+        setTimeout(() => {
+          toastContainer.classList.add('hidden');
+        }, 3000);
+    }
     
 
-
-
-
-
+    
 
 });

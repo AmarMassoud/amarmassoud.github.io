@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                     var h2 = editButton.previousElementSibling;
                     var textField = document.createElement("input");
                     textField.className = "input input-bordered w-full focus:outline-none text-center";
-                    textField.value = currentUser.phone;
+                    textField.value = currentUser.phone ? currentUser.phone : "00000";
                     textField.setAttribute("id", "phone-textfield");
                     element.replaceChild(textField, h2);
                     editButton.textContent = "Save";

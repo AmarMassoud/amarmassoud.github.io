@@ -36,6 +36,7 @@
                 Full Name
               </label>
               <input
+                required
                 type="text"
                 name="name"
                 id="name"
@@ -62,7 +63,8 @@
               >
                 Email
               </label>
-              <input
+              <input 
+                required
                 type="email"
                 name="email"
                 id="email"
@@ -77,6 +79,7 @@
                 Password
               </label>
               <input
+                required
                 type="password"
                 name="password"
                 id="password"
@@ -85,6 +88,7 @@
             </div>
             <div class="mb-4 w-full flex justify-center">
               <input
+              id="sign"
                 type="submit"
                 value="SIGN UP"
                 class="bg-custom-red text-white p-2 rounded-3xl w-2/5 cursor-pointer hover:text-black"
@@ -93,7 +97,7 @@
             <p class="text-center text-gray-500">
               already have an account ?
               <span
-                ><a href="../../index.html" class="text-custom-red">
+                ><a href="login.html" id="sign-in" class="text-custom-red">
                   SIGN IN</a
                 ></span
               >
@@ -108,6 +112,17 @@
           class="object-cover h-screen -lg:hidden"
         />
       </section>
+      <div
+        id="toast-container"
+        class="fixed bottom-4 right-0 left-0 z-50 hidden mx-20 transition-opacity duration-300"
+      >
+        <div
+          class="bg-gray-100 text-white px-4 py-2 rounded-md shadow-md"
+          id="toast-alert"
+        >
+          New message arrived.
+        </div>
+      </div>
     </main>
   </body>
 </html>
