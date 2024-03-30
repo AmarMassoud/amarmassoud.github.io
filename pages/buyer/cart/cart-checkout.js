@@ -839,7 +839,7 @@ if(paymentMethod===1){
     localStorage.setItem('currentUser',JSON.stringify(currentUser));
     const users= JSON.parse(localStorage.getItem('user'));
     users.find(user=>user.id===currentUser.id).balance=currentUser.balance;
-    localStorage.setItem('users',JSON.stringify(users));
+    localStorage.setItem('user',JSON.stringify(users));
 }
 return true;
    
