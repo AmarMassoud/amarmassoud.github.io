@@ -235,7 +235,7 @@ if(currentUser.id!==-1){
 const loginButton=document.createElement('a');
 loginButton.textContent='Login';
 loginButton.className='bg-white text-custom-red font-semibold py-2 rounded-3xl hover:bg-opacity-90 mt-10 px-5';
-loginButton.href='/index.html';
+loginButton.href='/pages/account/login.html';
     shippingInfoDiv.className='flex flex-col items-center justify-center';
     shippingInfoDiv.appendChild(noAddresses);
     shippingInfoDiv.appendChild(loginButton);

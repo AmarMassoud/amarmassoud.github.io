@@ -25,7 +25,7 @@ const productsData = localStorage.getItem('products');
 
 
         
-products=JSON.parse(localStorage.getItem('products'));
+products=JSON.parse(localStorage.getItem('products')) || [];
 
 if(products.length===0){
     await getProducts();

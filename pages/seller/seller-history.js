@@ -211,9 +211,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     title.appendChild(grayLine);
 
     const cardsDiv = document.querySelector("#card-div");
-    cardsDiv.className="flex flex-col space-y-4 my-5";
+    cardsDiv.className="flex flex-col space-y-4 my-5 ";
     
     const sellerPurchasedItems=purchasedItems.filter((purchase)=>purchase.deals[0].seller.id===currentUser.id)
+    if(sellerPurchasedItems.length===0){
+        const noItems=document.createElement("h1");
+        noItems.className="text-5xl font-semibold text-center opacity-25";
+        noItems.textContent="No Sale History";
+        cardsDiv.appendChild(noItems);
+    }
+
     sellerPurchasedItems.forEach((purchase) => {
         cardsDiv.appendChild(renderCard(purchase));
     

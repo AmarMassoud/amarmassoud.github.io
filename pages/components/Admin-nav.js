@@ -11,7 +11,7 @@ class AdminNav extends LitElement {
     static styles = css`
  
    
-    .seller-navbar {
+    .admin-navbar {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -86,8 +86,8 @@ class AdminNav extends LitElement {
 
   render() {
     return html`
-  <div  class="seller-navbar">
-  <a href="/pages/buyer/landingPage/landingPage.html"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
+  <div  class="admin-navbar">
+  <a href="/index.html"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
       <a href="/pages/admin/admin.html">Home</a>
   </div>

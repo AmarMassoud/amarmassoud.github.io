@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', async() => {
             console.log('User:', user);
             localStorage.setItem('currentUser', JSON.stringify(user));
             if (user.role === 'CUSTOMER') {
-                window.location.href = '/pages/buyer/landingPage/landingPage.html';
+                window.location.href = '/';
+                console.log('User:', user);
             } else if (user.role === 'SELLER') {
                 window.location.href = '/pages/seller/seller-dashboard.html';
             }  if(user.role === 'ADMIN') {

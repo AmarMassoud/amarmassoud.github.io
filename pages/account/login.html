@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <script type="text/javascript" src="login.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Login</title>
+  </head>
+  <body>
+    <main
+      class="h-screen w-full flex justify-between items-center -lg:bg-custom-coral"
+    >
+      <section
+        id="login-section "
+        class="flex-1 flex justify-center items-center z-50 bg-cover bg-center bg-no-repeat bg-fixed h-screen"
+      >
+        <div id="login-card" class="rounded-3xl bg-white shadow-xl py-8 px-10">
+          <img src="../../media/logo.svg" alt="" />
+          <div class="mb-6 mt-14">
+            <p class="text-gray-500 text-sm mb-1">Welcome back!</p>
+            <h1 class="text-5xl font-bold">Sign in</h1>
+          </div>
+
+          <form action="" class="mb-6" id="login-form">
+            <div class="mb-4">
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                class="mt-1 p-2 rounded-lg w-96 bg-custom-coral text-gray-600 focus:outline-none"
+              />
+            </div>
+            <div class="mb-8">
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="mt-1 p-2 rounded-lg w-96 text-gray-600 bg-custom-coral focus:outline-none"
+              />
+            </div>
+            <div class="mb-4 w-full flex justify-center">
+              <input
+                type="submit"
+                value="SIGN IN"
+                class="bg-custom-red text-white p-2 rounded-3xl w-2/5 cursor-pointer hover:text-black"
+              />
+            </div>
+            <p class="text-center text-gray-500">
+              Don't have an account ?
+              <span
+                ><a href="pages/account/sign-up.html" class="text-custom-red">
+                  Sign up</a
+                ></span
+              >
+            </p>
+          </form>
+        </div>
+      </section>
+      <section class="h-screen justify-items-end">
+        <img
+          src="../../media/login-vector.svg"
+          alt=""
+          class="object-cover h-screen -lg:hidden"
+        />
+      </section>
+      <div
+        id="toast-container"
+        class="fixed bottom-4 right-0 left-0 z-50 hidden mx-20 transition-opacity duration-300"
+      >
+        <div
+          class="bg-gray-100 text-white px-4 py-2 rounded-md shadow-md"
+          id="toast-alert"
+        >
+          New message arrived.
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
