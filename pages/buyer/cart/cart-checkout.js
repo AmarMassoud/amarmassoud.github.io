@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 let cartItems= JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser= JSON.parse(localStorage.getItem('currentUser')) || {};
+cartItems=cartItems.filter(item=>item.customer===currentUser.id);
 
 if(cartItems.length!==0){
     cartItems.forEach(item=>{

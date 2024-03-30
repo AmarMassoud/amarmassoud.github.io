@@ -195,7 +195,7 @@ const showToast=(message, color)=>{
         figure.className="h-[14rem] "
         const img = document.createElement('img');
         img.className='  h-[14rem] object-contain  self-start'
-        img.src = product.images[0]; 
+        img.src = product.thumbnail; 
         img.alt = product.title;
         figure.appendChild(img);
         

@@ -77,14 +77,27 @@ document.addEventListener("DOMContentLoaded", async() => {
   
   comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   
+  const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+
+  if(currentUser.role === "ADMIN") {
+    document.querySelector("#nav").innerHTML = "<admin-nav name=\"Wardan\" id=\"nav\"> </admin-nav>"
+    // document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
+} else if(currentUser.role === "SELLER") {
+    document.querySelector("#nav").innerHTML = "<seller-nav name=\"Wardan\" id=\"nav\"> </seller-nav>"
+    document.querySelector("#history").href = "../seller/seller-history.html"
+}
+
+
+const getTotalSales=()=>{
+  const purchases=JSON.parse(localStorage.getItem('purchasedItems')) || [];
+  const totalSales=purchases.reduce((acc,curr)=>acc+curr.totalPrice,0);
+return totalSales;
+}
 
   
-  
-  
-  const currentUser=JSON.parse(localStorage.getItem("currentUser"));
-    const select = document.getElementById("sellerNav");
-    console.log(currentUser.firstName)
-      select.setAttribute("name",currentUser.firstName)
+    // const select = document.getElementById("sellerNav");
+    // console.log(currentUser.firstName)
+    //   select.setAttribute("name",currentUser.firstName)
   
     const renderComment = (comment) => {
   
@@ -147,8 +160,10 @@ document.addEventListener("DOMContentLoaded", async() => {
       const totalSalesDiv = document.querySelector("#total-sales-div");
   
       const totalSales = document.createElement("h3");
+      totalSales.replaceChildren();
+
       totalSales.classList.add("text-5xl", "font-bold", "ms-3");
-      totalSales.textContent = 1000;
+      totalSales.textContent = '$' + getTotalSales();
   
       totalSalesDiv.appendChild(totalSales);
       
@@ -162,6 +177,7 @@ document.addEventListener("DOMContentLoaded", async() => {
       const totalCustomersDiv = document.querySelector("#total-customers-div");
   
       const totalCustomers=document.createElement("h3");
+      totalCustomers.replaceChildren();
       totalCustomers.classList.add("text-5xl", "font-bold", "ms-3");
       totalCustomers.textContent=noOfCustomers;
   
