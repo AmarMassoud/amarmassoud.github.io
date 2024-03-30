@@ -2887,6 +2887,10 @@ html {
   max-height: 35rem;
 }
 
+.max-h-52 {
+  max-height: 13rem;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -3125,6 +3129,10 @@ html {
   cursor: pointer;
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -3299,12 +3307,6 @@ html {
   --tw-space-y-reverse: 0;
   margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
-}
-
-.space-y-16 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(4rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(4rem * var(--tw-space-y-reverse));
 }
 
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
@@ -4337,6 +4339,18 @@ html {
 }
 
 @media (max-width: 640px) {
+  .-sm\:order-1 {
+    order: 1;
+  }
+
+  .-sm\:order-2 {
+    order: 2;
+  }
+
+  .-sm\:order-last {
+    order: 9999;
+  }
+
   .-sm\:col-span-1 {
     grid-column: span 1 / span 1;
   }
@@ -4380,6 +4394,10 @@ html {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
+  .-sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .-sm\:grid-cols-8 {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
@@ -4400,12 +4418,28 @@ html {
     justify-content: center;
   }
 
+  .-sm\:justify-around {
+    justify-content: space-around;
+  }
+
   .-sm\:gap-2 {
     gap: 0.5rem;
   }
 
   .-sm\:gap-4 {
     gap: 1rem;
+  }
+
+  .-sm\:space-y-16 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(4rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(4rem * var(--tw-space-y-reverse));
+  }
+
+  .-sm\:space-y-2 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
   }
 }
 

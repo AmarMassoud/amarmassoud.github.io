@@ -10,100 +10,99 @@ class SellerNav extends LitElement {
     static properties = {
         name: {},
       };
-    static styles = css`
- 
-    @media screen and (max-width: 1280px) {
-        :root{
-          font-size: 12px;
+      static styles = css`
+      @media screen and (max-width: 1280px) {
+          :root{
+            font-size: 12px;
+          }
         }
+        @media screen and (max-width: 768px) {
+          :root{
+            font-size: 10px;
+          }
       }
-      @media screen and (max-width: 768px) {
-        :root{
-          font-size: 10px;
-        }
-    }
-        #logo {
-            max-width: 150px;
-            max-height: 50px;
-        }
-   
-    .seller-navbar {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 8px;
-        margin: 8px;
-        align-items: center;
-        border-bottom: 1px solid #888; /* Add a border at the bottom */
-        font-size: 1.1rem;
-        font-family: "Inter", Times, serif;
-        font-weight: 500;
-
-
-    }
-    #nav-buttons a:hover {
-        // font-size: 1.2rem;
-        font-weight: 600;
-        background: #F20E0F;     
-        color: white; 
-    border-radius: 0.5rem;
-    }
-    #nav-buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 50%;
-        max-width: 30em;
-
-
-    }
-    #nav-buttons>a {
-        text-decoration: none;
-        color: black;
-        padding: 8px;
-    }
-    #profile-icon{
-        margin-left: 1em;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: .4em;
-        height: .4em;
-        padding: .9em;
-        border-radius: 50%;
-        background-color: #F20E0F
-    }
-    h3{       
-        text-align: center;
-        font-size: 1em;
-        color: white;
-    }
-    a{
-        text-decoration: none;
-        color: white;
-        text-wrap: nowrap;**/
-    }
-    #nav-end{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-    #nav-end>a{
-        display: flex;
-        flex-direction: Column;
-        align-items: center;
-        justify-content: center;
-    }
-    
-   
-  `;
+          #logo {
+              max-width: 150px;
+              max-height: 50px;
+          }
+     
+      .seller-navbar {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          padding: 8px;
+          margin: 8px, 8px, 0px, 8px;
+          align-items: center;
+          border-bottom: 1px solid #888; /* Add a border at the bottom */
+          font-size: 1.1rem;
+          font-family: "Inter", Times, serif;
+          font-weight: 500;
+  
+  
+      }
+      #nav-buttons a:hover {
+          // font-size: 1.2rem;
+          font-weight: 600;
+          background: #F20E0F;     
+          color: white; 
+      border-radius: 0.5rem;
+      }
+      #nav-buttons {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 50%;
+          max-width: 30em;
+  
+  
+      }
+      #nav-buttons>a {
+          text-decoration: none;
+          color: black;
+          padding: 8px;
+      }
+      #profile-icon{
+          margin-left: 1em;
+  
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: .4em;
+          height: .4em;
+          padding: .9em;
+          border-radius: 50%;
+          background-color: #F20E0F
+      }
+      h3{       
+          text-align: center;
+          font-size: 1em;
+          color: white;
+      }
+      a{
+          text-decoration: none;
+          color: white;
+          text-wrap: nowrap;
+      }
+      #nav-end{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+      }
+      #nav-end>a{
+          display: flex;
+          flex-direction: Column;
+          align-items: center;
+          justify-content: center;
+      }
+      
+     
+    `;
 
 
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="/"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
+  <a href="/pages/seller/seller-dashboard.html"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
   <div id="nav-buttons">
       <a href="../seller/seller-dashboard.html" class="hover:bg-custom-red">Dashboard</a>
       <a href="../seller/sellerProducts.html">Products</a>

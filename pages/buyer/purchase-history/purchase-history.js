@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-    const smallScreen=window.innerWidth < 600;
-    
+
     const purchasedItems = JSON.parse(localStorage.getItem("purchasedItems")) || [];
 
     const currnetUser = JSON.parse(localStorage.getItem("currentUser")) || {};
@@ -211,17 +210,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         messageInput.id="refund-message";
         messageInput.className="textarea bg-custom-gray textarea-bordered w-full h-32";
         messageInput.placeholder="Write your message here..."
+        
 
 
         messageDiv.appendChild(messageHeader);
         messageDiv.appendChild(inform);
         messageDiv.appendChild(messageInput);
         
+        const isDisabled=selectedCartItem.quantity===undefined;
 
         const submitButton=document.createElement("button");
-        submitButton.className='btn btn-primary mt-12 mr-4 hover:bg-custom-red hover:text-white self-end';
-        submitButton.textContent="Submit Refund Request";
-        submitButton.addEventListener("click",()=>{
+        submitButton.textContent=(isDisabled?'Please select a product':'Submit Refund Request');
+        submitButton.className=(isDisabled?'btn btn-primary mt-12 mr-4  self-end cursor-not-allowed':'btn btn-primary mt-12 mr-4 hover:bg-custom-red hover:text-white self-end');
+        submitButton.disabled=isDisabled;
+        submitButton.type="submit";
+
+        console.log(selectedCartItem.quantity);
+        console.log(isDisabled);
+        submitButton.addEventListener("submit",()=>{
             const reason=selectReasonOptions.value;
             const message=messageInput.value;
             const refundRequest={
@@ -236,10 +242,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             const refundRequests=JSON.parse(localStorage.getItem("refundRequests")) || [];
             refundRequests.push(refundRequest);
             localStorage.setItem("refundRequests",JSON.stringify(refundRequests));
-            
+        
             closePopUp();
 
         });
+    
 
 
         refundPopUp.appendChild(closeButton);
@@ -260,14 +267,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         deal.items.forEach((cartItem) => {
             const proudct=cartItem.product;
             const card = document.createElement("div");
-            card.className = "grid items-center w-full  " + (smallScreen ? "grid-row-4 grid-cols-2" : "grid-cols-4 h-52");
+            card.className = "grid items-center w-full  -sm:grid-row-4 -sm:grid-cols-2 grid-cols-4 ";
 
             const image = document.createElement("img");
             image.src = proudct.images[0];
-            image.className = "w-48 object-cover ";
+            image.className = "w-48 object-cover -sm:order-1 max-h-52";
 
             const details = document.createElement("div");
-            details.className = "flex flex-col  col-span-2 py-4 " + (smallScreen ? "space-y-2" : "space-y-5");
+            details.className = "flex flex-col  col-span-2 py-4 -sm:space-y-2 -sm:order-last space-y-5";
 
             const title = document.createElement("h1");
             title.className = "text-2xl font-bold";
@@ -297,10 +304,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             details.appendChild(soldByDiv);
 
             const quantityPriceDiv = document.createElement("div");
-            quantityPriceDiv.className = "flex flex-col   items-end h-40 " + (smallScreen ? "justify-around" : "justify-between");
+            quantityPriceDiv.className = "flex flex-col justify-between items-end h-40 -sm:justify-around -sm:order-2";
 
             const quantity = document.createElement("p");
-            quantity.className = "text-xl font-bold";
+            quantity.className = "text-xl font-bold ";
             quantity.textContent = cartItem.quantity;
 
             const priceDiv = document.createElement("div");
@@ -325,14 +332,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             card.appendChild(image);
-            if(smallScreen){
-                card.appendChild(quantityPriceDiv);
-                card.appendChild(details);
-            }
-            else{
+
                 card.appendChild(details);
                 card.appendChild(quantityPriceDiv);
-            }
 
             cartItems.appendChild(card);
         });

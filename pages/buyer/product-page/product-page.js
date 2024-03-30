@@ -1,7 +1,5 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    var widnowWidth = window.innerWidth;
-    const smallScreen=widnowWidth < 600;
     const body=document.querySelector("body")
     body.className="px-7"
     
@@ -72,7 +70,7 @@ const renderProductDetails = () => {
 
     const producDetailsDiv= document.querySelector("#product-details");
     producDetailsDiv.replaceChildren();
-    producDetailsDiv.className = "w-full px-10 py-20 flex  " + (smallScreen ?"flex-col space-y-16": "flex-row justify-start space-x-32 items-center" );
+    producDetailsDiv.className = "w-full px-10 py-20 flex   -sm:flex-col -sm:space-y-16 flex-row justify-start space-x-32 items-center" ;
 
 
     const imagesColumn=document.createElement("div")
@@ -126,8 +124,8 @@ const renderProductDetails = () => {
     // categoriesDiv.className="flex flex-row gap3 "
 
     const category=document.createElement("a");
-    category.textContent=` More from ${currentProduct.category.charAt(0).toUpperCase() +currentProduct.category.slice(1)} category`;
-    category.className="badge badge-lg badge-outline text-lg px-5 py-4 rounded-xl border-0  bg-custom-red text-white font-bold underline self-end  hover:bg-red-600"
+    category.textContent=`${currentProduct.category.charAt(0).toUpperCase() +currentProduct.category.slice(1)} category`;
+    category.className="badge badge-lg badge-outline text-lg px-5 py-4 rounded-xl border-0  bg-custom-red text-white font-bold underline self-start  hover:bg-red-600"
     // hover:cursor-pointer
     category.addEventListener("click",()=>{
         // goToCategoryPage(currentProduct);
@@ -235,15 +233,14 @@ const renderProductDetails = () => {
 
 
     
-    if(!smallScreen)detailsDiv.appendChild(category);
+    detailsDiv.appendChild(category);
     detailsDiv.appendChild(prouctTitle);
     detailsDiv.appendChild(productDescription);
     detailsDiv.appendChild(priceQuanitityDiv);
     detailsDiv.appendChild(sellerInfo);
     detailsDiv.appendChild(addToCartButton);
 
-    if(smallScreen)
-    producDetailsDiv.appendChild(category);
+
     
     producDetailsDiv.appendChild(imagesColumn);
     
