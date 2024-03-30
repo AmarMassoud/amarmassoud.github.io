@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const refundPopUp = document.createElement('dialog');
         refundPopUpDiv.appendChild(refundPopUp);
     
-        refundPopUp.className = 'self-center justify-self-center modal bg-white rounded-lg p-4 flex flex-col  p-6 max-w-[50rem] h-fit ';
+        refundPopUp.className = 'self-center justify-self-center modal bg-white rounded-lg p-4 flex flex-col  p-6 max-w-[50rem] max-h-[800px] overflow-y-scroll';
         refundPopUp.replaceChildren();
 
         const closeButton = document.createElement('button');
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         closeButton.addEventListener('click', closePopUp);
 
         const title = document.createElement('h1');
-        title.className = 'text-3xl font-bold self-start';
+        title.className = 'text-2xl font-bold self-start';
         title.textContent = 'Select Item:';
 
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const cartItemsDiv=document.createElement("div");
         // Adding a max height and vertical overflow auto for vertical scrolling
-    cartItemsDiv.className="flex flex-row  overflow-x-auto px-5 max-w-[47rem]";
+    cartItemsDiv.className="flex flex-row  overflow-x-scroll   px-5 max-w-[42rem] min-h-52";
 
         const cartItems=purchase.deals.flatMap((deal)=>deal.items);
         cartItems.forEach((cartItem) => {
@@ -59,25 +59,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const card = document.createElement("div");
             card.className = `
-            border-2
-            border-custom-gray
-            mx-2
-            min-w-56 h-56 bg-white 
-            flex flex-col space-y-2
-            cursor-pointer 
-            opacity-70 
-            hover:opacity-100
-            hover:bg-custom-gray 
-            rounded-lg shadow-md 
-            justify-center align-center`+(selectedCartItem===cartItem ?"  border-custom-red  ":"");
+  border-2
+  border-custom-gray
+  mx-2
+  min-w-52 h-52 bg-white 
+  flex flex-col space-y-2
+  cursor-pointer 
+  opacity-70 
+  hover:opacity-100
+  hover:bg-custom-gray 
+  rounded-lg shadow-md 
+  justify-center items-center `+(selectedCartItem===cartItem ? " border-custom-red " : "");
+
             
             const image = document.createElement("img");
             image.src = proudct.images[0];
-            //make the image in the middle of the card
-            image.className = " object-scale-down w-30 h-28 justify-self-center ";
+            image.className = "object-scale-down w-[7rem] h-[7rem]";
+
 
             const details = document.createElement("p");
-            details.className = "text-m font-bold text-center";
+            details.className = "text-sm font-bold text-center";
             details.textContent = `${proudct.title} x ${cartItem.quantity}`;
 
 
@@ -102,11 +103,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         detailsDiv.className="flex flex-col space-y-2 w-full items-start my-6 ";
 
         const orderDate=document.createElement("p");
-        orderDate.className="text-m";
+        orderDate.className="text-sm";
         orderDate.textContent="Order Date:"
 
         const dateValue = document.createElement("span");
-        dateValue.className = "text-m font-bold";
+        dateValue.className = "text-sm font-bold";
         dateValue.textContent = purchase.timeStamp.split("T")[0];
 
         orderDate.appendChild(dateValue);
@@ -115,21 +116,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         quantityPriceDiv.className="flex flex-row space-x-2 ";
 
         const quantity = document.createElement("p");
-        quantity.className = "text-m";
+        quantity.className = "text-sm";
         quantity.textContent = "Quantity: ";
 
         const quantityValue = document.createElement("span");
-        quantityValue.className = "text-m font-bold";
+        quantityValue.className = "text-sm font-bold";
         quantityValue.textContent = selectedCartItem.quantity||"N/A";
 
         quantity.appendChild(quantityValue);
 
         const price = document.createElement("p");
-        price.className = "text-m";
+        price.className = "text-sm";
         price.textContent = "Price: ";
 
         const priceValue = document.createElement("span");
-        priceValue.className = "text-m font-bold";
+        priceValue.className = "text-sm font-bold";
         console
         const selectedItemPrice=selectedCartItem.quantity * selectedCartItem.product?.price;
         priceValue.textContent = (selectedItemPrice)?`$${selectedItemPrice}`:"N/A";
@@ -146,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         selectReasonDiv.className="flex flex-col space-y-2 w-full items-start my-3 ";
 
         const selectReason=document.createElement("p");
-        selectReason.className="text-xl font-bold";
+        selectReason.className="text-l font-bold";
         selectReason.textContent="Select Reason for Refund:"
         selectReason.appendChild(redStar.cloneNode(true));
 
@@ -197,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         messageDiv.className="flex flex-col space-y-2 w-full items-start my-3 ";
 
         const messageHeader=document.createElement("h1");
-        messageHeader.className="text-xl font-bold";
+        messageHeader.className="text-l font-bold";
         messageHeader.textContent="Your message:"
         messageHeader.appendChild(redStar.cloneNode(true));
 
@@ -206,8 +207,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         inform.textContent="Please do not include any sensitive information. Information provided in this field will be shared with the asset provider."
         
         const messageInput=document.createElement("textarea");
+        messageInput.required=true;
         messageInput.id="refund-message";
-        messageInput.className="textarea bg-custom-gray textarea-bordered w-full h-52";
+        messageInput.className="textarea bg-custom-gray textarea-bordered w-full h-32";
         messageInput.placeholder="Write your message here..."
 
 
@@ -220,7 +222,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         submitButton.className='btn btn-primary mt-12 mr-4 hover:bg-custom-red hover:text-white self-end';
         submitButton.textContent="Submit Refund Request";
         submitButton.addEventListener("click",()=>{
-            //todo send refund request
+            const reason=selectReasonOptions.value;
+            const message=messageInput.value;
+            const refundRequest={
+                purchaseId:purchase.id,
+                productId:selectedCartItem.product.id,
+                body:message,
+                reason:reason,
+                cartItem: selectedCartItem,
+                user:currnetUser,
+                timeStamp:new Date().toISOString()
+            }
+            const refundRequests=JSON.parse(localStorage.getItem("refundRequests")) || [];
+            refundRequests.push(refundRequest);
+            localStorage.setItem("refundRequests",JSON.stringify(refundRequests));
+            
             closePopUp();
 
         });
