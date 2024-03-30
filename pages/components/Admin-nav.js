@@ -1,12 +1,10 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
-
+ 
 let currnetUser = JSON.parse(localStorage.getItem('currentUser'));
 if(currnetUser===null){
     currnetUser={firstName: "Guest"};
 }
-
-
-class SellerNav extends LitElement {
+class AdminNav extends LitElement {
     static properties = {
         name: {},
       };
@@ -18,7 +16,7 @@ class SellerNav extends LitElement {
         flex-direction: row;
         justify-content: space-between;
         padding: 8px;
-        margin: 8px;
+        margin: 8px, 8px, 0px, 8px;
         align-items: center;
         border-bottom: 1px solid #888; /* Add a border at the bottom */
         font-size: 1.1rem;
@@ -37,7 +35,7 @@ class SellerNav extends LitElement {
     #nav-buttons {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         width: 50%;
         max-width: 30em;
 
@@ -68,7 +66,7 @@ class SellerNav extends LitElement {
     a{
         text-decoration: none;
         color: white;
-        text-wrap: nowrap;**/
+        text-wrap: nowrap;
     }
     #nav-end{
         display: flex;
@@ -89,15 +87,15 @@ class SellerNav extends LitElement {
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="/"><img src="../../media/logo.svg" alt="Logo" width="150" height="50"></a>
+  <a href="/pages/buyer/landingPage/landingPage.html"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
-      <a href="../seller/seller-dashboard.html" class="hover:bg-custom-red">Dashboard</a>
-      <a href="../seller/sellerProducts.html">Products</a>
-      <a href="../seller/addProduct.html" id="add" >Add Item</a>
+      <a href="/pages/admin/admin.html">Home</a>
   </div>
   <div id="nav-end">
   
-  <a id="add" href="../../pages/profile/profile.html" >
+
+  
+  <a href="/pages/profile/profile.html" >
   <div id="profile-icon">
   <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>
@@ -109,16 +107,8 @@ class SellerNav extends LitElement {
   
 }
 
-// const addBtn= document.querySelector('#add')
-// addBtn.addEventListener('click',()=>{
+customElements.define('admin-nav', AdminNav);
 
-//     if (localStorage.getItem('currentUser')) {
-//     localStorage.removeItem('currentUser');
-// }
-//     console.log('clicked')
-// })
-customElements.define('seller-nav', SellerNav);
-
-const tag = document.createElement('seller-nav');
+const tag = document.createElement('admin-nav');
 // tag.name = 'dynamically created';
 // document.body.appendChild(tag);

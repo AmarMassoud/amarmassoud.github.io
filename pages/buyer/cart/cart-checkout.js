@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", async() => {
 let cartItems= JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser= JSON.parse(localStorage.getItem('currentUser')) || {};
 
-if(cartItems.length!==0){
+if(cartItems.length!==0 && cartItems[0].customer===-1){
+    
     cartItems.forEach(item=>{
         item.customer=currentUser.id;
     })
@@ -133,7 +134,10 @@ const cartTotal=()=>{
 
 const renderCartItems=()=>{
 
-    const cartItems= JSON.parse(localStorage.getItem('cart'))||[];
+    let  cartItems= JSON.parse(localStorage.getItem('cart'))||[];
+    cartItems=cartItems.filter(item=>item.customer===currentUser.id);
+
+    
     const CartItemsDiv=document.querySelector('#cart-items');
     CartItemsDiv.replaceChildren();
     if(cartItems.length!==0){
@@ -839,7 +843,7 @@ if(paymentMethod===1){
     localStorage.setItem('currentUser',JSON.stringify(currentUser));
     const users= JSON.parse(localStorage.getItem('user'));
     users.find(user=>user.id===currentUser.id).balance=currentUser.balance;
-    localStorage.setItem('users',JSON.stringify(users));
+    localStorage.setItem('user',JSON.stringify(users));
 }
 return true;
    
