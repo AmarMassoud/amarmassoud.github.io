@@ -12,6 +12,20 @@ class SellerNav extends LitElement {
       };
     static styles = css`
  
+    @media screen and (max-width: 1280px) {
+        :root{
+          font-size: 12px;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        :root{
+          font-size: 10px;
+        }
+    }
+        #logo {
+            max-width: 150px;
+            max-height: 50px;
+        }
    
     .seller-navbar {
         display: flex;
@@ -89,7 +103,7 @@ class SellerNav extends LitElement {
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="/"><img src="../../media/logo.svg" alt="Logo" width="150" height="50"></a>
+  <a href="/"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
   <div id="nav-buttons">
       <a href="../seller/seller-dashboard.html" class="hover:bg-custom-red">Dashboard</a>
       <a href="../seller/sellerProducts.html">Products</a>
