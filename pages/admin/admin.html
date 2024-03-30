@@ -36,7 +36,7 @@
               Sales Summary
             </h2>
             <div
-              class="bg-white w-full rounded-3xl h-44 p-2 grid grid-cols-2 gap-4 mt-10 -sm:flex -sm:flex-col -sm:gap-4 -sm:mt-4"
+              class="bg-white w-full rounded-3xl p-2 grid grid-cols-2 gap-4 mt-10 -sm:flex -sm:flex-col -sm:gap-4 -sm:mt-4 h-fit"
             >
               <div class="flex p-4 h-full">
                 <div>
@@ -68,7 +68,7 @@
               </div>
             </div>
             <div
-              class="bg-white w-full rounded-3xl h-44 p-2 grid grid-cols-2 gap-4 mt-10 -sm:flex -sm:flex-col -sm:gap-4 -sm:mt-4"
+              class="bg-white w-full rounded-3xl p-2 grid grid-cols-2 gap-4 mt-10 -sm:flex -sm:flex-col -sm:gap-4 -sm:mt-4"
             >
               <div class="flex p-4 h-full">
                 <div>
@@ -177,21 +177,59 @@
 
           <!-- <button class="btn bg-custom-gray">Save</button> -->
         </section>
-        <section id="products" class="mx-10">
+        <section id="products" class="mx-10 -sm:mx-4">
           <div
             id="products-header"
-            class="grid grid-cols-10 border-b-2 border-cusotm-gray-500 pb-5 gap-8"
+            class="grid grid-cols-10 border-b-2 border-cusotm-gray-500 pb-5 gap-8 -sm:grid-cols-8 -sm:me-1"
           >
-            <p onclick="" class="cursor-pointer col-span-3 text-center">
+            <p
+              onclick=""
+              class="cursor-pointer col-span-2 text-center flex justify-center items-center hover:bg-custom-red hover:text-white rounded-md text-center mx-10 -sm:col-span-1"
+            >
               Product
             </p>
-            <p onclick="" class="cursor-pointer col-span-1">Price</p>
-            <p onclick="" class="cursor-pointer col-span-1">Stock</p>
-            <p onclick="" class="cursor-pointer col-span-1">Earnings</p>
-            <p onclick="" class="cursor-pointer col-span-1">Sales</p>
-            <p onclick="" class="cursor-pointer col-span-1">Category</p>
-            <p onclick="" class="cursor-pointer col-span-1">Rating</p>
-            <p onclick="" class="cursor-pointer col-span-1">Actions</p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            >
+              Price
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            >
+              Stock
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            >
+              Earnings
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            >
+              Sales
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            >
+              Category
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+            >
+              Rating
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-2 text-center -sm:col-span-1"
+            >
+              Actions
+            </p>
           </div>
           <div id="products-table" class=""></div>
         </section>
