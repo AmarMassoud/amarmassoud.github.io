@@ -316,7 +316,7 @@ console.log(getTotalCustomers())
 
         const users=JSON.parse(localStorage.getItem("user"));
         const user=users.find(user=>user.id===refundReuqest.user.id);
-        user.balance+=refundReuqest.cartItem.quantity * refundReuqest.cartItem.product.price;
+        user.balance+=refundReuqest.cartItem.quantity * (refundReuqest.cartItem.product.price * refundReuqest.cartItem.quantity);
         localStorage.setItem("user",JSON.stringify(users));
 
         const refundRequests=JSON.parse(localStorage.getItem("refundRequests"));
