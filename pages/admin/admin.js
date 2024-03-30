@@ -368,19 +368,29 @@ const renderProduct= (product) =>{
     productInfo.className='col-span-3 grid grid-cols-2 gap-4  ';
     const productPrice=document.createElement('p');
     productPrice.textContent=product.price + '$';
+    productPrice.className='text-center';
+
 
     const productStock=document.createElement('p');
     productStock.textContent=product.stock ;
+    productStock.className='text-center';
+
     
     const productEarnings=document.createElement('p');
     productEarnings.textContent= product.price*product.stock + '$' ;
+    productEarnings.className='text-center';
+
     // needs update
     const productSales=document.createElement('p');
     productSales.textContent=product.stock + '$' ;
+    productSales.className='text-center';
+
     // needs update
 
     const productCategory=document.createElement('p');
     productCategory.textContent=product.category ;
+    productCategory.className='text-center';
+
 
 
     const productRating=document.createElement('p');

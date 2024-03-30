@@ -67,6 +67,7 @@ function showOverlay(products) {
     overlayContent.innerHTML = '';
     const productsAmount = products.length;
     if (products.length > 0 && products.length <= 4) {
+        
         products.forEach(product => {
             overlayContent.appendChild(renderSearchedProductCard(product));
         });
