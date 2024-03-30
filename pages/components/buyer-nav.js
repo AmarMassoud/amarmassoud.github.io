@@ -1,7 +1,8 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
  
 let currnetUser = JSON.parse(localStorage.getItem('currentUser'));
-if(currnetUser===null){
+let isLoggedin = currnetUser===null || currnetUser.id===-1?false:true;
+if(!isLoggedin){
     currnetUser={firstName: "Guest"};
 }
 class BuyerNav extends LitElement {
@@ -102,7 +103,7 @@ class BuyerNav extends LitElement {
   <div  class="seller-navbar">
   <a href="/"><img src="../../../media/logo.svg" alt="Logo" id="logo"></a>
   <div id="nav-buttons">
-      <a href="/">Home</a>
+      <a href="/pages/buyer/landingPage/landingPage.html">Home</a>
       <a id="products" href="/pages/buyer/search/searched-products.html">Products</a>
       <a href="/pages/buyer/cart/cart-checkout.html">Cart</a>
   </div>
@@ -110,13 +111,19 @@ class BuyerNav extends LitElement {
   
 
   
-  <a href="/pages/profile/profile.html" >
+  ${(currnetUser.firstName.charAt(0) == "G")?html`
+  <a href="/pages/account/login.html">=
   <div id="profile-icon">
   <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>
    </div>
-  </div>
-
+  </div>`:
+  html` <a href="/pages/profile/profile.html" >
+    <div id="profile-icon">
+    <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
+     <div></a>
+     </div>
+    </div>`}
     `;
   }
   
