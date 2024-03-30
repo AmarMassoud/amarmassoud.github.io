@@ -91,9 +91,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             lastName,
             email,
             password,
-            role: role,
-            addresses: [],
-            balance: 0,
+            role: role
         }
 
         if (!checkExist(email)) {

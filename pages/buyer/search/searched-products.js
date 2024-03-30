@@ -2,15 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { firstName: "Guest", id: -1 };
     document.querySelector("#nav").textContent = currentUser.firstName.charAt(0);
 
-    var searchedProducts = JSON.parse(localStorage.getItem('searchedProducts')) || JSON.parse(localStorage.getItem('products'));
+    var searchedProducts = JSON.parse(localStorage.getItem('searchedProducts')) || [];
     document.querySelector("#sort-products").textContent = "Products ("+searchedProducts.length+")";
-
-
-
-
-
-
-
 
     var productsContainer = document.querySelector('#products');
 
@@ -211,7 +204,7 @@ categoryContainer.appendChild(categoryLabel);
 document.querySelector("#filters").appendChild(categoryContainer);
 
 
-const products = JSON.parse(localStorage.getItem('searchedProducts'))|| JSON.parse(localStorage.getItem('products'));
+const products = JSON.parse(localStorage.getItem('searchedProducts'));
 let categories = products.map(product => product.category);
 categories = [...new Set(categories)];
 categories.forEach(category => {
@@ -335,17 +328,9 @@ const showToast=(message, color)=>{
 const renderProducts = (products) => {
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = '';
-    if(products.length!==0)
     products.forEach(product => {
         productsContainer.appendChild(renderProductCard(product));
     });
-    else {
-        const noProducts = document.createElement('h2');
-        noProducts.textContent = "No products found";
-        noProducts.className = "text-2xl text-gray-600";
-        productsContainer.appendChild(noProducts);
-    
-    }
 }
 const renderProductCard=(product)=>{
     const inStock=product.stock>1;
@@ -356,7 +341,7 @@ const renderProductCard=(product)=>{
     figure.className="h-[14rem] "
     const img = document.createElement('img');
     img.className='  h-[14rem] object-contain  self-start'
-    img.src = product.thumbnail; 
+    img.src = product.images[0]; 
     img.alt = product.title;
     figure.appendChild(img);
     

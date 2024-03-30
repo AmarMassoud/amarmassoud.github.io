@@ -21,7 +21,7 @@ let products=[]
         }
     currentProduct=JSON.parse(currentProduct);
     let images=[...currentProduct.images];
-    let currentImage=currentProduct.thumbnail;
+    let currentImage=images[0];
 
     const comments=JSON.parse(localStorage.getItem('comments'));
 
@@ -50,7 +50,7 @@ let products=[]
     const updateProduct=(product)=>{
         currentProduct=product;
         images=[...currentProduct.images];
-        currentImage=currentProduct.thumbnail;
+        currentImage=images[0];
     };
 
     let desiredQuanitiy=1;

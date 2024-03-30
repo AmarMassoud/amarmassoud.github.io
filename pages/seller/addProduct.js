@@ -3,18 +3,6 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     const addImageBtn =document.getElementById('add-file');
 
-    const currentUser=JSON.parse(localStorage.getItem("currentUser"));
-
-    if(currentUser.role === "ADMIN") {
-      document.querySelector("#nav").innerHTML = "<admin-nav name=\"Wardan\" id=\"nav\"> </admin-nav>"
-      // document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
-  } else if(currentUser.role === "SELLER") {
-      document.querySelector("#nav").innerHTML = "<seller-nav name=\"Wardan\" id=\"nav\"> </seller-nav>"
-      document.querySelector("#history").href = "../seller/seller-history.html"
-  }
-
-
-
 let images=[]
 
 
@@ -225,11 +213,11 @@ requestCategoryBtn.addEventListener("click", function() {
 });
 
 
-// const onDelete=(productId) => {
-// const storedProducts= JSON.parse(localStorage.getItem('products'));
-// const updatedProducts= storedProducts.filter(p=> p.id !== productId);
-// localStorage.setItem('products',JSON.stringify(updatedProducts));
-// }
+const onDelete=(productId) => {
+const storedProducts= JSON.parse(localStorage.getItem('products'));
+const updatedProducts= storedProducts.filter(p=> p.id !== productId);
+localStorage.setItem('products',JSON.stringify(updatedProducts));
+}
 
 const onSave = async () => {
 
@@ -291,10 +279,7 @@ if (categoryRequest!==''){
 }
 
 localStorage.removeItem('currentProduct');
-if(currentUser.role==='SELLER'){
 window.location.href = '/pages/seller/sellerProducts.html';
-}else{window.location.href = '/pages/admin/admin.html';
-}
 
 
 }

@@ -83,7 +83,7 @@ const currentUser=JSON.parse(localStorage.getItem("currentUser"));
 
 const getTotalSales = () => {
   console.log('purchases',JSON.parse(localStorage.getItem('purchasedItems')))
-  const purchases= JSON.parse(localStorage.getItem('purchasedItems'))||[]
+  const purchases= JSON.parse(localStorage.getItem('purchasedItems'))
   const userPurchase= purchases.filter(purchase=> purchase.deals.some(deal=>deal.seller.id===currentUser.id));
   const userDeals = [];
 
@@ -110,7 +110,7 @@ const getTotalSales = () => {
 
 
 const getTotalCustomers = () => {
-  const purchases = JSON.parse(localStorage.getItem('purchasedItems'))||[];
+  const purchases = JSON.parse(localStorage.getItem('purchasedItems'));
   const customerIds = new Set();
 
   purchases.forEach((purchase) => {
@@ -126,46 +126,6 @@ const getTotalCustomers = () => {
 
 console.log(getTotalCustomers())
 
-const deleteDeal = (purchaseId) => {
-  console.log('purchases', JSON.parse(localStorage.getItem('purchasedItems')))
-  const purchases = JSON.parse(localStorage.getItem('purchasedItems')) || [];
-  const purchaseIndex = purchases.findIndex(purchase => purchase.id === purchaseId);
-  
-  if (purchaseIndex !== -1) {
-    console.log('purchaseIndex', purchaseIndex);
-
-    const purchaseToDelete = purchases[purchaseIndex];
-    const dealToDeleteIndex = purchaseToDelete.deals.findIndex(deal => deal.seller.id === currentUser.id);
-    console.log('dealToDelete', dealToDeleteIndex);
-
-
-    if (dealToDeleteIndex !== -1) {
-      const dealToDelete = purchaseToDelete.deals[dealToDeleteIndex];
-      console.log('dealToDelete', dealToDelete);
-      const refundRequests=JSON.parse(localStorage.getItem("refundRequests")) || [];
-      const refundRequest=refundRequests.find(request=>request.purchaseId===purchaseId);
-      console.log('purchaseId', refundRequest.purchaseId);
-
-
-
-      const itemIndex = dealToDelete.items.findIndex(item => item.product.id === refundRequest.productId);
-
-      console.log('itemIndex', itemIndex);
-
-      if (itemIndex !== -1) {
-        dealToDelete.items.splice(itemIndex, 1);
-        if (dealToDelete.items.length === 0) {
-          purchaseToDelete.deals.splice(dealToDeleteIndex, 1);
-        }
-        if (purchaseToDelete.deals.length === 0) {
-          purchases.splice(purchaseIndex, 1);
-        }
-
-        localStorage.setItem('purchasedItems', JSON.stringify(purchases));
-      }
-    }
-  }
-}
 
 
 
@@ -359,19 +319,11 @@ const deleteDeal = (purchaseId) => {
         user.balance+=refundReuqest.cartItem.quantity * refundReuqest.cartItem.product.price;
         localStorage.setItem("user",JSON.stringify(users));
 
-        let refundRequests=JSON.parse(localStorage.getItem("refundRequests"));
-        // const index=refundRequests.findIndex(request=>request.id===refundReuqest.id);
-        // refundRequests=refundRequests.splice(index,1);
-        deleteDeal(refundReuqest.purchaseId)
-
-        refundRequests=refundRequests.filter(request=>request.id!==refundReuqest.id);
+        const refundRequests=JSON.parse(localStorage.getItem("refundRequests"));
+        const index=refundRequests.findIndex(request=>request.id===refundReuqest.id);
+        refundRequests.splice(index,1);
         localStorage.setItem("refundRequests",JSON.stringify(refundRequests));
-        console.log(refundReuqest.purchaseId)
-
           closePopUp();
-          renderRequests();
-          rednderTotalSales();
-          totalCustomers();
       });
 
       const rejectButton=document.createElement("button");
@@ -380,7 +332,7 @@ const deleteDeal = (purchaseId) => {
       rejectButton.addEventListener("click",()=>{
         const refundRequests=JSON.parse(localStorage.getItem("refundRequests"));
         const index=refundRequests.findIndex(request=>request.id===refundReuqest.id);
-        // refundRequests.splice(index,1);
+        refundRequests.splice(index,1);
         localStorage.setItem("refundRequests",JSON.stringify(refundRequests));
         closePopUp();
         renderRequests();
@@ -446,7 +398,7 @@ const deleteDeal = (purchaseId) => {
   };
 
   const renderComments = () => {
-if(comments.length!==0){
+
     const commentsDiv = document.querySelector("#latest-comments");
     commentsDiv.replaceChildren();
 
@@ -457,36 +409,17 @@ if(comments.length!==0){
 
     displayComments.forEach((comment) =>
       commentsDiv.appendChild(renderComment(comment))
-    );}else {
-
-      const commentsDiv = document.querySelector("#latest-comments");
-      commentsDiv.replaceChildren();
-      commentsDiv.className='h-[46.375rem]  flex flex-col justify-center items-center'
-      const noComments= document.createElement("p");
-      noComments.className="text-2xl font-bold text-center  text-gray-500  ";
-      noComments.innerHTML="No requests at the Moment"
-
-      const noCommentsIcon= document.createElement("i");
-      noCommentsIcon.className="fa-solid fa-check text-5xl text-gray-500"
-     
-      commentsDiv.appendChild(noComments);
-      commentsDiv.appendChild(noCommentsIcon);
-    }
-      
-    
+    );
   };
 
   const rednderTotalSales = () => {
     const totalSalesDiv = document.querySelector("#total-sales-div");
-    // totalSalesDiv.replaceChildren();
 
     const totalSales = document.createElement("h3");
-    totalSales.replaceChildren
     totalSales.classList.add("text-5xl", "font-bold", "ms-3");
     totalSales.textContent =  '$'+ getTotalSales() ;
 
     totalSalesDiv.appendChild(totalSales);
-
     
   };
 
@@ -495,10 +428,8 @@ if(comments.length!==0){
 
     // const purchases= JSON.parse(localStorage.getItem('purchases')).find(purchase=>purchase.sellerId===currentUser.id);
     const totalCustomersDiv = document.querySelector("#total-customers-div");
-    // totalCustomersDiv.replaceChildren();
-    const totalCustomers=document.createElement("h3");
-    totalCustomers.replaceChildren
 
+    const totalCustomers=document.createElement("h3");
     totalCustomers.classList.add("text-5xl", "font-bold", "ms-3");
     totalCustomers.textContent=getTotalCustomers();
 
@@ -564,12 +495,11 @@ if(comments.length!==0){
   };
 
   const renderRequests = () => {
-    const refundRequests=JSON.parse(localStorage.getItem("refundRequests")) || [];
 
-if(refundRequests.length!==0){
     const commentsDiv = document.querySelector("#refund-requests");
     commentsDiv.replaceChildren();
 
+    const refundRequests=JSON.parse(localStorage.getItem("refundRequests")) || [];
 
     let displayRequests=[]
     for (let i = 0; i < 3; i++) {
@@ -580,21 +510,7 @@ if(refundRequests.length!==0){
 
     displayRequests.forEach((refundRequest) =>
       commentsDiv.appendChild(renderRequest(refundRequest))
-    );}else {
-
-      const commentsDiv = document.querySelector("#refund-requests");
-      commentsDiv.replaceChildren();
-      commentsDiv.className='h-[46.375rem]  flex flex-col justify-center items-center'
-      const noRequests= document.createElement("p");
-      noRequests.className="text-2xl font-bold text-center  text-gray-500  ";
-      noRequests.innerHTML="No requests at the Moment"
-
-      const noRequestsIcon= document.createElement("i");
-      noRequestsIcon.className="fa-solid fa-check text-5xl text-gray-500"
-     
-      commentsDiv.appendChild(noRequests);
-      commentsDiv.appendChild(noRequestsIcon);
-    }
+    );
   };
 
 

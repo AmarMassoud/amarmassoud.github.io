@@ -458,10 +458,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const cardsDiv = document.querySelector("#card-div");
     cardsDiv.className="flex flex-col space-y-4 my-5";
-    let purchaseByUser=purchasedItems.filter((purchase)=>purchase.deals[0].customer.id===currnetUser.id) //todo change to ===
-    purchaseByUser= purchaseByUser.sort((a, purchase) =>  a.timeStamp  -purchase.timeStamp );
-
-
+    const purchaseByUser=purchasedItems.filter((purchase)=>purchase.deals[0].customer.id===currnetUser.id) //todo change to ===
     purchaseByUser.forEach((purchase) => {
         cardsDiv.appendChild(renderCard(purchase));
     });
