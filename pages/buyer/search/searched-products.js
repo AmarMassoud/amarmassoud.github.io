@@ -238,7 +238,7 @@ document.querySelector("#title-reverse").addEventListener("click",()=>{
 
 document.querySelector("#price").addEventListener("click",()=>{
     const products = JSON.parse(localStorage.getItem("searchedProducts"))
-    const selectedProducts = products.sort((a,b)=>a.price-b.price);
+    const selectedProducts = products.sort((a,b)=>b.price-a.price);
     localStorage.setItem('searchedProducts',JSON.stringify(selectedProducts));
     document.querySelector("#sort-products").textContent = "Products ("+selectedProducts.length+")";
     renderProducts(selectedProducts);
@@ -248,7 +248,7 @@ document.querySelector("#price").addEventListener("click",()=>{
 
 document.querySelector("#price-reverse").addEventListener("click",()=>{
     const products = JSON.parse(localStorage.getItem("searchedProducts"))
-    const selectedProducts = products.sort((a,b)=>b.price-a.price);
+    const selectedProducts = products.sort((a,b)=>a.price-b.price);
     localStorage.setItem('searchedProducts',JSON.stringify(selectedProducts));
     document.querySelector("#sort-products").textContent = "Products ("+selectedProducts.length+")";
     renderProducts(selectedProducts);
@@ -267,7 +267,7 @@ document.querySelector("#rating").addEventListener("click",()=>{
 });
 
 document.querySelector("#rating-reverse").addEventListener("click",()=>{
-    const products = JSON.parse(localStorage.getItem("products"))
+    const products = JSON.parse(localStorage.getItem("searchedProducts"))
     const selectedProducts = products.sort((a,b)=>a.rating-b.rating);
     localStorage.setItem('searchedProducts',JSON.stringify(selectedProducts));
     document.querySelector("#sort-products").textContent = "Products ("+selectedProducts.length+")";
