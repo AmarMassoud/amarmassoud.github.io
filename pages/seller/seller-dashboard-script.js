@@ -134,6 +134,225 @@ console.log(getTotalCustomers())
   console.log(currentUser.firstName)
     select.setAttribute("name",currentUser.firstName)
 
+    const renderRefundPopup = (refundReuqest) => {
+        
+      const refundPopUpDiv = document.querySelector('#refund-pop-up');
+      refundPopUpDiv.replaceChildren();
+
+      const refundPopUp = document.createElement('dialog');
+      refundPopUpDiv.appendChild(refundPopUp);
+  
+      refundPopUp.className = 'self-center justify-self-center modal bg-white rounded-lg p-4 flex flex-col  p-6 max-w-[50rem] max-h-[800px] overflow-y-scroll';
+      refundPopUp.replaceChildren();
+
+      const closeButton = document.createElement('button');
+      closeButton.className = 'text-custom-red float-right self-end hover:text-red-700';
+      closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" 
+      stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/>
+      <path d="m6 6 12 12"/></svg>`;
+      
+      refundPopUp.showModal();
+
+      const closePopUp = () => {
+          refundPopUp.close();
+      };
+      closeButton.addEventListener('click', closePopUp);
+
+      const title = document.createElement('h1');
+      title.className = 'text-2xl font-bold self-start';
+      title.textContent = 'Selected Item:';
+
+
+      const redStar=document.createElement("span");
+      redStar.textContent="*";
+      redStar.className="text-custom-red";
+
+      title.appendChild(redStar);
+
+
+      const cartItemsDiv=document.createElement("div");
+      // Adding a max height and vertical overflow auto for vertical scrolling
+    cartItemsDiv.className="flex flex-row    px-5 max-w-[42rem] min-h-52";
+
+
+
+          const card = document.createElement("div");
+          card.className = `
+          border-2
+          border-custom-gray
+          mx-2
+          min-w-52 h-52 bg-white 
+          flex flex-col space-y-2
+          cursor-pointer 
+          bg-custom-gray 
+          rounded-lg shadow-md 
+          justify-center items-center  border-custom-red `;
+
+          
+          const image = document.createElement("img");
+          image.src = refundReuqest.cartItem.product.images[0];
+          image.className = "object-scale-down w-[7rem] h-[7rem]";
+
+
+          const details = document.createElement("p");
+          details.className = "text-sm font-bold text-center";
+          details.textContent = `${refundReuqest.cartItem.product.title} x ${refundReuqest.cartItem.quantity}`;
+
+
+
+          card.appendChild(image);
+          card.appendChild(details);
+
+          cartItemsDiv.appendChild(card);
+
+
+
+
+
+
+      const detailsDiv=document.createElement("div");
+      detailsDiv.className="flex flex-col space-y-2 w-full items-start my-6 ";
+
+      const orderDate=document.createElement("p");
+      orderDate.className="text-sm";
+      orderDate.textContent="Order Date:"
+
+      const dateValue = document.createElement("span");
+      dateValue.className = "text-sm font-bold";
+      dateValue.textContent = refundReuqest.timeStamp.split("T")[0];
+
+      orderDate.appendChild(dateValue);
+  
+      const quantityPriceDiv = document.createElement("div");
+      quantityPriceDiv.className="flex flex-row space-x-2 ";
+
+      const quantity = document.createElement("p");
+      quantity.className = "text-sm";
+      quantity.textContent = "Quantity: ";
+
+      const quantityValue = document.createElement("span");
+      quantityValue.className = "text-sm font-bold";
+      quantityValue.textContent = refundReuqest.cartItem.quantity||"N/A";
+
+      quantity.appendChild(quantityValue);
+
+      const price = document.createElement("p");
+      price.className = "text-sm";
+      price.textContent = "Price: ";
+
+      const priceValue = document.createElement("span");
+      priceValue.className = "text-sm font-bold";
+      console
+      const selectedItemPrice=refundReuqest.cartItem.quantity * refundReuqest.cartItem.product?.price;
+      priceValue.textContent = (selectedItemPrice)?`$${selectedItemPrice}`:"N/A";
+
+      price.appendChild(priceValue);
+
+      quantityPriceDiv.appendChild(quantity);
+      quantityPriceDiv.appendChild(price);
+
+      detailsDiv.appendChild(orderDate);
+      detailsDiv.appendChild(quantityPriceDiv);
+
+      const selectReasonDiv=document.createElement("div");
+      selectReasonDiv.className="flex flex-col space-y-2 w-full items-start my-3 ";
+
+      const selectReason=document.createElement("p");
+      selectReason.className="text-l font-bold";
+      selectReason.textContent="Reason for Refund:"
+      selectReason.appendChild(redStar.cloneNode(true));
+
+      const selectReasonOptions=document.createElement("select");
+      //make selectedReasonOptions static
+      selectReasonOptions.disabled=true;
+      selectReasonOptions.className="select select-bordered w-full bg-custom-gray text-black";
+
+
+      const option1=document.createElement("option");
+      option1.value=refundReuqest.reason;
+      option1.textContent=refundReuqest.reason;
+      option1.selected=true;
+      
+
+      selectReasonOptions.appendChild(option1);
+
+
+
+
+      selectReasonDiv.appendChild(selectReason);
+      selectReasonDiv.appendChild(selectReasonOptions);
+
+
+      const messageDiv=document.createElement("div");
+      messageDiv.className="flex flex-col space-y-2 w-full items-start my-3 ";
+
+      const messageHeader=document.createElement("h1");
+      messageHeader.className="text-l font-bold";
+      messageHeader.textContent="Refund message:"
+      messageHeader.appendChild(redStar.cloneNode(true));
+
+      const inform=document.createElement("p");
+      inform.className="text-xs text-gray-400";
+      inform.textContent="Please do not include any sensitive information. Information provided in this field will be shared with the asset provider."
+      
+      const messageInput=document.createElement("textarea");
+      messageInput.disabled=true;
+      messageInput.className="textarea bg-custom-gray textarea-bordered w-full h-32";
+      messageInput.textContent=refundReuqest.body;
+
+
+      messageDiv.appendChild(messageHeader);
+      messageDiv.appendChild(inform);
+      messageDiv.appendChild(messageInput);
+      
+      acceptRejectButtonsDiv=document.createElement("div");
+      acceptRejectButtonsDiv.className="flex flex-row space-x-2 w-full justify-end my-3 ";
+
+      const acceptButton=document.createElement("button");
+      acceptButton.className='btn btn-primary mt-12 mr-4 hover:bg-green-600 hover:text-white self-end';
+      acceptButton.textContent="Accept";
+      acceptButton.addEventListener("click",()=>{
+
+        const users=JSON.parse(localStorage.getItem("user"));
+        const user=users.find(user=>user.id===refundReuqest.user.id);
+        user.balance+=refundReuqest.cartItem.quantity * refundReuqest.cartItem.product.price;
+        localStorage.setItem("user",JSON.stringify(users));
+
+        const refundRequests=JSON.parse(localStorage.getItem("refundRequests"));
+        const index=refundRequests.findIndex(request=>request.id===refundReuqest.id);
+        refundRequests.splice(index,1);
+        localStorage.setItem("refundRequests",JSON.stringify(refundRequests));
+          closePopUp();
+      });
+
+      const rejectButton=document.createElement("button");
+      rejectButton.className='btn btn-primary mt-12 hover:bg-red-600 hover:text-white self-end';
+      rejectButton.textContent="Reject";
+      rejectButton.addEventListener("click",()=>{
+        const refundRequests=JSON.parse(localStorage.getItem("refundRequests"));
+        const index=refundRequests.findIndex(request=>request.id===refundReuqest.id);
+        refundRequests.splice(index,1);
+        localStorage.setItem("refundRequests",JSON.stringify(refundRequests));
+        closePopUp();
+        renderRequests();
+      });
+
+      acceptRejectButtonsDiv.appendChild(rejectButton);
+      acceptRejectButtonsDiv.appendChild(acceptButton);
+
+
+      refundPopUp.appendChild(closeButton);
+      refundPopUp.appendChild(title);
+      refundPopUp.appendChild(cartItemsDiv);
+      refundPopUp.appendChild(detailsDiv);
+      refundPopUp.appendChild(selectReasonDiv);
+      refundPopUp.appendChild(messageDiv);
+      refundPopUp.appendChild(acceptRejectButtonsDiv);
+      
+
+  };
+
   const renderComment = (comment) => {
 
     const commentDiv = document.createElement("div");
@@ -218,7 +437,8 @@ console.log(getTotalCustomers())
 
   }
   
-  const renderRequest = (comment) => {
+  const renderRequest = (refundRequest) => {
+    console.log(refundRequest)
 
     const requestDiv = document.createElement("div");
     requestDiv.classList.add(
@@ -246,19 +466,20 @@ console.log(getTotalCustomers())
 
     const name = document.createElement("h3");
     name.classList.add("text-xl", "font-semibold");
-    name.textContent = comment.user.firstName + " " + comment.user.lastName;
+    name.textContent = refundRequest.user.firstName + " " + refundRequest.user.lastName;
 
     const product = document.createElement("p");
     product.classList.add("text-sm");
-    product.textContent = products.find((product) => product.id===comment.productId).title;
+    product.textContent = products.find((product) => product.id===refundRequest.productId).title;
 
     const commentP = document.createElement("p");
     commentP.classList.add("mt-3");
-    commentP.textContent = comment.body;
+    commentP.textContent = refundRequest.body;
 
     const moreDetails = document.createElement("button");
     moreDetails.className = "text-bs font-semibold text-black-500 bg-white py-2 px-10 rounded-xl hover:text-white  hover:bg-custom-red mt-5 text-nowrap ";
     moreDetails.textContent = 'More Details';
+    moreDetails.addEventListener('click', ()=>{renderRefundPopup(refundRequest)});
 
 
 
@@ -278,13 +499,17 @@ console.log(getTotalCustomers())
     const commentsDiv = document.querySelector("#refund-requests");
     commentsDiv.replaceChildren();
 
+    const refundRequests=JSON.parse(localStorage.getItem("refundRequests")) || [];
+
     let displayRequests=[]
     for (let i = 0; i < 3; i++) {
-      displayRequests.push(comments[i]);
+      if(refundRequests[i]){
+        displayRequests.push(refundRequests[i]);
+      }
     }
 
-    displayRequests.forEach((comment) =>
-      commentsDiv.appendChild(renderRequest(comment))
+    displayRequests.forEach((refundRequest) =>
+      commentsDiv.appendChild(renderRequest(refundRequest))
     );
   };
 
