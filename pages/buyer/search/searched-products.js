@@ -293,31 +293,38 @@ document.querySelector("#rating-reverse").addEventListener("click",()=>{
 
 
 const addToCart=(product)=>{
+    
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { firstName: "Guest", id: -1 };
 
     const cartItems=JSON.parse(localStorage.getItem('cart')) || [];
     let inCart= cartItems.find(item=>item.product.id===product.id);
     console.log(product.id)
     console.log(inCart)
-    if(!inCart){
+    if(!inCart ){
     const cartItem={
         product:product,
         quantity:1,
         customer:currentUser.id,
         dealId:null
-
-    
     }
     cartItems.push(cartItem);
  showToast('Product added to cart','bg-green-200');
-}else{
+}
+else if(inCart.quantity<inCart.product.stock){
+
     inCart.quantity++;
     showToast('Product added to cart','bg-green-200');
 
 }
-    localStorage.setItem('cart',JSON.stringify(cartItems));
+else{
+    showToast('Your reached max stock','bg-red-200');
 
 }
+localStorage.setItem('cart',JSON.stringify(cartItems));
+
+
+}
+
 const showToast=(message, color)=>{
     const toastContainer = document.getElementById('toast-container');
     toastContainer.classList.remove('hidden');
@@ -327,6 +334,8 @@ const showToast=(message, color)=>{
     toastAlert.classList.add(color);
 
     setTimeout(() => {
+    toastAlert.classList.remove(color);
+
       toastContainer.classList.add('hidden');
     }, 3000);
 }

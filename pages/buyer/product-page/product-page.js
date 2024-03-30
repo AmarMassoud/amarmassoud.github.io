@@ -71,6 +71,8 @@ let products=[]
         toastAlert.classList.add(color);
     
         setTimeout(() => {
+    toastAlert.classList.remove(color);
+
           toastContainer.classList.add('hidden');
         }, 3000);
     }
@@ -569,21 +571,36 @@ const renderComments=()=>{
 };
 
     const addToCart=(product,quantity=1)=>{
+
         const cartItems=JSON.parse(localStorage.getItem('cart')) || [];
         let inCart= cartItems.find(item=>item.product.id===product.id);
-        if(!inCart){
+        console.log(product.id)
+        console.log(inCart)
+        if(!inCart ){
         const cartItem={
             product:product,
-            quantity:quantity,
+            quantity:1,
             customer:currentUser.id,
             dealId:null
         }
         cartItems.push(cartItem);
-        showToast('Product added to cart','bg-green-200');
-    }else{
-        inCart.quantity+=quantity;
+     showToast('Product added to cart','bg-green-200');
     }
-        localStorage.setItem('cart',JSON.stringify(cartItems));
+    else if(inCart.quantity<inCart.product.stock){
+    
+        inCart.quantity+=quantity;
+
+        showToast('Product added to cart','bg-green-200');
+    
+    }
+    else{
+        showToast('Your reached max stock','bg-red-200');
+    
+    }
+    localStorage.setItem('cart',JSON.stringify(cartItems));
+    
+
+        
     };
     const goToCategoryPage=(product)=>{
         
