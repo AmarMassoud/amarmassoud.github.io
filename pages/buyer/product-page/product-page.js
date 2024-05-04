@@ -80,7 +80,8 @@ let products=[]
 
 const renderProductDetails = () => {
     document.title = currentProduct.title;
-    const productInStock=currentProduct.stock>=1;
+    const productInStock=currentProduct.stock>=
+1;
 
     const producDetailsDiv= document.querySelector("#product-details");
     producDetailsDiv.replaceChildren();
