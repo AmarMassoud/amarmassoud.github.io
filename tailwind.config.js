@@ -3,7 +3,7 @@ const withMT = require("@material-tailwind/html/utils/withMT");
 module.exports = withMT({
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/public/**/*.{html,js}", // Add the public folder here
+    "./public/**/*.{html,js}", // Add the public folder here
   ],
   theme: {
     extend: {
@@ -37,14 +37,5 @@ module.exports = withMT({
   daisyui: {
     themes: [],
   },
-  purge: {
-    enabled: true,
-    content: [
-      "./app/**/*.{js,ts,jsx,tsx,mdx}",
-      "./app/public/**/*.{html,js}", // Add the public folder here
-    ],
-    safelist: [
-      "@media screen and (max-width: 1024px) { :root { font-size: 12px; } }",
-    ],
-  },
+  
 });
