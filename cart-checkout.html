@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="./scripts/footer.js"></script>
+    <script type="module" src="./scripts/buyer-nav.js"></script>
+    <script type="module" src="./scripts/cart-checkout.js"></script>
+    <link rel="stylesheet" href="./output.css" />
+    <!-- <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script> -->
+    <!-- <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/script-name.js"></script> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <buyer-nav name="Wardan" id="nav"> </buyer-nav>
+    </nav>
+
+    <main class="grid grid-cols-4 gap-8 mx-10 mt-10 -lg:flex -lg:flex-col">
+      <section id="cart" class="rounded-3xl h-[45rem] col-span-3 shadow-2xl">
+        <h1 class="font-bold text-3xl m-8">Shopping Cart</h1>
+        <div
+          id="items-head"
+          class="grid grid-cols-10 mx-10 border-b-2 pb-1 border-gray-300"
+        >
+          <div class="col-start-1 col-end-6 -sm:col-start-1 -sm:col-end-5">
+            Product
+          </div>
+          <div class="col-span-2 text-center">Quantity</div>
+          <div class="col-span-2 text-center -sm:col-start-7 -sm:col-end-9">
+            Total
+          </div>
+        </div>
+        <div id="cart-items" class="mx-10 overflow-auto h-[30rem]"></div>
+        <div id="cart-total-div" class="grid justify-items-end">
+          <h2 class="text-xl m-10 text-end" id="cart-total-h">
+            Cart Total: <span id="cart-total" class="font-bold"></span>
+          </h2>
+        </div>
+      </section>
+      <section class="bg-custom-red rounded-3xl h-[45rem] col-span-1 relative">
+        <div id="checkout" class="p-5 h-full">
+          <p class="text-white text-md font-semibold">
+            Checkout Step: <span id="checkout-step-no"></span>/2
+          </p>
+          <h1 id="checkout-step"></h1>
+          <div id="checkout-div" class="h-full"></div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <web-footer> </web-footer>
+    </footer>
+  </body>
+</html>

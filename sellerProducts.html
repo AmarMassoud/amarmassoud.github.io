@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./output.css" />
+
+    <script type="text/javascript" src="./scripts/sellerProducts.js"></script>
+    <script type="module" src="scripts/sellernav.js"></script>
+    <script type="module" src="scripts/footer.js"></script>
+    <script
+      src="https://kit.fontawesome.com/056ea1a590.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+    <title>Document</title>
+  </head>
+  <body class="min-h-screen flex justify-between flex-col">
+    <div>
+      <nav>
+        <seller-nav name="Wardan" class="" id="sellerNav"> </seller-nav>
+      </nav>
+      <section
+        class="flex items-center mx-10 my-4 bg-custom-gray rounded-xl px-20"
+        id="top-section"
+      >
+        <label class="input input-bordered flex items-center gap-2">
+          <input type="text" class="grow" placeholder="Search" id="search" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="w-4 h-4 opacity-70"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </label>
+        <p
+          class="text-3xl text-bold bg-custom-gray p-4 rounded-2xl text-center w-full"
+        >
+          Products
+        </p>
+  
+        <!-- <button class="btn bg-custom-gray">Save</button> -->
+      </section>
+      <div class="">
+        <section id="products" class="mx-10 -sm:mx-4">
+          <div
+            id="products-header"
+            class="grid grid-cols-10 border-b-2 border-cusotm-gray-500 pb-5 gap-8 -sm:grid-cols-8 -sm:me-1"
+          >
+            <p
+              onclick=""
+              class="cursor-pointer col-span-2 text-center flex justify-center items-center hover:bg-custom-red hover:text-white rounded-md text-center mx-10 -sm:col-span-1"
+              id="product-header"
+            >
+              Product
+            </p>
+  
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+              id="price-header"
+            >
+              Price
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+              id="stock-header"
+            >
+              Stock
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+              id="earnings-header"
+            >
+              Earnings
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+              id="sales-header"
+            >
+              Sales
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+              id="category-header"
+            >
+              Category
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-1 hover:bg-custom-red hover:text-white rounded-md text-center"
+              id="rating-header"
+            >
+              Rating
+            </p>
+            <p
+              onclick=""
+              class="cursor-pointer col-span-2 text-center -sm:col-span-1"
+            >
+              Actions
+            </p>
+          </div>
+          <div id="products-table" class=""></div>
+        </section>
+      </div>
+      <footer>
+    </div>
+      <web-footer class="flex-shrink-0 w-full"></web-footer>
+    </footer>
+  </body>
+</html>
