@@ -89,13 +89,13 @@ class AdminNav extends LitElement {
   <div  class="admin-navbar">
   <a href="/index.html"><img src="../../../media/logo.svg" alt="Logo" width="150" height="50"></a>
   <div id="nav-buttons">
-      <a href="/pages/admin/admin.html">Home</a>
+      <a href="../admin.html">Home</a>
   </div>
   <div id="nav-end">
   
 
   
-  <a href="/pages/profile/profile.html" >
+  <a href="../profile.html" >
   <div id="profile-icon">
   <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 if (currentUser.id === -1) {
     const profileButton = document.querySelector('#profile-link');
-    profileButton.href = '/pages/account/login.html';
+    profileButton.href = '../login.html';
 }
 
 
@@ -403,17 +403,14 @@ const renderProductCard=(product)=>{
 
     cardBody.addEventListener("click",()=>{
         localStorage.setItem('currentProduct',JSON.stringify(product));
-        window.location.href = '/pages/buyer/product-page/product-page.html';
+        window.location.href = '../product-page.html';
         console.log("test")
     
     });
     img.addEventListener("click",()=>{
         localStorage.setItem('currentProduct',JSON.stringify(product));
-        window.location.href = '/pages/buyer/product-page/product-page.html';
-        console.log("test")
-    
+        window.location.href = '../product-page.html';
     });
-
     return card;
 }
 ;

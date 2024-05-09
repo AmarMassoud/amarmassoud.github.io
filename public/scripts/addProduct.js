@@ -292,8 +292,8 @@ if (categoryRequest!==''){
 
 localStorage.removeItem('currentProduct');
 if(currentUser.role==='SELLER'){
-window.location.href = '/pages/seller/sellerProducts.html';
-}else{window.location.href = '/pages/admin/admin.html';
+window.location.href = '../sellerProducts.html';
+}else{window.location.href = '../admin.html';
 }
 
 

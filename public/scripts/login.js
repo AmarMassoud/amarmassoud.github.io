@@ -119,9 +119,9 @@ document.addEventListener('DOMContentLoaded', async() => {
                 window.location.href = '/';
                 console.log('User:', user);
             } else if (user.role === 'SELLER') {
-                window.location.href = '/pages/seller/seller-dashboard.html';
+                window.location.href = '../seller-dashboard.html';
             }  if(user.role === 'ADMIN') {
-                window.location.href = '/pages/admin/admin.html';
+                window.location.href = '../admin.html';
             }
             // window.location.href = '../../pages/seller/seller-dashboard.html';
         } else {

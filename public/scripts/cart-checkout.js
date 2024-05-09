@@ -235,7 +235,7 @@ if(currentUser.id!==-1){
 const loginButton=document.createElement('a');
 loginButton.textContent='Login';
 loginButton.className='bg-white text-custom-red font-semibold py-2 rounded-3xl hover:bg-opacity-90 mt-10 px-5';
-loginButton.href='/pages/account/login.html';
+loginButton.href='/login.html';
     shippingInfoDiv.className='flex flex-col items-center justify-center';
     shippingInfoDiv.appendChild(noAddresses);
     shippingInfoDiv.appendChild(loginButton);
@@ -574,7 +574,7 @@ cardPaymentForm.addEventListener('input', validateAndToggleSubmit); // Re-valida
 submitButton.addEventListener('click',()=>{
     if(validateCardPaymentForm()){
        if( onCheckout()){
-        window.location.href='/pages/buyer/cart/confirmation.html';
+        window.location.href='../confirmation.html';
     }else {
         alert('please add items to your cart')}
     }
@@ -613,7 +613,7 @@ const renderBalancePayment=()=>{
             if(onCheckout()){
                 // console.log('checked out', onCheckout()    )
 
-            window.location.href='/pages/buyer/cart/confirmation.html';
+            window.location.href='../confirmation.html';
             }else {
                 // console.log('failed out', onCheckout()    )
 

@@ -104,21 +104,21 @@ class BuyerNav extends LitElement {
   <a href="/"><img src="../../../media/logo.svg" alt="Logo" id="logo"></a>
   <div id="nav-buttons">
       <a href="/">Home</a>
-      <a id="products" href="/pages/buyer/search/searched-products.html">Products</a>
-      <a href="/pages/buyer/cart/cart-checkout.html">Cart</a>
+      <a id="products" href="../searched-products.html">Products</a>
+      <a href="../cart-checkout.html">Cart</a>
   </div>
   <div id="nav-end">
   
 
   
   ${(currnetUser.firstName.charAt(0) == "G")?html`
-  <a href="/pages/account/login.html">=
+  <a href="../login.html">=
   <div id="profile-icon">
   <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>
    </div>
   </div>`:
-  html` <a href="/pages/profile/profile.html" >
+  html` <a href="../profile.html" >
     <div id="profile-icon">
     <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
      <div></a>

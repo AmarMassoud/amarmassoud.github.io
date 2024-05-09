@@ -102,15 +102,15 @@ class SellerNav extends LitElement {
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="/pages/seller/seller-dashboard.html"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
+  <a href="../seller-dashboard.html"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
   <div id="nav-buttons">
-      <a href="../seller/seller-dashboard.html" class="hover:bg-custom-red">Dashboard</a>
-      <a href="../seller/sellerProducts.html">Products</a>
-      <a href="../seller/addProduct.html" id="add" >Add Item</a>
+      <a href="../seller-dashboard.html" class="hover:bg-custom-red">Dashboard</a>
+      <a href="../sellerProducts.html">Products</a>
+      <a href="../addProduct.html" id="add" >Add Item</a>
   </div>
   <div id="nav-end">
   
-  <a id="add" href="../../pages/profile/profile.html" >
+  <a id="add" href="../profile.html" >
   <div id="profile-icon">
   <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>

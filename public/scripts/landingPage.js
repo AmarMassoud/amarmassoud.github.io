@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (currentUser === null || currentUser.id === -1) {
     currentUser = { firstName: "Guest", id: -1 };
     const profileButton = document.querySelector("#profile-link");
-    profileButton.href = "/pages/account/login.html";
+    profileButton.href = "../login.html";
 
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
   }
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       viewAll.addEventListener("click", () => {
         console.log(products);
         localStorage.setItem("searchedProducts", JSON.stringify(products));
-        window.location.href = "/pages/buyer/search/searched-products.html";
+        window.location.href = "../searched-products.html";
       });
       overlayContent.appendChild(viewAll);
     } else {
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     searchedProductDiv.addEventListener("click", () => {
       localStorage.setItem("currentProduct", JSON.stringify(product));
-      window.location.href = "/pages/buyer/product-page/product-page.html";
+      window.location.href = "../product-page.html";
     });
 
     return searchedProductDiv;
@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     cardBody.addEventListener("click", () => {
       localStorage.setItem("currentProduct", JSON.stringify(product));
-      window.location.href = "/pages/buyer/product-page/product-page.html";
+      window.location.href = "../product-page.html";
     });
 
     return card;
