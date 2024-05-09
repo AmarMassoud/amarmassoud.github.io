@@ -1,51 +1,50 @@
 const withMT = require("@material-tailwind/html/utils/withMT");
 
-/** @type {import('tailwindcss').Config} */
-
-module.exports =withMT( {
-  content: ["./pages/**/*.{html,js}", "./index.html.{html,js}"],
+module.exports = withMT({
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/public/**/*.{html,js}", // Add the public folder here
+  ],
   theme: {
     extend: {
       colors: {
-      'custom-gray': '#F0F0F0',
-      'custom-coral': '#f36a6b1a',
-      'custom-red': '#F20E0F'
-      
-    },
-    height:{
-      '19rem': '19rem'
-
-    },
-    fontFamily: {
-      inter: ['Inter', 'sans-serif'],
-      
-    },
-    maxHeight:{
-      '45': '35rem'
-    },
-    screens: {
-      '-sm': {'max':'640px'},  // Small screens and up
-      '-md': {'max':'768px'},  // Medium screens and up
-      '-lg': {'max':'1024px'}, // Large screens and up
-      '-xl': {'max':'1208px'}, // Extra large screens and up
+        "custom-gray": "#F0F0F0",
+        "custom-coral": "#f36a6b1a",
+        "custom-red": "#F20E0F",
+      },
+      height: {
+        "19rem": "19rem",
+      },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
+      maxHeight: {
+        45: "35rem",
+      },
+      screens: {
+        "-sm": { max: "640px" },
+        "-md": { max: "768px" },
+        "-lg": { max: "1024px" },
+        "-xl": { max: "1208px" },
+      },
     },
   },
-  },
-  plugins: 
-  [
+  plugins: [
+    require("tailwindcss"),
+    require("autoprefixer"),
     require("daisyui"),
-],
+  ],
   daisyui: {
-
     themes: [],
   },
-  purge:{
+  purge: {
     enabled: true,
-    content: ["./pages/**/*.{html,js}"],
-
+    content: [
+      "./app/**/*.{js,ts,jsx,tsx,mdx}",
+      "./app/public/**/*.{html,js}", // Add the public folder here
+    ],
     safelist: [
-      '@media screen and (max-width: 1024px) { :root { font-size: 12px; } }'
-    ]
-  }
-}
-);
+      "@media screen and (max-width: 1024px) { :root { font-size: 12px; } }",
+    ],
+  },
+});

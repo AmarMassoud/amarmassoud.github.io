@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="./settings.js"></script>
+    <script type="module" src="../../pages/components/sellernav.js"></script>
+    <script type="module" src="../../../pages/components/buyer-nav.js"></script>
+    <script type="module" src="../../pages/components/Admin-nav.js"></script>
+
+    <script type="module" src="../../pages/components/footer.js"></script>
+    <script type="module" src="../../pages/components/settings.js"></script>
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    
+    <div id="nav"></div>
+
+    <div class="m-0 px-0 flex flex-row">
+      <div id="filters" class="bg-custom-gray w-32 p-8 min-h-screen max-h-full  flex flex-col 2 items-center">
+        <ul class="menu w-20 min-h-full bg-base-200 text-base-content">
+          <li>
+            <a href="profile.html" class="px-0 m-auto"
+              ><div
+                id="profile-icon"
+                class="mt-8 flex items-center justify-center w-12 h-12 rounded-full bg-red-600">
+                <h3 id="name2" class="font-bold text-2xl text-white"></h3>
+              </div></a>
+          </li>
+          <li>
+            <a href="settings.html" class="px-0 m-auto">
+              <img src="../../media/Settings.svg" class="mt-8">
+            </a>
+          </li>
+
+          <li>
+            <div id="history-icon" class="px-0 m-auto my-8">
+              <a id="history"><img src="../../../media/history.svg" alt="Logo" width="40" height="32"></a>
+                </div>
+          </li>
+        </ul>
+    </div>
+
+<div id="sections" class="grid grid-cols-2 grid-rows-1 m-6 -md:flex -md:flex-col  -md:items-center gap-64 -md:w-full p-8">
+  <div id="security" class="ml-20 order-last -md:border-t-2 -md:mt-8 -md:w-full -md:ml-0">
+    <div id="header" class="mb-24">
+      <h1 class="font-[500] text-6xl">Security</h1>
+      <h2 class="text-3xl mt-4">Change your security details</h2>
+    </div>
+    <div class="grid grid-cols-3 m-4 " id="passwordDiv">
+      <h1 class="font-semibold text-2xl">Current Password</h1>
+      <div id="security-password" class="flex flex-col items-center">
+        <h2 id="security-password-field" class="text-lg"></h2>
+      </div>
+      <button id="edit-password" class="font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-24 hover:bg-red-700 hover:scale-110">Edit</button>
+    </div>
+
+    <div class="grid grid-cols-3 m-4 gap-4" id="phoneDiv">
+      <h1 class="font-semibold text-2xl">Phone number</h1>
+      <h2 id="security-phone" class="text-lg text-center"></h2>
+      <button id="edit-phone" class="font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-24 hover:bg-red-700 hover:scale-110">Edit</button>
+    </div>
+  </div>
+</div>
+    
+
+
+
+
+
+    </div>
+
+    <!-- <settings-page type=""></settings-page> -->
+    <web-footer></web-footer>
+  </body>
+</html>

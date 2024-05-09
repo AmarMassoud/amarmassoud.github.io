@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script type="text/javascript" src="./profile.js"></script>
+    <script type="module" src="../../pages/components/sellernav.js"></script>
+    <script type="module" src="../../../pages/components/buyer-nav.js"></script>
+    <script type="module" src="../../pages/components/footer.js"></script>
+    <script type="module" src="../../pages/components/Admin-nav.js"></script>
+
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Edit your profile</title>
+  </head>
+  <body>
+    <div id="nav"></div>
+
+    <div class="m-0 px-0 flex flex-row">
+      <div
+        id="filters"
+        class="bg-custom-gray w-32 p-8 min-h-screen max-h-full flex flex-col 2 items-center"
+      >
+        <ul class="menu w-20 min-h-full bg-base-200 text-base-content">
+          <li>
+            <a href="profile.html" class="px-0 m-auto"
+              ><div
+                id="profile-icon"
+                class="mt-8 flex items-center justify-center w-12 h-12 rounded-full bg-red-600">
+                <h3 id="name2" class="font-bold text-2xl text-white"></h3></div
+            ></a>
+          </li>
+          <li>
+            <a href="settings.html" class="px-0 m-auto">
+              <img src="../../media/Settings.svg" class="mt-8" />
+            </a>
+          </li>
+
+          <li>
+            <div id="history-icon" class="px-0 m-auto my-8">
+              <a id="history"
+                ><img
+                  src="../../../media/history.svg"
+                  alt="Logo"
+                  width="40"
+                  height="32"
+              /></a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div id="profile" class="w-2/3 -xl:w-full">
+        <div class="mt-8 w-full px-16">
+          <div class="mb-16">
+            <h1 class="font-[500] text-5xl">Personal details</h1>
+            <h4 class="text-2xl">Change your personal details</h4>
+          </div>
+
+          <div
+            id="profile-icon"
+            class="mt-7 m-8 flex items-center justify-center w-96 h-96 p-30 rounded-full bg-red-600"
+          >
+            <h3
+              id="name"
+              class="font-bold text-center text-9xl text-white"
+            ></h3>
+          </div>
+
+          <div class="mt-16">
+            <div
+              class="grid grid-cols-3 m-4 gap-4 -sm:flex -sm:flex-col"
+              id="fname"
+            >
+              <h1 class="font-semibold text-2xl">First Name</h1>
+              <h2 id="first-name" class="text-lg"></h2>
+              <button
+                class="font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-24 hover:bg-red-700 hover:scale-110"
+                onclick="switchEdit.call(this)"
+              >
+                Edit
+              </button>
+            </div>
+
+            <div
+              class="grid grid-cols-3 m-4 gap-4 -sm:flex -sm:flex-col"
+              id="lname"
+            >
+              <h1 class="font-semibold text-2xl">Last Name</h1>
+              <h2 id="last-name" class="text-lg"></h2>
+              <button
+                class="font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-24 hover:bg-red-700 hover:scale-110"
+                onclick="switchEdit.call(this)"
+              >
+                Edit
+              </button>
+            </div>
+
+            <div
+              class="grid grid-cols-3 m-4 gap-4 -sm:flex -sm:flex-col"
+              id="emails"
+            >
+              <h1 class="font-semibold text-2xl">Email</h1>
+              <h2 id="email" class="text-lg"></h2>
+              <button
+                class="font-semibold text-2xl text-center btn btn-wide bg-custom-red text-white hover:text-white w-24 hover:bg-red-700 hover:scale-110"
+                onclick="switchEdit.call(this)"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+          <a
+            href="../account/login.html"
+            id="logout-button"
+            class="bg-red-500 hover:bg-red-800 hover:scale-110 text-white font-bold py-2 px-4 rounded"
+          >
+            Logout
+          </a>
+        </div>
+      </div>
+    </div>
+    <web-footer></web-footer>
+  </body>
+</html>
+
+<!-- 
+<a class="px-0 m-auto">
+  <div
+    id="profile-icon"
+    class="mt-8 flex items-center justify-center w-12 h-12 rounded-full bg-red-600"
+  >
+    <h3
+      id="name2"
+      class="font-bold text-2xl text-white"
+    ></h3></div
+></a> -->
+
+<!-- 
+<a href="settings.html" class="px-0 m-auto">
+  <img src="../../media/Settings.svg" class="mt-8">
+</a> -->
