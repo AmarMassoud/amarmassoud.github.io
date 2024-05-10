@@ -1,6 +1,7 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-row items-center justify-between p-24">
@@ -10,7 +11,9 @@ export default function Home() {
         </h1>
         <p className="text-2xl text-center">
           The best place to buy and sell your favorite products
-          <Link href="/index.html">Go to index.html</Link>
+          <button onClick={() => (window.location.href = "/app/pages/page.js")}>
+            Home
+          </button>
         </p>
       </section>
       <Image
