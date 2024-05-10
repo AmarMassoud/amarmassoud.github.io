@@ -1,117 +1,45 @@
-
-const showToast = (message, color) => {
-    const toastContainer = document.getElementById('toast-container');
-    toastContainer.classList.remove('hidden');
-    const toastAlert = document.querySelector('#toast-alert');
-    toastAlert.textContent = message;
-    toastAlert.classList.remove('bg-gray-100');
-    toastAlert.classList.add(color);
-
-    setTimeout(() => {
-        toastAlert.classList.remove(color);
-
-        toastContainer.classList.add('hidden');
-    }, 3000);
-}
-
-export const addToCart = (product, quantity = 1) => {
-
-    const isLoggedIn = localStorage.getItem('currentUser') === "-1";
-    if (isLoggedIn) {
-        let carItems = []
-        const response = fetch(`/api/cart`).then(res => res.json()).then(data => carItems = data);
-        carItems = carItems.filter(item => item.customer === currentUser.id);
-        let inCart = carItems.find(item => item.product.id === product.id);
-        if (!inCart) {
-            const cartItem = {
-                product: product.id,
-                quantity: quantity,
-                customer: currentUser.id
-            }
-            const addCartItemResponse = fetch(`/api/cartitems`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(cartItem)
-            })
-        }
-        else {
-            if (inCart.quantity < inCart.product.stock) {
-                inCart.quantity += quantity; //todo change in api
-                const updateCartItemResponse = fetch(`/api/cartitems/${inCart.id}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(inCart)
-                })
-            } else {
-                showToast('Your reached max stock', 'bg-red-200');
-            }
-        }
-
-    }
-    else {
-        let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];//
-        const allProductsResponse = fetch(`/api/products`).then(res => res.json()).then(data => {
-            cartItemsLs = cartItemsLs.map(item => {
-                item.product = data.find(product => product.id === item.product.id);
-                return item;
-            })
-        });
-        let inCart = cartItemsLs.find(item => item.product.id === product.id);
-        if (!inCart) {
-            const cartItem = {
-                product: product.id,
-            }
-            cartItemsLs.push(cartItem);
-            localStorage.setItem('cart', JSON.stringify(cartItemsLs));
-            showToast('Product added to cart', 'bg-green-200');
-        }
-
-
-        else if (inCart.quantity < inCart.product.stock) {
-
-            inCart.quantity += quantity;
-
-            showToast('Product added to cart', 'bg-green-200');
-
-        } else {
-            showToast('Your reached max stock', 'bg-red-200');
-
-        }
-        localStorage.setItem('cart', JSON.stringify(cartItemsLs));
-
-    }
-
-};
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",  async() => {
         const body = document.querySelector("body")
         body.className = "px-7"
 
 // 
 
-        const currentUserId = localStorage.getItem('currentUser')
-        let currentUser = {};
-        const responseUser = fetch(`/api/users/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
+        // const currentUserId = localStorage.getItem('currentUser')
+        // let currentUser = {};
+        // const responseUser = fetch(`/api/users/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
+        //
+        //
+        //
+        // const currentProductId = localStorage.getItem('currentProduct');
+        // let currentProduct = {}
 
+        let currentProductId = localStorage.getItem("currentProduct") ?? 1;
+        let currentProduct = {loaded:false};
+        const responseProduct =await  fetch(`/api/products/${currentProductId}`, {
+            method: "GET",
+        }).then((res) => res.json()).then((data) => currentProduct = data);
+
+        console.log(currentProductId);
+        console.log(currentProduct);
+
+        let currentUserId = localStorage.getItem("currentUser");
+        let currentUser = {};
+        if (currentUserId !== "-1") {
+            const responseUser = await fetch(`/api/users/${currentUserId}`, {
+                method: "GET",
+            }).then((res) => res.json()).then((data) => currentUser = data);
+
+        }
 
         let products = []
-        const response = fetch(`/api/products`).then(res => res.json()).then(data => products = data);
+        const response = await fetch(`/api/products`).then(res => res.json()).then(data => products = data);
 
-        const currentProductId = localStorage.getItem('currentProduct');
-        let currentProduct = {}
-        const responseProduct = fetch(`/api/products/${currentProductId}`).then(res => res.json()).then(data => currentProduct = data);
+
         let images = [...currentProduct.images].map(image => image.url);
         let currentImage = currentProduct.thumbnail;
 
         let comments = []
-        const responseComments = fetch(`/api/comments/${currentProduct.id}`).then(res => res.json()).then(data => comments = data);
+        const responseComments = await fetch(`/api/comments/${currentProduct.id}`).then(res => res.json()).then(data => comments = data);
 
         let submitReview = false;
 
@@ -193,10 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const imagesDiv = document.createElement("div");
             imagesDiv.className = "flex flex-row justify-center w-full mt-10 h-[5rem] space-x-5";
-            images.forEach((image) => {
-                if (image != currentImage) {
+            currentProduct.images.forEach((image) => {
+                if (image !== currentImage) {
                     const miniImage = document.createElement("img");
-                    miniImage.src = image;
+                    miniImage.src = image.url;
                     miniImage.className = "saturate-[0%] w-[4rem] h-full object-scale-down transition-all duration-[ease]  cursor-pointer hover:saturate-[100%]  hover:w-[25%] ";
 
                     miniImage.addEventListener("click", () => {
@@ -359,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 figure.className = "h-[18rem] "
                 const img = document.createElement('img');
                 img.className = '  h-[18rem] object-contain  self-start'
-                img.src = product.images[0];
+                img.src = product.images[0].url;
                 img.alt = product.title;
                 figure.appendChild(img);
 
@@ -633,8 +561,10 @@ document.addEventListener("DOMContentLoaded", () => {
             reviewButton.className = "btn btn-primary mb-6 mr-4 hover:bg-white self-end ";
             reviewButton.textContent = (submitReview ? "Close Review Form" : "Add Review");
             reviewButton.addEventListener("click", () => {
-                submitReview = !submitReview;
-                renderComments();
+                if(currentUserId!=="-1") {
+                    submitReview = !submitReview;
+                    renderComments();
+                }
             });
 
             commentsFig.appendChild(legend);
@@ -665,13 +595,89 @@ document.addEventListener("DOMContentLoaded", () => {
 
         };
         const rerenderPage = () => {
-            localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
+            localStorage.setItem('currentProduct', currentProduct.id);
             submitReview = false;
             renderProductDetails();
             renderComments();
             renderMoreProductsByCategory();
         };
 
+
+        function addToCart  (product, quantity = 1) {
+
+            const isLoggedIn = localStorage.getItem('currentUser') !== "-1";
+            if (isLoggedIn) {
+                let carItems = []
+                const response = fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
+                carItems = carItems.filter(item => item.customer === currentUser.id);
+                let inCart = carItems.find(item => item.product.id === product.id);
+                if (!inCart) {
+                    const cartItem = {
+                        product: product.id,
+                        quantity: quantity,
+                        customer: currentUser.id
+                    }
+                    const addCartItemResponse = fetch(`/api/cartitems`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cartItem)
+                    })
+                }
+                else {
+                    console.log(inCart.quantity, inCart.product.stock)
+                    if (inCart.quantity < inCart.product.stock) {
+                        inCart.quantity += quantity; //todo change in api
+                        const updateCartItemResponse = fetch(`/api/cartitems/${inCart.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(inCart)
+                        })
+                    } else {
+                        showToast('Your reached max stock', 'bg-red-200');
+                    }
+                }
+
+            }
+            else {
+                let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
+                const allProductsResponse = fetch(`/api/products`).then(res => res.json()).then(data => {
+                    cartItemsLs = cartItemsLs.map(item => {
+                        item.product = data.find(product => product.id === item.product.id);
+                        return item;
+                    })
+                });
+                const mainProduct = products.find(prod => prod.id === product.id);
+                let inCart = cartItemsLs.find(item => item.product === product.id);
+                if (!inCart) {
+                    const cartItem = {
+                        product: product.id,
+                        quantity: 1
+                    }
+                    cartItemsLs.push(cartItem);
+                    localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+                    showToast('Product added to cart', 'bg-green-200');
+                }
+
+
+                else if (inCart.quantity < mainProduct.stock) {
+
+                    inCart.quantity += quantity;
+
+                    showToast('Product added to cart', 'bg-green-200');
+
+                } else {
+                    showToast('Your reached max stock', 'bg-red-200');
+
+                }
+                localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+
+            }
+
+        }
 
         renderProductDetails();
         renderComments();

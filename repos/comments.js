@@ -34,7 +34,11 @@ export async function getProductComments(id) {
     const comments = await prisma.Comment.findMany({
         where: {
             productId: id
-        }
+        },
+        include: {
+            user: true,
+            product: true
+        },
     });
     await disconnect();
     return comments;

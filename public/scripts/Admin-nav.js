@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
- 
-let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-if(currentUser===null || currentUser==="-1"){
-    currentUser={firstName: "Guest"};
+let currentUserId = localStorage.getItem("currentUser");
+let isLoggedIn = currentUserId != null && currentUserId !== "-1";
+let currentUser={firstName: "Guest"}
+if (isLoggedIn) {
+    const response = await fetch(`/api/users/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
 }
 class AdminNav extends LitElement {
     static properties = {

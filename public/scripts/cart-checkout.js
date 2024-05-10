@@ -883,10 +883,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function addToCart  (product, quantity = 1) {
 
-        const isLoggedIn = localStorage.getItem('currentUser') === "-1";
+        const isLoggedIn = localStorage.getItem('currentUser') !== "-1";
         if (isLoggedIn) {
             let carItems = []
-            const response = fetch(`/api/cart`).then(res => res.json()).then(data => carItems = data);
+            const response = fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
             carItems = carItems.filter(item => item.customer === currentUser.id);
             let inCart = carItems.find(item => item.product.id === product.id);
             if (!inCart) {
@@ -904,6 +904,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 })
             }
             else {
+                console.log(inCart.quantity, inCart.product.stock)
                 if (inCart.quantity < inCart.product.stock) {
                     inCart.quantity += quantity; //todo change in api
                     const updateCartItemResponse = fetch(`/api/cartitems/${inCart.id}`, {
@@ -920,17 +921,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
         else {
-            let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];//
+            let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
             const allProductsResponse = fetch(`/api/products`).then(res => res.json()).then(data => {
                 cartItemsLs = cartItemsLs.map(item => {
                     item.product = data.find(product => product.id === item.product.id);
                     return item;
                 })
             });
-            let inCart = cartItemsLs.find(item => item.product.id === product.id);
+            const mainProduct = products.find(prod => prod.id === product.id);
+            let inCart = cartItemsLs.find(item => item.product === product.id);
             if (!inCart) {
                 const cartItem = {
                     product: product.id,
+                    quantity: 1
                 }
                 cartItemsLs.push(cartItem);
                 localStorage.setItem('cart', JSON.stringify(cartItemsLs));
@@ -938,7 +941,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
-            else if (inCart.quantity < inCart.product.stock) {
+            else if (inCart.quantity < mainProduct.stock) {
 
                 inCart.quantity += quantity;
 
