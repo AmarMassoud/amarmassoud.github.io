@@ -22,23 +22,21 @@ model Deal {
   cartItems Int
   items     Cartitem[]
 
-  Purchase        Purchase?      @relation(fields: [purchaseId], references: [id])
-  purchaseId      String?
-  User            User?          @relation(fields: [userId], references: [id])
-  userId          String?
-  Refundrequest   Refundrequest? @relation(fields: [refundrequestId], references: [id])
-  refundrequestId String?
+  Purchase   Purchase? @relation(fields: [purchaseId], references: [id])
+  purchaseId String?
+  User       User?     @relation(fields: [userId], references: [id])
+  userId     String?
 }
 
 model Cartitem {
-  id            String          @id @default(cuid())
+  id            String         @id @default(cuid())
   productId     String
-  product       Product         @relation(fields: [productId], references: [id])
+  product       Product        @relation(fields: [productId], references: [id])
   dealId        String
-  deal          Deal            @relation(fields: [dealId], references: [id])
+  deal          Deal           @relation(fields: [dealId], references: [id])
   quantity      Int
   customer      String // this is an id
-  Refundrequest Refundrequest[]
+  Refundrequest Refundrequest?
 }
 
 model Bank {
@@ -48,28 +46,24 @@ model Bank {
   cardType   String
   currency   String
   iban       String
-  User       User[]
+  User       User?
 }
 
 model Refundrequest {
   id         String   @id @default(cuid())
-  deals      Deal[]
-  totalPrice Float
-  timeStamp  DateTime
   purchaseId String
   productId  String
   body       String
   reason     String
-
-  cartItemId String
+  cartItemId String   @unique
   cartItem   Cartitem @relation(fields: [cartItemId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  timeStamp  DateTime
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  // totalPrice Float
 
-  product Product @relation(fields: [productId], references: [id])
-
-  @@map(name: "refundrequest")
+  // product Product @relation(fields: [productId], references: [id])
 }
 
 model Purchase {
@@ -111,26 +105,25 @@ model Image {
 }
 
 model User {
-  id              String          @id @default(cuid())
-  firstName       String
-  lastName        String
-  email           String
-  password        String
-  image           String
-  bank            Bank            @relation(fields: [bankId], references: [id])
-  bankId          String
-  role            String
-  balance         Int             @default(0)
-  addresses       Address[]
-  refundRequestId String?
-  Comment         Comment[]
-  Product         Product[]
-  Deal            Deal[]
-  Refundrequest   Refundrequest[]
+  id            String          @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String
+  password      String
+  image         String
+  bank          Bank            @relation(fields: [bankId], references: [id])
+  bankId        String          @unique
+  role          String
+  balance       Int             @default(0)
+  addresses     Address[]
+  Comment       Comment[]
+  Product       Product[]
+  Deal          Deal[]
+  Refundrequest Refundrequest[]
 }
 
 model Product {
-  id                 String          @id @default(cuid())
+  id                 String     @id @default(cuid())
   title              String
   description        String
   price              Float // todo float
@@ -140,10 +133,9 @@ model Product {
   brand              String
   category           String
   thumbnail          String
-  seller             User            @relation(fields: [sellerId], references: [id])
+  seller             User       @relation(fields: [sellerId], references: [id])
   sellerId           String
   images             Image[]
   Cartitem           Cartitem[]
-  Refundrequest      Refundrequest[]
   Comment            Comment[]
 }

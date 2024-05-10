@@ -12,8 +12,6 @@ Table Deal {
   purchaseId String
   User User
   userId String
-  Refundrequest refundrequest
-  refundrequestId String
 }
 
 Table Cartitem {
@@ -24,7 +22,7 @@ Table Cartitem {
   deal Deal [not null]
   quantity Int [not null]
   customer String [not null]
-  Refundrequest refundrequest [not null]
+  Refundrequest Refundrequest
 }
 
 Table Bank {
@@ -34,23 +32,20 @@ Table Bank {
   cardType String [not null]
   currency String [not null]
   iban String [not null]
-  User User [not null]
+  User User
 }
 
-Table refundrequest {
+Table Refundrequest {
   id String [pk]
-  deals Deal [not null]
-  totalPrice Float [not null]
-  timeStamp DateTime [not null]
   purchaseId String [not null]
   productId String [not null]
   body String [not null]
   reason String [not null]
-  cartItemId String [not null]
+  cartItemId String [unique, not null]
   cartItem Cartitem [not null]
   userId String [not null]
   user User [not null]
-  product Product [not null]
+  timeStamp DateTime [not null]
 }
 
 Table Purchase {
@@ -97,15 +92,14 @@ Table User {
   password String [not null]
   image String [not null]
   bank Bank [not null]
-  bankId String [not null]
+  bankId String [unique, not null]
   role String [not null]
   balance Int [not null, default: 0]
   addresses Address [not null]
-  refundRequestId String
   Comment Comment [not null]
   Product Product [not null]
   Deal Deal [not null]
-  Refundrequest refundrequest [not null]
+  Refundrequest Refundrequest [not null]
 }
 
 Table Product {
@@ -123,7 +117,6 @@ Table Product {
   sellerId String [not null]
   images Image [not null]
   Cartitem Cartitem [not null]
-  Refundrequest refundrequest [not null]
   Comment Comment [not null]
 }
 
@@ -131,17 +124,13 @@ Ref: Deal.purchaseId > Purchase.id
 
 Ref: Deal.userId > User.id
 
-Ref: Deal.refundrequestId > refundrequest.id
-
 Ref: Cartitem.productId > Product.id
 
 Ref: Cartitem.dealId > Deal.id
 
-Ref: refundrequest.cartItemId > Cartitem.id
+Ref: Refundrequest.cartItemId - Cartitem.id
 
-Ref: refundrequest.userId > User.id
-
-Ref: refundrequest.productId > Product.id
+Ref: Refundrequest.userId > User.id
 
 Ref: Comment.userId > User.id
 
@@ -151,6 +140,6 @@ Ref: Address.userId > User.id
 
 Ref: Image.productId > Product.id
 
-Ref: User.bankId > Bank.id
+Ref: User.bankId - Bank.id
 
 Ref: Product.sellerId > User.id
