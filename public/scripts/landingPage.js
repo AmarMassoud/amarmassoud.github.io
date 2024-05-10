@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getProducts = async () => {
     const response = await fetch(`/api/products`, {
         method: "GET",
-      mode: 'no-cors',
+
     });
     console.log(response)
     if (response.ok) {
