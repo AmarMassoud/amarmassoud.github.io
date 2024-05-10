@@ -91,7 +91,7 @@ Table User {
   email String [not null]
   password String [not null]
   image String [not null]
-  bank Bank [not null]
+  bank Bank
   bankId String [unique, not null]
   role String [not null]
   balance Int [not null, default: 0]
