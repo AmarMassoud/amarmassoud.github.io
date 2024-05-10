@@ -2,16 +2,14 @@
 document.addEventListener("DOMContentLoaded", async () => {
   let products = [];
   const getProducts = async () => {
-    const response = await fetch(`https://market-hub.live/api/products`, {
+    const response = await fetch(`/api/products`, {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
       mode: 'no-cors',
     });
-
+    console.log(response)
     if (response.ok) {
       products = await response.json();
+      console.log(products)
     }
   }
 
@@ -19,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (products.length === 0) {
     await getProducts();
-    products = JSON.parse(localStorage.getItem("products"));
+
   }
 
   let currentProduct = JSON.parse(localStorage.getItem("currentProduct"));
