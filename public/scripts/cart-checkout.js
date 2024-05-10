@@ -1,4 +1,3 @@
-import {addToCart} from "./product-page.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -881,6 +880,79 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     renderCartItems()
+
+    function addToCart  (product, quantity = 1) {
+
+        const isLoggedIn = localStorage.getItem('currentUser') === "-1";
+        if (isLoggedIn) {
+            let carItems = []
+            const response = fetch(`/api/cart`).then(res => res.json()).then(data => carItems = data);
+            carItems = carItems.filter(item => item.customer === currentUser.id);
+            let inCart = carItems.find(item => item.product.id === product.id);
+            if (!inCart) {
+                const cartItem = {
+                    product: product.id,
+                    quantity: quantity,
+                    customer: currentUser.id
+                }
+                const addCartItemResponse = fetch(`/api/cartitems`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cartItem)
+                })
+            }
+            else {
+                if (inCart.quantity < inCart.product.stock) {
+                    inCart.quantity += quantity; //todo change in api
+                    const updateCartItemResponse = fetch(`/api/cartitems/${inCart.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(inCart)
+                    })
+                } else {
+                    showToast('Your reached max stock', 'bg-red-200');
+                }
+            }
+
+        }
+        else {
+            let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];//
+            const allProductsResponse = fetch(`/api/products`).then(res => res.json()).then(data => {
+                cartItemsLs = cartItemsLs.map(item => {
+                    item.product = data.find(product => product.id === item.product.id);
+                    return item;
+                })
+            });
+            let inCart = cartItemsLs.find(item => item.product.id === product.id);
+            if (!inCart) {
+                const cartItem = {
+                    product: product.id,
+                }
+                cartItemsLs.push(cartItem);
+                localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+                showToast('Product added to cart', 'bg-green-200');
+            }
+
+
+            else if (inCart.quantity < inCart.product.stock) {
+
+                inCart.quantity += quantity;
+
+                showToast('Product added to cart', 'bg-green-200');
+
+            } else {
+                showToast('Your reached max stock', 'bg-red-200');
+
+            }
+            localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+
+        }
+
+    }
 
 
 })
