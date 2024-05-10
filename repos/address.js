@@ -11,7 +11,11 @@ export async function disconnect() {
 }
 
 export async function getAddresses() {
-    const addresses = await prisma.Address.findMany();
+    const addresses = await prisma.Address.findMany({
+        include: {
+            user: true,
+        },
+    });
     await disconnect();
     return addresses;
 }

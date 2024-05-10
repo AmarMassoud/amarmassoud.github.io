@@ -11,7 +11,12 @@ export async function disconnect() {
 }
 
 export async function getRefunds() {
-    const refunds = await prisma.Refundrequest.findMany();
+    const refunds = await prisma.Refundrequest.findMany({
+        include: {
+            cartItem: true,
+            user: true
+        },
+    });
     await disconnect();
     return refunds;
 }

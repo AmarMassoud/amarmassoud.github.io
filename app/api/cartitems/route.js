@@ -22,22 +22,3 @@ export async function POST(request) {
     }
 }
 
-export async function PATCH(request) {
-    try {
-        const body = await request.json();
-        return Response.json(await cartItems.updateCartItem(body))
-    } catch (e) {
-        console.error(e)
-        return Response.json({error: e})
-    }
-}
-
-export async function DELETE(request) {
-    try {
-        const body = await request.json();
-        return Response.json(await cartItems.deleteCartItem(body))
-    } catch (e) {
-        console.error(e)
-        return Response.json({error: e})
-    }
-}

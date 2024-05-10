@@ -5,24 +5,23 @@
 Table Deal {
   id String [pk]
   sellerId String [not null]
+  seller User [not null]
   customerId String [not null]
-  cartItems Int [not null]
+  customer User [not null]
   items Cartitem [not null]
-  Purchase Purchase
+  purchase Purchase
   purchaseId String
-  User User
-  userId String
 }
 
 Table Cartitem {
   id String [pk]
   productId String [not null]
   product Product [not null]
-  dealId String [not null]
-  deal Deal [not null]
   quantity Int [not null]
   customer String [not null]
-  Refundrequest Refundrequest
+  refundrequest Refundrequest
+  deal Deal
+  dealId String
 }
 
 Table Bank {
@@ -32,7 +31,7 @@ Table Bank {
   cardType String [not null]
   currency String [not null]
   iban String [not null]
-  User User
+  user User
 }
 
 Table Refundrequest {
@@ -62,7 +61,7 @@ Table Comment {
   timestamp DateTime [not null]
   user User [not null]
   userId String [not null]
-  Product Product [not null]
+  product Product [not null]
 }
 
 Table Address {
@@ -72,7 +71,7 @@ Table Address {
   postalCode String [not null]
   state String [not null]
   name String [not null]
-  User User
+  user User
   userId String
 }
 
@@ -95,10 +94,11 @@ Table User {
   role String [not null]
   balance Int [not null, default: 0]
   addresses Address [not null]
-  Comment Comment [not null]
-  Product Product [not null]
-  Deal Deal [not null]
-  Refundrequest Refundrequest [not null]
+  comments Comment [not null]
+  product Product [not null]
+  refundrequest Refundrequest [not null]
+  sellerDeals Deal [not null]
+  customerDeals Deal [not null]
 }
 
 Table Product {
@@ -115,13 +115,15 @@ Table Product {
   seller User [not null]
   sellerId String [not null]
   images Image [not null]
-  Cartitem Cartitem [not null]
-  Comment Comment [not null]
+  cartItems Cartitem [not null]
+  comments Comment [not null]
 }
 
-Ref: Deal.purchaseId > Purchase.id
+Ref: Deal.sellerId > User.id
 
-Ref: Deal.userId > User.id
+Ref: Deal.customerId > User.id
+
+Ref: Deal.purchaseId > Purchase.id
 
 Ref: Cartitem.productId > Product.id
 

@@ -14,7 +14,12 @@ export async function disconnect() {
 
 
 export async function getComments() {
-    const comments = await prisma.Comment.findMany();
+    const comments = await prisma.Comment.findMany({
+        include: {
+            user: true,
+            product: true
+        },
+    });
     await disconnect();
     return comments;
 }

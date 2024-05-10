@@ -12,7 +12,13 @@ export async function disconnect() {
 }
 
 export async function getProducts() {
-    const products = await prisma.Product.findMany();
+    const products = await prisma.Product.findMany({
+        include: {
+            seller: true,
+            images: true,
+            comments: true
+        },
+    });
     await disconnect();
     return products;
 

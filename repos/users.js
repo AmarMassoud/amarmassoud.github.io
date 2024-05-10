@@ -59,7 +59,12 @@ export const updateUser = async (id, body) => {
     return user;
 }
 export const getUsers = async () => {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+        include: {
+            addresses: true,
+            bank: true
+        },
+    });
     await disconnect();
     return users;
 }

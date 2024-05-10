@@ -14,29 +14,26 @@ generator dbml {
 model Deal {
   id       String @id @default(cuid())
   sellerId String
-  // seller   User   @relation(fields: [sellerId], references: [id])
+  seller   User   @relation(fields: [sellerId], references: [id], name: "seller")
 
   customerId String
-  // customer   User   @relation(fields: [customerId], references: [id])
+  customer   User   @relation(fields: [customerId], references: [id], name: "customer")
 
-  cartItems Int
-  items     Cartitem[]
+  items Cartitem[]
 
-  Purchase   Purchase? @relation(fields: [purchaseId], references: [id])
+  purchase   Purchase? @relation(fields: [purchaseId], references: [id])
   purchaseId String?
-  User       User?     @relation(fields: [userId], references: [id])
-  userId     String?
 }
 
 model Cartitem {
   id            String         @id @default(cuid())
   productId     String
   product       Product        @relation(fields: [productId], references: [id])
-  dealId        String
-  deal          Deal           @relation(fields: [dealId], references: [id])
   quantity      Int
   customer      String // this is an id
-  Refundrequest Refundrequest?
+  refundrequest Refundrequest?
+  deal          Deal?          @relation(fields: [dealId], references: [id])
+  dealId        String?
 }
 
 model Bank {
@@ -46,7 +43,7 @@ model Bank {
   cardType   String
   currency   String
   iban       String
-  User       User?
+  user       User?
 }
 
 model Refundrequest {
@@ -81,7 +78,7 @@ model Comment {
   timestamp DateTime
   user      User     @relation(fields: [userId], references: [id])
   userId    String
-  Product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 model Address {
@@ -93,7 +90,7 @@ model Address {
   name       String
   // userId     String
   // User       User   @relation(fields: [userId], references: [id])
-  User       User?   @relation(fields: [userId], references: [id])
+  user       User?   @relation(fields: [userId], references: [id])
   userId     String?
 }
 
@@ -116,10 +113,11 @@ model User {
   role          String
   balance       Int             @default(0)
   addresses     Address[]
-  Comment       Comment[]
-  Product       Product[]
-  Deal          Deal[]
-  Refundrequest Refundrequest[]
+  comments      Comment[]
+  product       Product[]
+  refundrequest Refundrequest[]
+  sellerDeals   Deal[]          @relation("seller")
+  customerDeals Deal[]          @relation("customer")
 }
 
 model Product {
@@ -136,6 +134,6 @@ model Product {
   seller             User       @relation(fields: [sellerId], references: [id])
   sellerId           String
   images             Image[]
-  Cartitem           Cartitem[]
-  Comment            Comment[]
+  cartItems          Cartitem[]
+  comments           Comment[]
 }

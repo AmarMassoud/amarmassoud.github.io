@@ -16,6 +16,8 @@ export async function GET(request) {
 export async function POST(request) {
     try {
         const body = await request.json();
+
+
         return Response.json(await pruchases.addPurchase(body))
     } catch (e) {
         console.error(e)
