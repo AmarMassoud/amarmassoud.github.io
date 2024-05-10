@@ -1,29 +1,17 @@
+
 document.addEventListener("DOMContentLoaded", async () => {
   let products = [];
   const getProducts = async () => {
-    const productsData = localStorage.getItem("products");
-    if (!productsData) {
-      const response = await fetch("/data/products.json");
+    const response = await fetch(`api/products`, {
 
-      if (response.ok) {
-        const responseData = await response.json();
-        if (Array.isArray(responseData)) {
-          localStorage.setItem("products", JSON.stringify(responseData));
-          products = responseData;
-          // console.log('products data:', users);
-        } else {
-          console.error("Invalid products data format:", responseData);
-        }
-      } else {
-        console.error("Failed to fetch products data");
-      }
-    } else {
-      products = JSON.parse(productsData);
-      console.log("products data:", products);
+    });
+
+    if (response.ok) {
+      products = await response.json();
     }
-  };
+  }
 
-  products = JSON.parse(localStorage.getItem("products")) || [];
+  // products = JSON.parse(localStorage.getItem("products")) || [];
 
   if (products.length === 0) {
     await getProducts();
