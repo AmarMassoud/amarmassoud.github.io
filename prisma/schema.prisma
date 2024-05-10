@@ -14,10 +14,10 @@ generator dbml {
 model Deal {
   id       String @id @default(cuid())
   sellerId String
-  seller   User   @relation(fields: [sellerId], references: [id], name: "seller")
+  seller   User   @relation(fields: [sellerId], references: [id], name: "seller", onDelete: Cascade, onUpdate: Cascade)
 
   customerId String
-  customer   User   @relation(fields: [customerId], references: [id], name: "customer")
+  customer   User   @relation(fields: [customerId], references: [id], name: "customer", onDelete: Cascade, onUpdate: Cascade)
 
   items Cartitem[]
 
@@ -28,11 +28,11 @@ model Deal {
 model Cartitem {
   id            String         @id @default(cuid())
   productId     String
-  product       Product        @relation(fields: [productId], references: [id])
+  product       Product        @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   quantity      Int
   customer      String // this is an id
   refundrequest Refundrequest?
-  deal          Deal?          @relation(fields: [dealId], references: [id])
+  deal          Deal?          @relation(fields: [dealId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   dealId        String?
 }
 
@@ -53,9 +53,9 @@ model Refundrequest {
   body       String
   reason     String
   cartItemId String   @unique
-  cartItem   Cartitem @relation(fields: [cartItemId], references: [id])
+  cartItem   Cartitem @relation(fields: [cartItemId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   timeStamp  DateTime
 
   // totalPrice Float
@@ -76,9 +76,9 @@ model Comment {
   // postId    String // todo what's a post
   productId String
   timestamp DateTime
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Address {
@@ -90,7 +90,7 @@ model Address {
   name       String
   // userId     String
   // User       User   @relation(fields: [userId], references: [id])
-  user       User?   @relation(fields: [userId], references: [id])
+  user       User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     String?
 }
 
@@ -98,7 +98,7 @@ model Image {
   id        String  @id @default(cuid())
   url       String
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model User {
@@ -108,7 +108,7 @@ model User {
   email         String          @unique
   password      String
   image         String?
-  bank          Bank?           @relation(fields: [bankId], references: [id])
+  bank          Bank?           @relation(fields: [bankId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   bankId        String?         @unique
   role          String
   balance       Int             @default(0)
@@ -131,7 +131,7 @@ model Product {
   brand              String
   category           String
   thumbnail          String
-  seller             User       @relation(fields: [sellerId], references: [id])
+  seller             User       @relation(fields: [sellerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   sellerId           String
   images             Image[]
   cartItems          Cartitem[]

@@ -1,8 +1,9 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
  
-let currnetUser = JSON.parse(localStorage.getItem('currentUser'));
-if(currnetUser===null){
-    currnetUser={firstName: "Guest"};
+let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+if(currentUser===null || currentUser==="-1"){
+    currentUser={firstName: "Guest"};
 }
 class AdminNav extends LitElement {
     static properties = {
@@ -97,7 +98,7 @@ class AdminNav extends LitElement {
   
   <a href="../profile.html" >
   <div id="profile-icon">
-  <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
+  <h3>${currentUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>
    </div>
   </div>

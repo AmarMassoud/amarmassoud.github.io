@@ -2,82 +2,31 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     comments = [];
     const getComments = async () => {
-        const commentsData = localStorage.getItem('comments');
-        if (!commentsData) {
-            const response = await fetch('../../data/comments.json');
-  
-            if (response.ok) {
-                const responseData = await response.json();
-                if (Array.isArray(responseData)) {
-                    localStorage.setItem('comments', JSON.stringify(responseData));
-                    comments = responseData;
-                    console.log('comments data:', comments);
-                } else {
-                    console.error('Invalid products data format:', responseData);
-                }
-            } else {
-                console.error('Failed to fetch products data');
-            }
-        } else {
-          comments = JSON.parse(commentsData);
-            console.log('comments data:', comments);
-        }
+        const response = await fetch(`/api/comments`).then(res=>res.json()).then(data=>comments=data);
     };
     await getComments(); //
   
   
     let products = [];
     const getProducts = async () => {
-        const productsData = localStorage.getItem('products');
-        if (!productsData) {
-            const response = await fetch('../../data/products.json');
-  
-            if (response.ok) {
-                const responseData = await response.json();
-                if (Array.isArray(responseData)) {
-                    localStorage.setItem('products', JSON.stringify(responseData));
-                    products = responseData;
-                    // console.log('products data:', users);
-                } else {
-                    console.error('Invalid products data format:', responseData);
-                }
-            } else {
-                console.error('Failed to fetch products data');
-            }
-        } else {
-            products = JSON.parse(productsData);
-            console.log('products data:', products);
-        }
+        const response = await fetch(`/api/products`).then(res=>res.json()).then(data=>products=data);
     };
     await getProducts(); //
     
     let users = [];
     const getUsers = async () => {
-      const usersData = localStorage.getItem('user');
-      if (!usersData) {
-          const response = await fetch('../../data/users.json');
-          if (response.ok) {
-              const responseData = await response.json();
-              if (Array.isArray(responseData)) {
-                  localStorage.setItem('user', JSON.stringify(responseData));
-                  users = responseData;
-                  console.log('Users data:', users);
-              } else {
-                  console.error('Invalid users data format:', responseData);
-              }
-          } else {
-              console.error('Failed to fetch users data');
-          }
-      } else {
-          users = JSON.parse(usersData);
-          console.log('Users data:', users);
-      }
-  };
+        const response = await fetch(`/api/user`).then(res=>res.json()).then(data=>users=data);
+    }
+
   await getUsers(); //
   
   comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-  
-  const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+    const userId=localStorage.getItem('currentUser')
+    let currentUser= {};
+    const responseUser = await fetch(`/api/users/${userId}`).then(res=>res.json()).then(data=>currentUser=data);
+
+    const currentProductId=localStorage.getItem('currentProduct')
+    let currentProduct= {};
 
   if(currentUser.role === "ADMIN") {
     document.querySelector("#nav").innerHTML = "<admin-nav name=\"Wardan\" id=\"nav\"> </admin-nav>"
@@ -88,10 +37,11 @@ document.addEventListener("DOMContentLoaded", async() => {
 }
 
 
-const getTotalSales=()=>{
-  const purchases=JSON.parse(localStorage.getItem('purchasedItems')) || [];
-  const totalSales=purchases.reduce((acc,curr)=>acc+curr.totalPrice,0);
-return totalSales;
+const getTotalSales=async () => {
+    let purchases = []
+    const response = await fetch(`/api/purchases`).then(res => res.json()).then(data => purchases = data);
+    const totalSales = purchases.reduce((acc, curr) => acc + curr.totalPrice, 0);
+    return totalSales;
 }
 
   
@@ -278,7 +228,7 @@ requestDetailsDiv.appendChild(decisionDiv);
             products.find(product=>product.id===category.product.id).category=category.name;
             categoryRequests=categoryRequests.filter(request=>request!==category);
             localStorage.setItem('categoryRequest',JSON.stringify(categoryRequests));
-            localStorage.setItem('products',JSON.stringify(products));
+            // localStorage.setItem('products',JSON.stringify(products));
 
             renderRequests();
             renderProducts();
@@ -330,18 +280,19 @@ requestDetailsDiv.appendChild(decisionDiv);
 
 
 
-  const renderCategories =()=>{
-const categoriesDiv=document.querySelector("#categories");
+  const renderCategories =async () => {
+      const categoriesDiv = document.querySelector("#categories");
 
-const products= JSON.parse(localStorage.getItem('products'));
-let  categories= [...new Set(products.map(product=>product.category))];
+      let products = []
+      const response = await fetch(`/api/products`).then(res => res.json()).then(data => products = data);
+      let categories = [...new Set(products.map(product => product.category))];
 
-categories.forEach(category => {
-    const categoryLabel = document.createElement('p')
-    categoryLabel.textContent=category;
-    categoryLabel.className='text-xl font-bold bg-white px-6 py-2 rounded-xl shadow-md mg-auto';
-    categoriesDiv.appendChild(categoryLabel);
-})
+      categories.forEach(category => {
+          const categoryLabel = document.createElement('p')
+          categoryLabel.textContent = category;
+          categoryLabel.className = 'text-xl font-bold bg-white px-6 py-2 rounded-xl shadow-md mg-auto';
+          categoriesDiv.appendChild(categoryLabel);
+      })
 
 
   }
@@ -451,7 +402,7 @@ const renderProduct= (product) =>{
         renderProducts()
     })
     editButton.addEventListener('click',()=>{
-           localStorage.setItem('currentProduct',JSON.stringify(product)); 
+           localStorage.setItem('currentProduct',product.id);
            window.location.href = '../addProduct.html';
 
     })
@@ -459,18 +410,10 @@ const renderProduct= (product) =>{
 return productDiv;
 }
 
-const deleteProduct=(id)=>{
-    let allProducts = JSON.parse(localStorage.getItem('products'));
-    allProducts=allProducts.filter(product=>product.id!==id);
-    localStorage.setItem('products',JSON.stringify(allProducts));
-    products = allProducts
-    console.log(id);
-
-    comments=comments.filter(comment=>comment.productId!==id);
-    localStorage.setItem('comments',JSON.stringify(comments));
-
-
-    
+const deleteProduct=async (id) => {
+    const response = await fetch(`/api/products/${id}`, {
+        method: 'DELETE',
+    });
     renderProducts();
 }
 

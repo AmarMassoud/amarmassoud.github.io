@@ -119,28 +119,28 @@ Table Product {
   comments Comment [not null]
 }
 
-Ref: Deal.sellerId > User.id
+Ref: Deal.sellerId > User.id [delete: Cascade]
 
-Ref: Deal.customerId > User.id
+Ref: Deal.customerId > User.id [delete: Cascade]
 
 Ref: Deal.purchaseId > Purchase.id
 
-Ref: Cartitem.productId > Product.id
+Ref: Cartitem.productId > Product.id [delete: Cascade]
 
-Ref: Cartitem.dealId > Deal.id
+Ref: Cartitem.dealId > Deal.id [delete: Cascade]
 
-Ref: Refundrequest.cartItemId - Cartitem.id
+Ref: Refundrequest.cartItemId - Cartitem.id [delete: Cascade]
 
-Ref: Refundrequest.userId > User.id
+Ref: Refundrequest.userId > User.id [delete: Cascade]
 
-Ref: Comment.userId > User.id
+Ref: Comment.userId > User.id [delete: Cascade]
 
-Ref: Comment.productId > Product.id
+Ref: Comment.productId > Product.id [delete: Cascade]
 
-Ref: Address.userId > User.id
+Ref: Address.userId > User.id [delete: Cascade]
 
-Ref: Image.productId > Product.id
+Ref: Image.productId > Product.id [delete: Cascade]
 
-Ref: User.bankId - Bank.id
+Ref: User.bankId - Bank.id [delete: Cascade]
 
-Ref: Product.sellerId > User.id
+Ref: Product.sellerId > User.id [delete: Cascade]

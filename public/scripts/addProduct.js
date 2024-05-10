@@ -3,7 +3,11 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     const addImageBtn =document.getElementById('add-file');
 
-    const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+    const currentUserId=localStorage.getItem('currentUser')
+    let currentUser= {};
+    const responseUser = await fetch(`/api/users/${currentUserId}`).then(res=>res.json()).then(data=>currentUser=data);
+
+
 
     if(currentUser.role === "ADMIN") {
       document.querySelector("#nav").innerHTML = "<admin-nav name=\"Wardan\" id=\"nav\"> </admin-nav>"
@@ -20,7 +24,8 @@ let images=[]
 
 let categories=[]
 const getCategories= async()=>{
-const products= JSON.parse(localStorage.getItem('products'));
+        let products=[]
+    const response = await fetch(`/api/products`).then(res=>res.json()).then(data=>products=data);
  categories= [...new Set(products.map(product=>product.category))];
 
 }
@@ -58,8 +63,9 @@ dropDown.appendChild(option);
 
 renderCategories()
 
-
-const selectedProduct= JSON.parse(localStorage.getItem('currentProduct'));
+    const selectedProductId=localStorage.getItem('currentProduct');
+    let selectedProduct= {};
+    const responseProduct = await fetch(`/api/products/${selectedProductId}`).then(res=>res.json()).then(data=>selectedProduct=data);
 const productId= selectedProduct? selectedProduct.id : null;
 
 const onEdit=(product) =>{
@@ -225,12 +231,6 @@ requestCategoryBtn.addEventListener("click", function() {
 });
 
 
-// const onDelete=(productId) => {
-// const storedProducts= JSON.parse(localStorage.getItem('products'));
-// const updatedProducts= storedProducts.filter(p=> p.id !== productId);
-// localStorage.setItem('products',JSON.stringify(updatedProducts));
-// }
-
 const onSave = async () => {
 
 const productName=document.querySelector('#product-name').value.trim();
@@ -243,9 +243,15 @@ const categoryRequest=document.querySelector("#request-category").value.trim();
 const rating=Math.floor(Math.random()*6)
 const imagesUrl=images;
 
-const user= JSON.parse(localStorage.getItem('currentUser'));
-const currentProduct= JSON.parse(localStorage.getItem('currentProduct'));
-const allProducts= JSON.parse(localStorage.getItem('products'));
+const userId=localStorage.getItem('currentUser')
+    let user= {};
+const responseUser = await fetch(`/api/users/${userId}`).then(res=>res.json()).then(data=>user=data);
+
+const currentProductId=localStorage.getItem('currentProduct')
+let currentProduct= {};
+const responseProduct = await fetch(`/api/products/${currentProductId}`).then(res=>res.json()).then(data=>currentProduct=data);
+    let allProducts=[]
+    const response = await fetch(`/api/products`).then(res=>res.json()).then(data=>allProducts=data);
 console.log(currentProduct);
 let categoryProduct=null
 if (imagesUrl){
@@ -264,13 +270,18 @@ thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
 rating: currentProduct? currentProduct.rating: rating,
 };
 categoryProduct=product;
-if(productId){
-    allProducts.splice (allProducts.findIndex((product)=> product.id===productId),1);
-}
-allProducts.push(product)
-// onDelete(productId);
+    if(productId){
+        const res= await fetch(`/api/products/${productId}`, {
+            method: 'PATCH',
+            body: JSON.stringify(product),
+        });
+    };
+    }else {
+        const response = await fetch(`/api/products/${product.id}`, {
+            method: 'POST',
+            body: JSON.stringify(product),
+        });
 
-      localStorage.setItem('products', JSON.stringify(allProducts));
 }
 if (categoryRequest!==''){
 
