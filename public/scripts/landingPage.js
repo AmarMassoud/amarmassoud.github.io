@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function searchProducts(query) {
-    const products = JSON.parse(localStorage.getItem("products"));
     let filteredProducts = products.filter((product) =>
       product.title.toLowerCase().includes(query.toLowerCase())
     );
