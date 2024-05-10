@@ -11,7 +11,7 @@ export default function Home() {
         </h1>
         <p className="text-2xl text-center">
           The best place to buy and sell your favorite products
-          <button onClick={() => (window.location.href = "/app/pages/page.js")}>
+          <button onClick={() => (window.location.href = "/app/pages/page.jsx")}>
             Home
           </button>
         </p>

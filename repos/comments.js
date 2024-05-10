@@ -39,3 +39,36 @@ export async function getProductComments(id) {
     await disconnect();
     return comments;
 }
+export async function getSellerComments(id) {
+    try {
+        // Get the products for the seller
+        const products = await prisma.Product.findMany({
+            where: {
+                sellerId: id
+            },
+            select: {
+                id: true
+            }
+        });
+        const productIds = products.map(product => product.id);
+
+        // Get the comments for the products
+        const comments = await prisma.Comment.findMany({
+            where: {
+                productId: {
+                    in: productIds
+                }
+            },
+            include: {
+                user: true,
+                product: true
+            },
+        });
+
+        await disconnect();
+        return comments;
+    } catch (e) {
+        console.error(e);
+        return "repo error";
+    }
+}

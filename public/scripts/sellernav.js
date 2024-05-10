@@ -1,11 +1,17 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 
-let currnetUser = JSON.parse(localStorage.getItem('currentUser'));
-if(currnetUser===null){
-    currnetUser={firstName: "Guest"};
+let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
+
+const getUser = await fetch(`/api/user/${currentUserId}`, {
+    method: "GET",
+    mode: 'no-cors',
+});
+
+const currentUser = await getUser.json();
+let isLoggedin = !(currentUser === null || currentUser.id === -1);
+if(!isLoggedin){
+    currentUserId=-1;
 }
-
-
 class SellerNav extends LitElement {
     static properties = {
         name: {},
@@ -104,7 +110,8 @@ class SellerNav extends LitElement {
   <div  class="seller-navbar">
   <a href="../seller-dashboard.html"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
   <div id="nav-buttons">
-      <a href="../seller-dashboard.html" class="hover:bg-custom-red">Dashboard</a>
+
+      <a href="/seller-dashboard" class="hover:bg-custom-red">Dashboard</a>
       <a href="../sellerProducts.html">Products</a>
       <a href="../addProduct.html" id="add" >Add Item</a>
   </div>
@@ -112,7 +119,7 @@ class SellerNav extends LitElement {
   
   <a id="add" href="../profile.html" >
   <div id="profile-icon">
-  <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
+  <h3>${currentUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>
    </div>
   </div>

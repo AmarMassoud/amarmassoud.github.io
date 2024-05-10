@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                     window.location.href = '/';
                     console.log('User:', user);
                 } else if (user.role === 'SELLER') {
-                    window.location.href = '../seller-dashboard.html';
+                    window.location.href = '/seller-dashboard';
                 }
                 if (user.role === 'ADMIN') {
                     window.location.href = '../admin.html';
