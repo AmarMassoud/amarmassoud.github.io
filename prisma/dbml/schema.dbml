@@ -106,7 +106,7 @@ Table Product {
   title String [not null]
   description String [not null]
   price Float [not null]
-  discountPercentage Float [not null]
+  discountPercentage Float [not null, default: 0]
   rating Float [not null]
   stock Int [not null]
   brand String [not null]
