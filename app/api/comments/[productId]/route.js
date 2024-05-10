@@ -1,4 +1,4 @@
-import * as comments from '@/repos/comments.js';
+import * as comments from '../../../..//repos/comments.js';
 
 
 export async function GET(request, {params}) {

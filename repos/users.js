@@ -1,4 +1,4 @@
-import prisma from 'repos/prisma';
+import prisma from './prisma.js';
 import bcrypt from 'bcryptjs';
 
 
@@ -23,11 +23,11 @@ export const validatePassword = async (userPassword, storedPassword) => {
     return bcrypt.compare(userPassword, storedPassword);
 };
 
-export const createUser = async (email, password) => {
-    const hashedPassword = await bcrypt.hash(password, 10);
+export const addUser = async (body) => {
+    const hashedPassword = await bcrypt.hash(body.password, 10);
     const user =  await prisma.user.create({
         data: {
-            email: email,
+            email: body.email,
             password: hashedPassword,
         },
     });

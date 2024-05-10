@@ -1,4 +1,4 @@
-import * as pruchases from '@/repos/purchases.js';
+import * as pruchases from '../../../repos/purchases.js';
 
 
 

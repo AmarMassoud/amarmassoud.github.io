@@ -1,4 +1,4 @@
-import * as deals from '@/repos/deals.js';
+import * as deals from '../../../repos/deals.js';
 
 export async function GET(request) {
     try {

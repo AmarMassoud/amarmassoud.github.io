@@ -1,4 +1,4 @@
-import * as refunds from '@/repos/refunds';
+import * as refunds from '../../../repos/refunds';
 
 export async function GET(request) {
     try {

@@ -1,4 +1,4 @@
-import * as cartItems from 'repos/cartitems.js';
+import * as cartItems from '../../../repos/cartitems.js';
 
 
 export async function GET(request) {

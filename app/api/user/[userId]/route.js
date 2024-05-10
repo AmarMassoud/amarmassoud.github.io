@@ -1,4 +1,4 @@
-import * as users from "@/repos/users";
+import * as users from "../../../../repos/users";
 
 export async function GET(request, {params}) {
     const userId = params.userId;

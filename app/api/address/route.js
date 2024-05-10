@@ -1,4 +1,4 @@
-import * as addresses from '@/repos/address.js';
+import * as addresses from '../../../repos/address.js';
 
 
 export async function GET(request) {
