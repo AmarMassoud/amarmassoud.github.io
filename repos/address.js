@@ -21,7 +21,17 @@ export async function getAddresses() {
 }
 
 export async function addAddress(body) {
-    const address = await prisma.Address.create({data: {...body}})
+    const address = await prisma.Address.create({
+        data: {...body, userId: body.userId}});
+    await disconnect();
+    return address;
+}
+
+export async function editAddress(id, body) {
+    const address = await prisma.Address.update({
+        where: {id: id},
+        data: {...body}
+    });
     await disconnect();
     return address;
 }

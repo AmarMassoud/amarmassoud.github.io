@@ -89,7 +89,7 @@ model Address {
   state      String
   name       String
   // userId     String
-  // User       User   @relation(fields: [userId], references: [id])
+  // User       User   @relation(fields: [addressId], references: [id])
   user       User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     String?
 }

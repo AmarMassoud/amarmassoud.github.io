@@ -1,9 +1,33 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { firstName: "Guest", id: -1 };
-    document.querySelector("#nav").textContent = currentUser.firstName.charAt(0);
+document.addEventListener('DOMContentLoaded', async function () {
+    const currentUserId = JSON.parse(localStorage.getItem('currentUser')) || "-1";
 
-    var searchedProducts = JSON.parse(localStorage.getItem('searchedProducts')) || JSON.parse(localStorage.getItem('products'));
-    document.querySelector("#sort-products").textContent = "Products ("+searchedProducts.length+")";
+    const currentUserResponse = await fetch(`/api/user/${currentUserId}`, {
+        method: 'GET',
+    });
+    let currentUser;
+    if(currentUserResponse.ok) {
+        currentUser = await currentUserResponse.json();
+    document.querySelector("#nav").textContent = currentUser.firstName.charAt(0);
+    } else {
+        document.querySelector("#nav").textContent = "G"
+
+    }
+
+
+    // var searchedProducts = JSON.parse(localStorage.getItem('searchedProducts')) || JSON.parse(localStorage.getItem('products'));
+    // document.querySelector("#sort-products").textContent = "Products ("+searchedProducts.length+")";
+
+
+    const productsResponse = await fetch('/api/products', {
+        method: 'GET',
+    });
+    const products = await productsResponse.json();
+
+    const searchedProductIds = JSON.parse(localStorage.getItem('searchedProducts'))
+    const searchedProducts = products.filter(product => searchedProductIds.includes(product.id));
+
+
+
 
 
 
@@ -23,8 +47,11 @@ if (currentUser.id === -1) {
 
 
 document.querySelector("#search").addEventListener("input",()=>{
-    const products = JSON.parse(localStorage.getItem("products"))
-    const selectedProducts = products.filter(product=>product.title.toLowerCase().includes(document.querySelector("#search").value.toLowerCase()));
+    let filteredProducts = products.filter(product => product.title.toLowerCase().includes(document.querySelector("#search").value.toLowerCase())).map(product => product.id);
+    console.log(filteredProducts)
+    localStorage.setItem('searchedProducts', JSON.stringify(filteredProducts));
+    const selectedProducts = products.filter(product => filteredProducts.includes(product.id));
+
     document.querySelector("#sort-products").textContent = "Products ("+selectedProducts.length+")";
     localStorage.setItem('searchedProducts',JSON.stringify(selectedProducts));
     renderProducts(selectedProducts);
@@ -36,7 +63,7 @@ document.querySelector("#search").addEventListener("input",()=>{
 
  const priceSliderContainer = document.createElement('div');
  priceSliderContainer.className = "price-slider flex justify-between items-center flex-col bg-gray-300 p-4 shadow-xl rounded-lg mb-4 w-full";
- 
+
 
 
  const priceLabel = document.createElement('label');
@@ -57,17 +84,17 @@ const minPriceLabel = document.createElement('label');
     minPriceInput.max = '5000';
     minPriceInput.value = '0';
     minPriceInput.addEventListener('input', () => updateValue('min'));
- 
+
  const minValueSpan = document.createElement('span');
  minValueSpan.setAttribute('id', 'minValue');
  minValueSpan.classList.add('text-gray-600');
  minValueSpan.textContent = '0';
- 
+
 
  const maxPriceLabel = document.createElement('label');
     maxPriceLabel.textContent = 'Max Price:';
     maxPriceLabel.classList.add('text-gray-600');
-    
+
 
     const maxPriceInput = document.createElement('input');
     maxPriceInput.type = 'range';
@@ -77,22 +104,22 @@ const minPriceLabel = document.createElement('label');
     maxPriceInput.max = '5000';
     maxPriceInput.value = '5000';
     maxPriceInput.addEventListener('input', () => updateValue('max'));
- 
+
  const maxValueSpan = document.createElement('span');
  maxValueSpan.setAttribute('id', 'maxValue');
  maxValueSpan.classList.add('text-gray-600');
  maxValueSpan.textContent = '5000';
- 
+
  priceSliderContainer.appendChild(minPriceInput);
  priceSliderContainer.appendChild(minValueSpan);
  priceSliderContainer.appendChild(maxPriceLabel);
 
  priceSliderContainer.appendChild(maxPriceInput);
  priceSliderContainer.appendChild(maxValueSpan);
- 
+
 
  document.querySelector("#filters").appendChild(priceSliderContainer);
- 
+
 function updateValue(type) {
     const minPriceInput = document.querySelector('#minPrice');
     const maxPriceInput = document.querySelector('#maxPrice');
@@ -135,7 +162,7 @@ document.querySelector('#minPrice').addEventListener('input', (event) => {
     if (!isNaN(value) && value <= max) {
 
         document.querySelector('#minPrice').value = value;
-        
+
         updateValue('min');
     }
 });
@@ -150,12 +177,12 @@ document.querySelector('#maxPrice').addEventListener('input', () => {
     if (!isNaN(value) && value >= min) {
         document.querySelector('#maxPrice').value = value;
 
-      
+
         updateValue('max');
     }
 });
 
-const renderCategory = (category) => { 
+const renderCategory = (category) => {
     const categoryDiv = document.createElement('div');
     categoryDiv.className = 'flex items-center justify-between w-full mb-2';
 
@@ -183,13 +210,13 @@ const renderCategory = (category) => {
             document.querySelector("#sort-products").textContent = "Products ("+products.length+")";
             renderProducts(products);
 
-        
+
         }
 
 
 
 
-        
+
 
     });
 
@@ -214,7 +241,6 @@ categoryContainer.appendChild(categoryLabel);
 document.querySelector("#filters").appendChild(categoryContainer);
 
 
-const products = JSON.parse(localStorage.getItem('products'))|| JSON.parse(localStorage.getItem('products'));
 let categories = products.map(product => product.category);
 categories = [...new Set(categories)];
 categories.forEach(category => {
@@ -291,7 +317,7 @@ document.querySelector("#rating-reverse").addEventListener("click",()=>{
 
 
 
-    
+
 });
 
 

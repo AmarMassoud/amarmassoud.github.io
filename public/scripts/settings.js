@@ -201,7 +201,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       };
 
       createButton.addEventListener("click", () => {
-        console.log("test");
 
         const [firstName, LastName] = emailField.value
             .split("@")[0]
@@ -220,11 +219,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             emailField.value.length !== 0 &&
             passwordField.value.length !== 0
         ) {
-          console.log("email not found");
           users.push(newUser);
           localStorage.setItem("user", JSON.stringify(users));
         } else {
-          console.log("email found");
+
         }
       });
     };
@@ -283,9 +281,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       fieldsDiv.appendChild(balanceDiv);
 
-      balanceEditButton.addEventListener("click", () => {
-        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        let users = JSON.parse(localStorage.getItem("user")); // Retrieve users from local storage
+      balanceEditButton.addEventListener("click", async () => {
 
         if (balanceEditButton.textContent === "Edit") {
           var element = balanceEditButton.parentNode;
@@ -296,6 +292,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               "mr-3.5 input input-bordered w-full max-w-xs focus:outline-none text-center";
           textField.setAttribute("id", "textField");
           textField.setAttribute("placeholder", h2.textContent);
+          console.log(currentUser);
           textField.value = currentUser.balance;
           element.replaceChild(textField, h2);
 
@@ -312,21 +309,16 @@ document.addEventListener("DOMContentLoaded", async () => {
           element.replaceChild(newElement, textField);
 
           if (balanceEditButton.parentNode.id === "balance") {
-            users.find((user) => user.id == currentUser.id).balance = enteredText;
+            await fetch(`/api/user/${currentUser.id}`, {
+              method: "PATCH",
+              body: JSON.stringify({
+                balance: parseInt(enteredText),
+              }),
+            });
           }
-          const newCurrentUser = users.find((user) => user.id == currentUser.id);
-          localStorage.setItem("currentUser", JSON.stringify(newCurrentUser));
-          currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-          users.splice(
-              users.findIndex((user) => user.id === currentUser.id),
-              1
-          );
-          users.push(currentUser);
-          localStorage.setItem("user", JSON.stringify(users));
-
-          balanceEditButton.textContent = "Edit";
-        }
+        balanceEditButton.textContent = "Edit";
+      }
       });
 
       const addressDiv = document.createElement("div");
@@ -504,7 +496,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const street = document.createElement("h1");
       street.id = "street";
-      street.textContent = userAddress.address.address;
+      street.textContent = userAddress.address;
       street.className = "";
 
       streetDiv.appendChild(streetLabel);
@@ -521,7 +513,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const city = document.createElement("h1");
       city.id = "city";
-      city.textContent = userAddress.address.city;
+      city.textContent = userAddress.city;
       city.className = "";
 
       cityDiv.appendChild(cityLabel);
@@ -538,7 +530,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const state = document.createElement("h1");
       state.id = "state";
-      state.textContent = userAddress.address.state;
+      state.textContent = userAddress.state;
       state.className = "";
 
       stateDiv.appendChild(statelabel);
@@ -555,7 +547,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const postalCode = document.createElement("h1");
       postalCode.id = "postal-code";
-      postalCode.textContent = userAddress.address.postalCode;
+      postalCode.textContent = userAddress.postalCode;
       postalCode.className = "";
 
       postalCodeDiv.appendChild(postalCodeLabel);
@@ -571,7 +563,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.querySelector("#addresses-div").appendChild(addressCard);
     };
 
-    function addressPopup(address) {
+    async function addressPopup(address) {
       let editMode = true;
       if (!address) {
         address = {
@@ -655,7 +647,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       nicknameLabel.className = "block";
       const nicknameInput = document.createElement("input");
       nicknameInput.type = "text";
-      nicknameInput.value = address.name;
+      nicknameInput.value = editMode ? address.name : "";
       nicknameInput.className = "input input-bordered input-md w-full w-md";
 
       const addressLabel = document.createElement("label");
@@ -663,7 +655,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       addressLabel.className = "block mt-4";
       const addressInput = document.createElement("input");
       addressInput.type = "text";
-      addressInput.value = address.address.address || "";
+      addressInput.value = editMode ? address.address : "";
       addressInput.className = "input input-bordered input-md w-full max-w-2xl";
 
       const cityLabel = document.createElement("label");
@@ -671,7 +663,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       cityLabel.className = "block mt-4";
       const cityInput = document.createElement("input");
       cityInput.type = "text";
-      cityInput.value = address.address.city;
+      cityInput.value = editMode ? address.city : "";
       cityInput.className = "input input-bordered input-md w-full max-w-2xl ";
 
       const stateLabel = document.createElement("label");
@@ -679,7 +671,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       stateLabel.className = "block mt-4";
       const stateInput = document.createElement("input");
       stateInput.type = "text";
-      stateInput.value = address.address.state;
+      stateInput.value = editMode ? address.state : "";
       stateInput.className = "input input-bordered input-md w-full max-w-2xl";
 
       const postalCodeLabel = document.createElement("label");
@@ -687,7 +679,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       postalCodeLabel.className = "block mt-4";
       const postalCodeInput = document.createElement("input");
       postalCodeInput.type = "text";
-      postalCodeInput.value = address.address.postalCode;
+      postalCodeInput.value = editMode ? address.postalCode : "";
       postalCodeInput.className =
           "input input-bordered input-md w-full max-w-2xl ";
 
@@ -721,22 +713,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       popup.appendChild(form);
 
-      nicknameInput.addEventListener("input", () => {
-        console.log(nicknameInput.value);
-        console.log(addressName);
-        const addressIndex = currentUser.addresses.findIndex(
-            (address) => address.name === addressName
-        );
-        console.log(currentUser.addresses[addressIndex]);
-        if (addressIndex !== -1) {
-          console.log(nicknameInput.value);
-
-
-        }
+      const currentUserId = JSON.parse(localStorage.getItem("currentUser"));
+      const user = await fetch(`/api/user/${currentUserId}`, {
+        method: "GET",
       });
-      
+      const currentUser = await user.json();
 
-      confirmButton.addEventListener("click", () => {
+
+      confirmButton.addEventListener("click", async (event) => {
+        event.preventDefault();
         if (
             !nicknameInput.value ||
             !addressInput.value ||
@@ -747,52 +732,67 @@ document.addEventListener("DOMContentLoaded", async () => {
           alert("Please fill in all fields");
           return;
         }
-        let users = JSON.parse(localStorage.getItem("user"));
 
         const addressIndex = currentUser.addresses.findIndex(
             (address) => address.name === addressName
         );
         if (addressIndex !== -1) {
-          currentUser.addresses[addressIndex].name = nicknameInput.value;
-          currentUser.addresses[addressIndex].address.address =
-              addressInput.value;
-          currentUser.addresses[addressIndex].address.city = cityInput.value;
-          currentUser.addresses[addressIndex].address.state = stateInput.value;
-          currentUser.addresses[addressIndex].address.postalCode =
-              postalCodeInput.value;
-          localStorage.setItem("currentUser", JSON.stringify(currentUser));
-          users.splice(
-              users.findIndex((user) => user.id === currentUser.id),
-              1,
-              currentUser
-          );
-          localStorage.setItem("user", JSON.stringify(users));
+
+          await fetch(`/api/address/${address.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                name: nicknameInput.value,
+                address: addressInput.value,
+                city: cityInput.value,
+                state: stateInput.value,
+                postalCode: postalCodeInput.value,
+
+            })
+          })
+          window.location.reload();
+
+
         } else {
           const newAddress = {
             name: nicknameInput.value,
-            address: {
               address: addressInput.value,
               city: cityInput.value,
               state: stateInput.value,
               postalCode: postalCodeInput.value,
-            },
+
           };
-          currentUser.addresses.push(newAddress);
-          localStorage.setItem("currentUser", JSON.stringify(currentUser));
-          users.splice(
-              users.findIndex((user) => user.id === currentUser.id),
-              1
-          );
-          users.push(currentUser);
-          localStorage.setItem("user", JSON.stringify(users));
+          await fetch(`/api/address`, {
+            method: "POST",
+            body: JSON.stringify({
+              name: nicknameInput.value,
+                address: addressInput.value,
+                city: cityInput.value,
+                state: stateInput.value,
+                postalCode: postalCodeInput.value,
+                userId: currentUserId
+            })
+          })
+          window.location.reload();
         }
+
+
       });
 
-      deleteButton.addEventListener("click", () => {
+      deleteButton.addEventListener("click", async () => {
         const addressIndex = currentUser.addresses.findIndex(
             (address) => address.name === addressName
         );
-        currentUser.addresses.splice(addressIndex, 1);
+        await fetch(`/api/user/${currentUser.id}`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            addresses: currentUser.addresses.filter(
+                (address) => address.name !== addressName
+            ),
+          })
+        })
+
+
+        // currentUser.addresses.splice(addressIndex, 1);
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
       });
 
