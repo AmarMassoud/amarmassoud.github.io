@@ -76,7 +76,7 @@ model Purchase {
 model Comment {
   id        String   @id @default(cuid())
   body      String
-  postId    String // todo what's a post
+  // postId    String // todo what's a post
   productId String
   timestamp DateTime
   user      User     @relation(fields: [userId], references: [id])

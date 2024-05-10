@@ -58,7 +58,6 @@ Table Purchase {
 Table Comment {
   id String [pk]
   body String [not null]
-  postId String [not null]
   productId String [not null]
   timestamp DateTime [not null]
   user User [not null]
