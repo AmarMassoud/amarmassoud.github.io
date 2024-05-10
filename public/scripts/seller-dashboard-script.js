@@ -537,7 +537,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const product = document.createElement("p");
     product.classList.add("text-sm");
     product.textContent = products.find(
-      (product) => product.id === refundRequest.productId
+      (product) => product.id === refundRequest.cartItem.productId
     ).title;
 
     const commentP = document.createElement("p");
