@@ -18,7 +18,7 @@ const seed = async () => {
 
                 })
 
-            }
+            } // trying seeding again
 
             const bank = user.bank;
             prisma.bank.create({
