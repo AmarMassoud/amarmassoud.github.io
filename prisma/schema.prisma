@@ -107,7 +107,7 @@ model User {
   lastName      String
   email         String          @unique
   password      String
-  image         String
+  image         String?
   bank          Bank?           @relation(fields: [bankId], references: [id])
   bankId        String?         @unique
   role          String

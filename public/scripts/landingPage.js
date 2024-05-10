@@ -4,12 +4,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getProducts = async () => {
     const response = await fetch(`/api/products`, {
         method: "GET",
-
+      mode: 'no-cors',
     });
-    console.log(response)
     if (response.ok) {
       products = await response.json();
-      console.log(products)
     }
   }
 
@@ -19,22 +17,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     await getProducts();
 
   }
-
-  let currentProduct = JSON.parse(localStorage.getItem("currentProduct"));
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  if (currentUser === null || currentUser.id === -1) {
-    currentUser = { firstName: "Guest", id: -1 };
+  const navbar = document.querySelector("#nav");
+
+  if (currentUser === null || currentUser === -1) {
+    currentUser = -1;
     const profileButton = document.querySelector("#profile-link");
     profileButton.href = "../login.html";
-
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    navbar.textContent = "G";
+    navbar.setAttribute("name",  "Guest");
+  } else {
+    const getUser = await fetch(`/api/user/${currentUser}`, {
+      method: "GET",
+      mode: 'no-cors',
+    });
+    currentUser = await getUser.json();
+  navbar.textContent = currentUser ? currentUser.firstName.charAt(0) : "G";
+  navbar.setAttribute("name", currentUser ? currentUser.firstName : "Gust");
   }
-  const navbar = document.querySelector("#nav");
-  navbar.textContent = currentUser ? currentUser.firstName.charAt(0) : "U";
-  navbar.setAttribute("name", currentUser ? currentUser.firstName : "User");
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const searchInput = document.querySelector("#search");
 
@@ -88,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       viewAll.className = "text-center text-sm text-custom-red cursor-pointer";
       viewAll.addEventListener("click", () => {
         console.log(products);
-        localStorage.setItem("searchedProducts", JSON.stringify(products));
+        localStorage.setItem("searchedProducts", JSON.stringify(products.map((product) => product.id)));
         window.location.href = "../searched-products.html";
       });
       overlayContent.appendChild(viewAll);
@@ -153,7 +156,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     searchedProductDiv.appendChild(productInfo);
 
     searchedProductDiv.addEventListener("click", () => {
-      localStorage.setItem("currentProduct", JSON.stringify(product));
+      localStorage.setItem("currentProduct", JSON.stringify(product.id));
       window.location.href = "../product-page.html";
     });
 
@@ -225,7 +228,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     card.appendChild(cardActions);
 
     cardBody.addEventListener("click", () => {
-      localStorage.setItem("currentProduct", JSON.stringify(product));
+      localStorage.setItem("currentProduct", JSON.stringify(product.id));
       window.location.href = "../product-page.html";
     });
 
@@ -234,7 +237,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const renderProducts = (divId, filter) => {
     const productsDiv = document.querySelector(`#${divId}`);
     productsDiv.replaceChildren();
-    console.log(products);
     let filteredProduct = [];
     const displayProducts = [];
 

@@ -11,10 +11,10 @@ export async function POST(request) {
 
         const isValid = password === user.password
         if (!isValid) {
-            return new Response(JSON.stringify({ error: "Invalid credentials" }), { status: 401 });
+            return new Response(JSON.stringify({ message: "Login unsuccessful" }));
         }
 
-        return new Response(JSON.stringify({ message: "Login successful", userId: user.id }), { status: 200 });
+        return new Response(JSON.stringify({ message: "Login successful", userId: user.id }));
 
     } catch (e) {
         console.error(e);

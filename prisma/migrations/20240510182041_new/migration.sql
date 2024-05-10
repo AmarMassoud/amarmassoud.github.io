@@ -94,7 +94,7 @@ CREATE TABLE "User" (
     "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "image" TEXT NOT NULL,
+    "image" TEXT,
     "bankId" TEXT,
     "role" TEXT NOT NULL,
     "balance" INTEGER NOT NULL DEFAULT 0,

@@ -1,9 +1,16 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
- 
-let currnetUser = JSON.parse(localStorage.getItem('currentUser'));
-let isLoggedin = currnetUser===null || currnetUser.id===-1?false:true;
+
+let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
+
+const getUser = await fetch(`/api/user/${currentUserId}`, {
+    method: "GET",
+    mode: 'no-cors',
+});
+
+const currentUser = await getUser.json();
+let isLoggedin = currentUser===null || currentUser.id===-1?false:true;
 if(!isLoggedin){
-    currnetUser={firstName: "Guest"};
+    currentUserId=-1;
 }
 class BuyerNav extends LitElement {
     static properties = {
@@ -111,16 +118,16 @@ class BuyerNav extends LitElement {
   
 
   
-  ${(currnetUser.firstName.charAt(0) == "G")?html`
+  ${(currentUser.firstName.charAt(0) == "G")?html`
   <a href="../login.html">=
   <div id="profile-icon">
-  <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
+  <h3>${currentUser.firstName.charAt(0).toUpperCase()}</h3>
    <div></a>
    </div>
   </div>`:
   html` <a href="../profile.html" >
     <div id="profile-icon">
-    <h3>${currnetUser.firstName.charAt(0).toUpperCase()}</h3>
+    <h3>${currentUser.firstName.charAt(0).toUpperCase()}</h3>
      <div></a>
      </div>
     </div>`}

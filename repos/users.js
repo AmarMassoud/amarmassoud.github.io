@@ -38,6 +38,10 @@ export const getUser = async (id
 ) => {
     const user = await prisma.user.findUnique({
         where: { id: id },
+        include: {
+            addresses: true,
+            bank: true
+        }
     });
     await disconnect();
     return user

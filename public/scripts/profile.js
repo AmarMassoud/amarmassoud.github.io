@@ -1,7 +1,12 @@
 document.addEventListener("DOMContentLoaded", async() => {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    
+    const currentUserId = JSON.parse(localStorage.getItem("currentUser"));
 
+    const getUser = await fetch(`/api/user/${currentUserId}`, {
+        method: "GET",
+        mode: 'no-cors',
+    });
+
+    const currentUser = await getUser.json();
 
     if(currentUser.role === "CUSTOMER") {
         document.querySelector("#nav").innerHTML = "<buyer-nav name=\"Wardan\" id=\"nav\"> </buyer-nav>"
@@ -26,10 +31,10 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 });
 
-function switchEdit() {
-    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    let users = JSON.parse(localStorage.getItem("user")); // Retrieve users from local storage
-    if (this.textContent === "Edit") {
+async function switchEdit() {
+    let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(currentUserId)
+    if (this.textContent.replace(/\s/g, '') === "Edit") {
         console.log("edit")
         var element = this.parentNode;
         var h2 = this.previousElementSibling;
@@ -39,11 +44,10 @@ function switchEdit() {
         textField.setAttribute("id", "textField");
         textField.setAttribute("value", h2.textContent);
         element.replaceChild(textField, h2);
-        
+
 
         this.textContent = "Save";
     } else if (this.textContent === "Save") {
-        console.log("save")
 
         var element = this.parentNode;
         var textField = this.previousElementSibling;
@@ -56,22 +60,36 @@ function switchEdit() {
         element.replaceChild(newElement, textField);
 
         if (this.parentNode.id === "fname") {
-            users.find((user) => user.id == currentUser.id).firstName = enteredText;
+
+            await fetch(`/api/user/${currentUserId}`, {
+                method: "PATCH",
+                body: JSON.stringify(
+                    {
+                        firstName: enteredText,
+                    }),
+            });
         } else if (this.parentNode.id === "lname") {
-            users.find((user) => user.id == currentUser.id).lastName = enteredText;
+            await fetch(`/api/user/${currentUserId}`, {
+                method: "PATCH",
+                body: JSON.stringify(
+                    {
+                        lastName: enteredText
+                    }),
+            });
         } else if (this.parentNode.id === "emails") {
-            users.find((user) => user.id == currentUser.id).email = enteredText;
+            await fetch(`/api/user/${currentUserId}`, {
+                method: "PATCH",
+                body: JSON.stringify(
+                    {
+                        email: enteredText
+                    }),
+            });
         }
-        const newCurrentUser = users.find((user) => user.id == currentUser.id); 
-        console.log(currentUser);
-        localStorage.setItem("currentUser", JSON.stringify(newCurrentUser));
-         currentUser = JSON.parse(localStorage.getItem("currentUser"));
-         window.location.reload();
+        console.log(currentUserId);
 
-        // Save the updated users array back to local storage
-        localStorage.setItem('user', JSON.stringify(users));
 
-        console.log(users);
+
+
         this.textContent = "Edit";
     }
 }

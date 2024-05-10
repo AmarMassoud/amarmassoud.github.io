@@ -88,7 +88,7 @@ Table User {
   lastName String [not null]
   email String [unique, not null]
   password String [not null]
-  image String [not null]
+  image String
   bank Bank
   bankId String [unique]
   role String [not null]

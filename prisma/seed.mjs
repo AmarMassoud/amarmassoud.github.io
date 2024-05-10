@@ -14,6 +14,7 @@ const seed = async () => {
                     ...bank,
                 },
             });
+            console.log("loading users");
 
             await prisma.user.create({
                 data: {
@@ -29,7 +30,7 @@ const seed = async () => {
                 },
             });
 
-            // console.log(user);
+            console.log("loading addresses");
             const addresses = user.addresses;
             for (let address of addresses) {
                 await prisma.address.create({
@@ -44,6 +45,8 @@ const seed = async () => {
                 });
             } // trying seeding again
         }
+        console.log("loading products");
+
         const productsData = fs.readFileSync('./public/data/products.json', 'utf8');
         const products = JSON.parse(productsData);
         for (const product of products) {
@@ -71,10 +74,10 @@ const seed = async () => {
             }
         }
 
+                console.log("loading comments");
             const commentsData = fs.readFileSync("./public/data/comments.json", "utf8");
             const comments = JSON.parse(commentsData);
             for (let comment of comments) {
-                console.log(comment);
                 await prisma.comment.create({
                     data: {
                         // id: comment.id.toString(),
