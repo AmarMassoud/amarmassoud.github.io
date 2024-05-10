@@ -1,4 +1,4 @@
-import * as products from 'repos/products.js';
+import * as products from '@/repos/products.js';
 
 
 export async function GET(request) {
