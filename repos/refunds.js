@@ -11,20 +11,20 @@ export async function disconnect() {
 }
 
 export async function getRefunds() {
-    const refunds = await prisma.Refund.findMany();
+    const refunds = await prisma.Refundrequest.findMany();
     await disconnect();
     return refunds;
 }
 
 
 export async function addRefund(body) {
-    const refund = await prisma.Refund.create({data: {...body}})
+    const refund = await prisma.Refundrequest.create({data: {...body}})
     await disconnect();
     return refund;
 }
 
 export async function deleteRefund(id) {
-    const refund = await prisma.Refund.delete({
+    const refund = await prisma.Refundrequest.delete({
         where: {
             id: id
         }

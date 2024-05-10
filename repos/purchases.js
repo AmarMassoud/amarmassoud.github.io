@@ -13,7 +13,7 @@ export async function disconnect() {
 }
 
 export async function getPurchases() {
-    const purchases = await prisma.Purchase.findMany();
+    const purchases = await prisma.purchase.findMany();
     await disconnect();
     return purchases;
 }
