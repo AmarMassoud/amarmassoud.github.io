@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     // document.querySelector("#history").href = "../buyer/purchase-history/purchase-history.html"
 } else if(currentUser.role === "SELLER") {
     document.querySelector("#nav").innerHTML = "<seller-nav name=\"Wardan\" id=\"nav\"> </seller-nav>"
-    document.querySelector("#history").href = "../seller/seller-history.html"
+    document.querySelector("#history").href = "../seller-history.html"
 }
 
 

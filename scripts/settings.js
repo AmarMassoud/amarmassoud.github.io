@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else if (currentUser.role === "SELLER") {
     document.querySelector("#nav").innerHTML =
       '<seller-nav name="Wardan" id="nav"> </seller-nav>';
-    document.querySelector("#history").href = "../seller/seller-history.html";
+    document.querySelector("#history").href = "../seller-history.html";
   }
   // document.getElementById("nav").setAttribute("name", currentUser.firstName.charAt(0));
   document.getElementById("name2").textContent =
