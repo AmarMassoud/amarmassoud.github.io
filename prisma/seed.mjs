@@ -29,7 +29,7 @@ const seed = async () => {
                 },
             });
 
-            console.log(user);
+            // console.log(user);
             const addresses = user.addresses;
             for (let address of addresses) {
                 await prisma.address.create({
@@ -69,22 +69,22 @@ const seed = async () => {
                     }
                 })
             }
+        }
 
             const commentsData = fs.readFileSync("./public/data/comments.json", "utf8");
             const comments = JSON.parse(commentsData);
             for (let comment of comments) {
                 console.log(comment);
-
                 await prisma.comment.create({
                     data: {
-                        id: comment.id.toString(),
+                        // id: comment.id.toString(),
                         body: comment.body,
-                        userId: comment.user.id.toString(),
+                        userId: (comment.user.id - 1).toString(),
                         productId: comment.productId.toString(),
                         timestamp: comment.timestamp,
                     },
                 });
-            }
+
         }
     } catch (err) {
         console.error(err);
