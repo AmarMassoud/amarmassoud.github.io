@@ -1,10 +1,10 @@
 import * as products from 'repos/products.js';
 
 
-export async function GET(request) {
+export async function GET(request, {params}) {
     try {
-        const body = await request.json();
-        return Response.json(await products.getProduct(body))
+        const productId = params.productId;
+        return Response.json(await products.getProduct(productId))
     } catch (e) {
         console.error(e)
         return Response.json({error: e})
