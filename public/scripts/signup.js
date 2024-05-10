@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', async() => {
                     firstName: firstName,
                     lastName: lastName,
                     balance: 0,
-                    addresses: []
                 }),
         });
 
