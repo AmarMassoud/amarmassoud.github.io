@@ -108,11 +108,11 @@ model User {
   id            String          @id @default(cuid())
   firstName     String
   lastName      String
-  email         String
+  email         String          @unique
   password      String
   image         String
   bank          Bank?           @relation(fields: [bankId], references: [id])
-  bankId        String          @unique
+  bankId        String?         @unique
   role          String
   balance       Int             @default(0)
   addresses     Address[]

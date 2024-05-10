@@ -87,11 +87,11 @@ Table User {
   id String [pk]
   firstName String [not null]
   lastName String [not null]
-  email String [not null]
+  email String [unique, not null]
   password String [not null]
   image String [not null]
   bank Bank
-  bankId String [unique, not null]
+  bankId String [unique]
   role String [not null]
   balance Int [not null, default: 0]
   addresses Address [not null]

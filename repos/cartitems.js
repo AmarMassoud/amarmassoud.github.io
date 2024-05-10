@@ -11,13 +11,13 @@ export async function disconnect() {
 }
 
 export async function getCartItems() {
-    const cartItems = await prisma.CartItem.findMany();
+    const cartItems = await prisma.cartItem.findMany();
     await disconnect();
     return cartItems;
 }
 
 export async function getCartItem(cartItemId) {
-    const cartItem = await prisma.CartItem.findUnique({
+    const cartItem = await prisma.cartItem.findUnique({
         where: {
             id: cartItemId
         }

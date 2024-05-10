@@ -9,7 +9,7 @@ export async function POST(request) {
             return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
         }
 
-        const isValid = await users.validatePassword(password, user.password);
+        const isValid = password === user.password
         if (!isValid) {
             return new Response(JSON.stringify({ error: "Invalid credentials" }), { status: 401 });
         }

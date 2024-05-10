@@ -13,7 +13,7 @@ export const disconnect = async () => {
 }
 export const getUserByEmail = async (email) => {
     const user = await prisma.user.findUnique({
-        where: { email:email },
+        where: { email: email },
     });
     await disconnect();
     return user;
@@ -27,8 +27,7 @@ export const addUser = async (body) => {
     const hashedPassword = await bcrypt.hash(body.password, 10);
     const user =  await prisma.user.create({
         data: {
-            email: body.email,
-            password: hashedPassword,
+            ...body
         },
     });
     await disconnect();
