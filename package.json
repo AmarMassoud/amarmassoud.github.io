@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma migrate dev && prism migrate reset && prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "build-tailwind": "postcss ./globals.css -o ./public/dist/output.css --watch",
