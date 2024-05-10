@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+model Deal {
+  id        String @id @default(cuid())
+  customer  String
+  cartItems Int
+
+  @@map(name: "deal")
+}
+
+model Cartitem {
+  id        String @id @default(cuid())
+  productId String
+  customer  String
+  quantity  Int
+
+  @@map(name: "cartitem")
+}
+
+model Bank {
+  id         String @id @default(cuid())
+  userId     String
+  cardNumber String
+  cardExpire String
+  iban       String
+
+  @@map(name: "bank")
+}
+
+model Refundrequest {
+  id         String @id @default(cuid())
+  cartItemId String
+  purchaseId String
+  body       String
+  reason     String
+  timeStamp  String
+
+  @@map(name: "refundrequest")
+}
+
+model Purchase {
+  id          String @id @default(cuid())
+  dealId      String
+  date        String
+  total_price Int
+
+  @@map(name: "purchase")
+}
+
+model Comment {
+  id        String @id @default(cuid())
+  productId String
+  customer  Int
+  text      String
+  date      String
+
+  @@map(name: "comment")
+}
+
+model Address {
+  id         String @id @default(cuid())
+  userId     String
+  name       String
+  city       String
+  state      String
+  postalCode String
+
+  @@map(name: "address")
+}
+
+model Image {
+  id        String  @id @default(cuid())
+  productId String?
+
+  @@map(name: "image")
+}
+
+model User {
+  id              String  @id @default(cuid())
+  balance         Int
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  password        String
+  bank            String
+  addressId       String
+  role            String
+  refundRequestId String?
+
+  @@map(name: "user")
+}
+
+model Product {
+  id          String @id @default(cuid())
+  quantity    Int
+  seller      Int
+  title       String
+  description String
+  price       Int
+  stock       Int
+  brand       String
+  category    String
+  thumbnail   String
+
+  @@map(name: "product")
+}

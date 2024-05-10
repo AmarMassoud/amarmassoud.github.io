@@ -1,0 +1,156 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Deal {
+  id String [pk]
+  sellerId String [not null]
+  customerId String [not null]
+  cartItems Int [not null]
+  items Cartitem [not null]
+  Purchase Purchase
+  purchaseId String
+  User User
+  userId String
+  Refundrequest refundrequest
+  refundrequestId String
+}
+
+Table Cartitem {
+  id String [pk]
+  productId String [not null]
+  product Product [not null]
+  dealId String [not null]
+  deal Deal [not null]
+  quantity Int [not null]
+  customer String [not null]
+  Refundrequest refundrequest [not null]
+}
+
+Table Bank {
+  id String [pk]
+  cardExpire String [not null]
+  cardNumber String [not null]
+  cardType String [not null]
+  currency String [not null]
+  iban String [not null]
+  User User [not null]
+}
+
+Table refundrequest {
+  id String [pk]
+  deals Deal [not null]
+  totalPrice Float [not null]
+  timeStamp DateTime [not null]
+  purchaseId String [not null]
+  productId String [not null]
+  body String [not null]
+  reason String [not null]
+  cartItemId String [not null]
+  cartItem Cartitem [not null]
+  userId String [not null]
+  user User [not null]
+  product Product [not null]
+}
+
+Table Purchase {
+  id String [pk]
+  deals Deal [not null]
+  total_price Float [not null]
+  timeStamp String [not null]
+}
+
+Table Comment {
+  id String [pk]
+  body String [not null]
+  postId String [not null]
+  productId String [not null]
+  timestamp DateTime [not null]
+  user User [not null]
+  userId String [not null]
+  Product Product [not null]
+}
+
+Table Address {
+  id String [pk]
+  address String [not null]
+  city String [not null]
+  postalCode String [not null]
+  state String [not null]
+  name String [not null]
+  User User
+  userId String
+}
+
+Table Image {
+  id String [pk]
+  url String [not null]
+  productId String [not null]
+  product Product [not null]
+}
+
+Table User {
+  id String [pk]
+  firstName String [not null]
+  lastName String [not null]
+  email String [not null]
+  password String [not null]
+  image String [not null]
+  bank Bank [not null]
+  bankId String [not null]
+  role String [not null]
+  balance Int [not null, default: 0]
+  addresses Address [not null]
+  refundRequestId String
+  Comment Comment [not null]
+  Product Product [not null]
+  Deal Deal [not null]
+  Refundrequest refundrequest [not null]
+}
+
+Table Product {
+  id String [pk]
+  title String [not null]
+  description String [not null]
+  price Float [not null]
+  discountPercentage Float [not null]
+  rating Float [not null]
+  stock Int [not null]
+  brand String [not null]
+  category String [not null]
+  thumbnail String [not null]
+  seller User [not null]
+  sellerId String [not null]
+  images Image [not null]
+  Cartitem Cartitem [not null]
+  Refundrequest refundrequest [not null]
+  Comment Comment [not null]
+}
+
+Ref: Deal.purchaseId > Purchase.id
+
+Ref: Deal.userId > User.id
+
+Ref: Deal.refundrequestId > refundrequest.id
+
+Ref: Cartitem.productId > Product.id
+
+Ref: Cartitem.dealId > Deal.id
+
+Ref: refundrequest.cartItemId > Cartitem.id
+
+Ref: refundrequest.userId > User.id
+
+Ref: refundrequest.productId > Product.id
+
+Ref: Comment.userId > User.id
+
+Ref: Comment.productId > Product.id
+
+Ref: Address.userId > User.id
+
+Ref: Image.productId > Product.id
+
+Ref: User.bankId > Bank.id
+
+Ref: Product.sellerId > User.id

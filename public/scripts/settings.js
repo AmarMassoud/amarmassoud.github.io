@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelector("#nav").innerHTML =
       '<buyer-nav name="Wardan" id="nav"> </buyer-nav>';
     document.querySelector("#history").href =
-      "../buyer/purchase-history/purchase-history.html";
+      "../purchase-history.html";
   } else if (currentUser.role === "SELLER") {
     document.querySelector("#nav").innerHTML =
       '<seller-nav name="Wardan" id="nav"> </seller-nav>';
