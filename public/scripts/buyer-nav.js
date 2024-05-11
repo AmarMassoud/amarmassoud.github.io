@@ -1,10 +1,11 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 
-let currentUserId = localStorage.getItem("currentUser");
+let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
 let isLoggedIn = currentUserId != null && currentUserId !== "-1";
 let currentUser={firstName: "Guest"}
 if (isLoggedIn) {
     const response = await fetch(`/api/user/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
+
 }
 class BuyerNav extends LitElement {
     static properties = {

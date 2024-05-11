@@ -276,21 +276,21 @@ const renderProducts = (divId, filter) => {
 };
 
 
-    function addToCart  (product, quantity = 1) {
+    async function addToCart  (product, quantity = 1) {
 
         const isLoggedIn = localStorage.getItem('currentUser') !== "-1";
         if (isLoggedIn) {
             let carItems = []
-            const response = fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
+            const response =await  fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
             carItems = carItems.filter(item => item.customer === currentUser.id);
             let inCart = carItems.find(item => item.product.id === product.id);
             if (!inCart) {
                 const cartItem = {
-                    product: product.id,
+                    productId: product.id,
                     quantity: quantity,
                     customer: currentUser.id
                 }
-                const addCartItemResponse = fetch(`/api/cartitems`, {
+                const addCartItemResponse = await fetch(`/api/cartitems`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -302,7 +302,7 @@ const renderProducts = (divId, filter) => {
                 console.log(inCart.quantity, inCart.product.stock)
                 if (inCart.quantity < inCart.product.stock) {
                     inCart.quantity += quantity; //todo change in api
-                    const updateCartItemResponse = fetch(`/api/cartitems/${inCart.id}`, {
+                    const updateCartItemResponse = await fetch(`/api/cartitems/${inCart.id}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json'
@@ -317,7 +317,7 @@ const renderProducts = (divId, filter) => {
         }
         else {
             let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
-            const allProductsResponse = fetch(`/api/products`).then(res => res.json()).then(data => {
+            const allProductsResponse = await fetch(`/api/products`).then(res => res.json()).then(data => {
                 cartItemsLs = cartItemsLs.map(item => {
                     item.product = data.find(product => product.id === item.product.id);
                     return item;
