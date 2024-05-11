@@ -10,7 +10,7 @@ export async function getTotalSalesForUser(id) {
             FROM "Deal"
             INNER JOIN "Cartitem" ON "Deal"."id" = "Cartitem"."dealId"
             INNER JOIN "Product" ON "Cartitem"."productId" = "Product"."id"
-            WHERE "Deal"."sellerId" = ${"5"};
+            WHERE "Deal"."sellerId" = ${id};
         `;
         return totalSales[0].totalSales;
 
@@ -27,7 +27,7 @@ export async function getCountUniqueCustomers(currentUser) {
     try {
         const uniqueCustomerCount = await prisma.deal.findMany({
                     where: {
-                sellerId: "1"
+                sellerId: currentUser
             },
             select: {
                 customerId: true
