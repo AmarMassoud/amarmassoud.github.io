@@ -104,7 +104,7 @@ function showOverlay(products) {
         viewAll.className = "text-center text-sm text-custom-red cursor-pointer";
         viewAll.addEventListener("click", () => {
             console.log(products);
-            localStorage.setItem("searchedProducts", JSON.stringify(products));
+            localStorage.setItem("searchedProducts", JSON.stringify(products.map((product) => product.id)));
             window.location.href = "../searched-products.html";
         });
         overlayContent.appendChild(viewAll);
