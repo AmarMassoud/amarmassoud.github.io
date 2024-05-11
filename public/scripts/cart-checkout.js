@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
     let cartItems = []
-    const cartItemsResponse = await fetch('/api/cartItems').then(res => res.json()).then(data => cartItems = data);
+    const cartItemsResponse = await fetch('/api/cartitems').then(res => res.json()).then(data => cartItems = data);
     let currentUserId = JSON.parse(localStorage.getItem('currentUser')) || {};
     let currentUser = {}
-    const currentUserResponse = await fetch(`/api/users/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
+    const currentUserResponse = await fetch(`/api/user/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
     let products = []
     const productsResponse = fetch('/api/products').then(res => res.json()).then(data => products = data);
 
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         removeButton.addEventListener('click', () => {
             const isLoggedIn = currentUserId !== "-1";
             if (isLoggedIn) {
-                const deleteCartItemResponse = fetch(`/api/cartItems/${cartItem.id}`, {
+                const deleteCartItemResponse = fetch(`/api/cartitems/${cartItem.id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -815,10 +815,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     async function updateStock(product ,quantity) {
         const newStock= product.stock - quantity;
-        const response = await fetch(`/api/product/${product.id}`, {
+        console.log(newStock)
+        console.log(product.id)
+
+        const response = await fetch(`/api/products/${product.id}`, {
             method: "PATCH",
             body: JSON.stringify({ stock: newStock }),
         });
+        console.log(response)
+
     }
 
 
@@ -833,19 +838,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         let InsufficientStock = false;
-        cartItems.forEach(cartItem => {
+        for (const cartItem of cartItems) {
             const product = products.find(p => p.id === cartItem.product.id);
             if (product && product.stock >= cartItem.quantity) {
                 // product.stock -= cartItem.quantity;
-                updateStock(product,cartItem.quantity);
+                await updateStock(product,cartItem.quantity);
             } else {
                 console.log(`Not enough quantity for product with ID ${cartItem.product.id}`);
 
                 InsufficientStock = true;
-                return;
+                continue;
 
             }
-        });
+        }
         if (InsufficientStock) {
             alert(`Not enough quantity for one of the products selected`);
 
@@ -855,7 +860,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // localStorage.setItem('products', JSON.stringify(products)); //todo
         const purchaseDeals = [];
         // let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
-        const groupedItems = Object.groupBy(cartItems, (item) => item.product.seller.id);
+        const groupedItems = Object.groupBy(cartItems, (item) => item.product.sellerId);
 
         const purchase = {
             totalPrice: cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0),
@@ -866,16 +871,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(purchase),
+            body: JSON.stringify({...purchase}),
         });
 
-        Object.values(groupedItems).forEach((items)  => {
+        for (const items of Object.values(groupedItems)) {
             const deal = {
                 seller: items[0].product.seller, // Assuming product.user is the seller object
                 items: items,
                 customer: currentUser,
             };
-            const response = fetch(`/api/deals`, {
+            const response = await fetch(`/api/deals`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -886,7 +891,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
             purchaseDeals.push(deal);
 
-        });
+        }
         // purchaseDeals.forEach(deal => {
         //
         // })
@@ -913,81 +918,76 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     renderCartItems()
 
-    function addToCart  (product, quantity = 1) {
-
-        const isLoggedIn = localStorage.getItem('currentUser') !== "-1";
-        if (isLoggedIn) {
-            let carItems = []
-            const response = fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
-            carItems = carItems.filter(item => item.customer === currentUser.id);
-            let inCart = carItems.find(item => item.product.id === product.id);
-            if (!inCart) {
-                const cartItem = {
-                    product: product.id,
-                    quantity: quantity,
-                    customer: currentUser.id
-                }
-                const addCartItemResponse = fetch(`/api/cartitems`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cartItem)
-                })
-            }
-            else {
-                console.log(inCart.quantity, inCart.product.stock)
-                if (inCart.quantity < inCart.product.stock) {
-                    inCart.quantity += quantity; //todo change in api
-                    const updateCartItemResponse = fetch(`/api/cartitems/${inCart.id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(inCart)
-                    })
-                } else {
-                    showToast('Your reached max stock', 'bg-red-200');
-                }
-            }
-
-        }
-        else {
-            let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
-            const allProductsResponse = fetch(`/api/products`).then(res => res.json()).then(data => {
-                cartItemsLs = cartItemsLs.map(item => {
-                    item.product = data.find(product => product.id === item.product.id);
-                    return item;
-                })
-            });
-            const mainProduct = products.find(prod => prod.id === product.id);
-            let inCart = cartItemsLs.find(item => item.product === product.id);
-            if (!inCart) {
-                const cartItem = {
-                    product: product.id,
-                    quantity: 1
-                }
-                cartItemsLs.push(cartItem);
-                localStorage.setItem('cart', JSON.stringify(cartItemsLs));
-                showToast('Product added to cart', 'bg-green-200');
-            }
-
-
-            else if (inCart.quantity < mainProduct.stock) {
-
-                inCart.quantity += quantity;
-
-                showToast('Product added to cart', 'bg-green-200');
-
-            } else {
-                showToast('Your reached max stock', 'bg-red-200');
-
-            }
-            localStorage.setItem('cart', JSON.stringify(cartItemsLs));
-
-        }
-
-    }
+    // async function addToCart(product, quantity = 1) {
+    //
+    //     const isLoggedIn = localStorage.getItem('currentUser') !== "-1";
+    //     if (isLoggedIn) {
+    //         let carItems = []
+    //         const response =await  fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
+    //         carItems = carItems.filter(item => item.customer === currentUser.id);
+    //         let inCart = carItems.find(item => item.product.id === product.id);
+    //         if (!inCart) {
+    //             const cartItem = {
+    //                 productId: product.id,
+    //                 quantity: quantity,
+    //                 customer: currentUser.id
+    //             }
+    //             const addCartItemResponse = await fetch(`/api/cartitems`, {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify({...cartItem})
+    //             })
+    //         } else {
+    //             console.log(inCart.quantity, inCart.product.stock)
+    //             if (inCart.quantity < inCart.product.stock) {
+    //                 inCart.quantity += quantity; //todo change in api
+    //                 const updateCartItemResponse = await fetch(`/api/cartitems/${inCart.id}`, {
+    //                     method: 'PATCH',
+    //                     headers: {
+    //                         'Content-Type': 'application/json'
+    //                     },
+    //                     body: JSON.stringify({quantity: inCart})
+    //                 })
+    //             } else {
+    //                 showToast('Your reached max stock', 'bg-red-200');
+    //             }
+    //         }
+    //
+    //     } else {
+    //         let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
+    //         const allProductsResponse = fetch(`/api/products`).then(res => res.json()).then(data => {
+    //             cartItemsLs = cartItemsLs.map(item => {
+    //                 item.product = data.find(product => product.id === item.product.id);
+    //                 return item;
+    //             })
+    //         });
+    //         const mainProduct = products.find(prod => prod.id === product.id);
+    //         let inCart = cartItemsLs.find(item => item.product === product.id);
+    //         if (!inCart) {
+    //             const cartItem = {
+    //                 product: product.id,
+    //                 quantity: 1
+    //             }
+    //             cartItemsLs.push(cartItem);
+    //             localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+    //             showToast('Product added to cart', 'bg-green-200');
+    //         } else if (inCart.quantity < mainProduct.stock) {
+    //
+    //             inCart.quantity += quantity;
+    //
+    //             showToast('Product added to cart', 'bg-green-200');
+    //
+    //         } else {
+    //             showToast('Your reached max stock', 'bg-red-200');
+    //
+    //         }
+    //         localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+    //
+    //     }
+    //
+    // }
 
 
 })
