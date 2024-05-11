@@ -585,9 +585,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         cardPaymentForm.addEventListener('input', validateAndToggleSubmit); // Re-validate on input change
 
-        submitButton.addEventListener('click', () => {
+        submitButton.addEventListener('click', async () => {
             if (validateCardPaymentForm()) {
-                if (onCheckout()) {
+                if (await onCheckout()) {
                     window.location.href = '../confirmation.html';
                 } else {
                     alert('please add items to your cart')
@@ -622,10 +622,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(validateBalancePayment());
         paymentDiv.appendChild(submitButton);
 
-        submitButton.addEventListener('click', () => {
+        submitButton.addEventListener('click', async () => {
             if (validateBalancePayment()) {
                 // console.log('checking out', onCheckout()    )
-                if (onCheckout()) {
+                if (await onCheckout()) {
                     // console.log('checked out', onCheckout()    )
 
                     window.location.href = '../confirmation.html';
