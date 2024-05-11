@@ -16,8 +16,11 @@ export default function SellerDashboard() {
   const [userName, setName] = useState(null);
   const [stale, setStale] = useState(true);
 
-    const currentUserId= (JSON.parse(localStorage.getItem("currentUser")));
+  const currentUserId= JSON.parse(localStorage.getItem("currentUser"));
+
   useEffect(() => {
+    const currentUserId= (JSON.parse(localStorage.getItem("currentUser")));
+
 
     if (stale && currentUserId ) {
       console.log(currentUserId);
@@ -36,6 +39,8 @@ export default function SellerDashboard() {
   }, [stale]);
 
   useEffect(() => {
+    const currentUserId= (JSON.parse(localStorage.getItem("currentUser")));
+
     if (stale && currentUserId) {
       console.log(currentUserId);
 

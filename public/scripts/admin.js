@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async() => {
   comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     const userId=JSON.parse(localStorage.getItem('currentUser'));
     let currentUser= {};
-    const responseUser = await fetch(`/api/users/${userId}`).then(res=>res.json()).then(data=>currentUser=data);
+    const responseUser = await fetch(`/api/user/${userId}`).then(res=>res.json()).then(data=>currentUser=data);
 
     const currentProductId=localStorage.getItem('currentProduct')
     let currentProduct= {};

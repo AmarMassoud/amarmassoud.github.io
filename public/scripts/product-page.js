@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded",  async() => {
         let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
         let currentUser = {};
         if (currentUserId !== "-1") {
-            const responseUser = await fetch(`/api/users/${currentUserId}`, {
+            const responseUser = await fetch(`/api/user/${currentUserId}`, {
                 method: "GET",
             }).then((res) => res.json()).then((data) => currentUser = data);
 

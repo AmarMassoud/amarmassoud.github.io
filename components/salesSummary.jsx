@@ -124,9 +124,9 @@ export default function SalesSummary({currentUserID}) {
   return (
       <section
           id="sales-summary"
-          class="bg-custom-gray rounded-3xl flex items-center justify-around flex-col p-4 px-8"
+          className="bg-custom-gray rounded-3xl flex items-center justify-around flex-col p-4 px-8"
       >
-        <h2 class="text-2xl font-bold text-left w-full ps-4" id="sales-summaryid">
+        <h2 className="text-2xl font-bold text-left w-full ps-4" id="sales-summaryid">
           <a href="/seller-dashboard"> Sales Summary</a>
         </h2>
         <div className="bg-white w-full rounded-3xl h-44 p-2 grid grid-cols-2 gap-4">
@@ -140,7 +140,7 @@ export default function SalesSummary({currentUserID}) {
             >
               <p className="font-bold text-bs">Total Sales</p>
               <h3 className="text-5xl font-bold ms-3">{
-                  "$" + totalSales? totalSales : 0
+                  totalSales? "$"+ totalSales :"$"+ 0
               }</h3>
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function SalesSummary({currentUserID}) {
             >
               <p className="font-bold text-bs">Possible revenue</p>
               <h3 className="text-5xl font-bold ms-3">{
-               "$"+ possibleRevenue
+                possibleRevenue? "$"+possibleRevenue : "$"+ 0
               }</h3>
             </div>
 
