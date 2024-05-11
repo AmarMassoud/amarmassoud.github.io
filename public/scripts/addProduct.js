@@ -3,9 +3,16 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     const addImageBtn =document.getElementById('add-file');
 
-    const currentUserId=localStorage.getItem('currentUser')
+    const currentUserId=JSON.parse(localStorage.getItem('currentUser'))
     let currentUser= {};
-    const responseUser = await fetch(`/api/users/${currentUserId}`).then(res=>res.json()).then(data=>currentUser=data);
+    if (currentUserId !== "-1") {
+        const responseUser = await fetch(`/api/user/${currentUserId}`, {
+            method: "GET",
+        })
+        if (responseUser.ok) {
+            currentUser = await responseUser.json();
+        }
+    }
 
 
 
@@ -26,12 +33,14 @@ let categories=[]
 const getCategories= async()=>{
         let products=[]
     const response = await fetch(`/api/products`).then(res=>res.json()).then(data=>products=data);
+        console.log(products);
+
  categories= [...new Set(products.map(product=>product.category))];
 
 }
 
 
-const renderCategories= ()=>{
+const renderCategories= async ()=>{
 
 const dropDown=document.querySelector('#category')
 dropDown.replaceChildren();
@@ -42,7 +51,7 @@ disabledCategory.selected=true;
 dropDown.appendChild(disabledCategory);
 
 
-getCategories()
+await getCategories()
 console.log(categories);
 categories.forEach(category=>{
     const option= document.createElement('option');
@@ -75,7 +84,7 @@ const onEdit=(product) =>{
     document.querySelector("#stock").value=product.stock;
     document.querySelector("#category").value=product.category;
     document.querySelector("#discount-percentage").value=product.discountPercentage;
-    images=product.images;
+    images=product.images.map(image=>image.url);
     document.querySelector("#submit-btn").value='Update Product';
     
     // onDelete(product);
@@ -264,11 +273,16 @@ price: price,
 stock: stock,
 category: category,
 discountPercentage: discountPercentage,
-images: imagesUrl,
 seller: currentProduct? currentProduct.seller : user,
 thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
 rating: currentProduct? currentProduct.rating: rating,
 };
+    imagesUrl.forEach(imageUrl=>{
+        const res= fetch(`/api/images`, {
+            method: 'POST',
+            body: JSON.stringify({url: imageUrl, product: product.id}),
+        });
+    })
 categoryProduct=product;
     if(productId){
         const res= await fetch(`/api/products/${productId}`, {
@@ -301,7 +315,7 @@ if (categoryRequest!==''){
     
 }
 
-localStorage.removeItem('currentProduct');
+localStorage.setItem('currentProduct', JSON.stringify("-1"));
 if(currentUser.role==='SELLER'){
 window.location.href = '../sellerProducts.html';
 }else{window.location.href = '../admin.html';

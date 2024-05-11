@@ -1,9 +1,22 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
 
-    const purchasedItems = JSON.parse(localStorage.getItem("purchasedItems")) || [];
+    let purchasedItems = [];
+    const getPurchaseHistory = await fetch(`/api/purchases`);
+    if (getPurchaseHistory.ok) {
+    purchasedItems = await getPurchaseHistory.json();
+    }
 
-    const currnetUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+    const currentUserId=JSON.parse(localStorage.getItem('currentUser'))
+    let currentUser= {};
+    if (currentUserId !== "-1") {
+        const responseUser = await fetch(`/api/user/${currentUserId}`, {
+            method: "GET",
+        })
+        if (responseUser.ok) {
+            currentUser = await responseUser.json();
+        }
+    }
 
     const body=document.querySelector("body")
     body.className="px-7"
@@ -236,7 +249,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 body:message,
                 reason:reason,
                 cartItem: selectedCartItem,
-                user:currnetUser,
+                user:currentUser,
                 timeStamp:new Date().toISOString()
             }
             const refundRequests=JSON.parse(localStorage.getItem("refundRequests")) || [];
@@ -460,7 +473,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const cardsDiv = document.querySelector("#card-div");
     cardsDiv.className="flex flex-col space-y-4 my-5";
-    let purchaseByUser=purchasedItems.filter((purchase)=>purchase.deals[0].customer.id===currnetUser.id) //todo change to ===
+    let purchaseByUser=purchasedItems.filter((purchase)=>purchase.deals[0].customer.id===currentUser.id) //todo change to ===
     purchaseByUser= purchaseByUser.sort((a, purchase) =>  a.timeStamp  -purchase.timeStamp );
 
 

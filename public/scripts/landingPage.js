@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
-let currentUserId = localStorage.getItem("currentUser");
+let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
     console.log(currentUserId)
     let currentUser = {};
 

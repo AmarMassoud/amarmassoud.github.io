@@ -2,9 +2,23 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
     const smallScreen=window.innerWidth < 600;
-    
-    const purchasedItems = JSON.parse(localStorage.getItem("purchasedItems")) || [];
-    const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+
+    let purchasedItems = [];
+    const getPurchaseHistory = await fetch(`/api/purchases`);
+    if (getPurchaseHistory.ok) {
+        purchasedItems = await getPurchaseHistory.json();
+    }
+
+    const currentUserId=JSON.parse(localStorage.getItem('currentUser'))
+    let currentUser= {};
+    if (currentUserId !== "-1") {
+        const responseUser = await fetch(`/api/user/${currentUserId}`, {
+            method: "GET",
+        })
+        if (responseUser.ok) {
+            currentUser = await responseUser.json();
+        }
+    }
 
     const body=document.querySelector("body")
     body.className="px-7"
