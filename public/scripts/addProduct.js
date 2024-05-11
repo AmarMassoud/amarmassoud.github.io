@@ -345,8 +345,8 @@ if (categoryRequest!==''){
 
 localStorage.setItem('currentProduct', JSON.stringify("-1"));
 if(currentUser.role==='SELLER'){
-// window.location.href = '../sellerProducts.html';
-// }else{window.location.href = '../admin.html';
+window.location.href = '../sellerProducts.html';
+}else{window.location.href = '../admin.html';
 }
 
 
