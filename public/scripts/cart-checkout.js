@@ -1,4 +1,5 @@
 
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
@@ -9,6 +10,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const currentUserResponse = await fetch(`/api/user/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
     let products = []
     const productsResponse = fetch('/api/products').then(res => res.json()).then(data => products = data);
+
+    cartItems = cartItems.filter(item => item.customer === currentUserId);
 
     if (cartItemsLs.length !== 0 && currentUserId !== "-1") {
         cartItemsLs.forEach(cartItem => {
@@ -435,13 +438,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 // localStorage.setItem('currentUser',JSON.stringify(currentUser));
                 // localStorage.setItem('user',JSON.stringify(users));
 
-                    const addAddressResponse = fetch('/api/addresses', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(address.address),
-                    });
+                const addAddressResponse = fetch('/api/addresses', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(address.address),
+                });
 
 
                 addAddress = false;
@@ -585,7 +588,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         submitButton.addEventListener('click', () => {
             if (validateCardPaymentForm()) {
                 if (onCheckout()) {
-                    window.location.href = '../confirmation.html';
+                    // window.location.href = '../confirmation.html'; todo remove comment
                 } else {
                     alert('please add items to your cart')
                 }
@@ -625,7 +628,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (onCheckout()) {
                     // console.log('checked out', onCheckout()    )
 
-                    window.location.href = '../confirmation.html';
+                    // window.location.href = '../confirmation.html'; todo remove comment
                 } else {
                     // console.log('failed out', onCheckout()    )
 
@@ -813,22 +816,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
     }
-    async function updateStock(product ,quantity) {
-        const newStock= product.stock - quantity;
+
+    async function updateStock(product, quantity) {
+        const newStock = product.stock - quantity;
         console.log(newStock)
         console.log(product.id)
 
         const response = await fetch(`/api/products/${product.id}`, {
             method: "PATCH",
-            body: JSON.stringify({ stock: newStock }),
+            body: JSON.stringify({stock: newStock}),
         });
         console.log(response)
 
     }
 
 
-
-    async function   onCheckout () {
+    async function onCheckout() {
         console.log('checking out', cartItems.length)
         if (cartItems.length === 0) {
             alert('please add items to your cart')
@@ -842,7 +845,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const product = products.find(p => p.id === cartItem.product.id);
             if (product && product.stock >= cartItem.quantity) {
                 // product.stock -= cartItem.quantity;
-                await updateStock(product,cartItem.quantity);
+                await updateStock(product, cartItem.quantity);
             } else {
                 console.log(`Not enough quantity for product with ID ${cartItem.product.id}`);
 
@@ -860,42 +863,49 @@ document.addEventListener("DOMContentLoaded", async () => {
         // localStorage.setItem('products', JSON.stringify(products)); //todo
         const purchaseDeals = [];
         // let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
-        const groupedItems = Object.groupBy(cartItems, (item) => item.product.sellerId);
 
         const purchase = {
-            totalPrice: cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0),
-            timeStamp: new Date(),
+            total_price: parseFloat(cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0)),
+            timeStamp: new Date().toString(),
         }
+
+        const groupedItems = Object.groupBy(cartItems, (item) => item.product.sellerId);
+        console.log(groupedItems)
+        // [],"id"
+        for (const [id, items] of Object.entries(groupedItems)) {
+            console.log(items, id)
+            const deal = {
+                sellerId: id, // Assuming product.user is the seller object
+                customerId: currentUser.id,
+                cartItems: items.map(item => item.id),
+            };
+            const response = await fetch(`/api/deal`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...deal,
+                }),
+            });
+
+            purchaseDeals.push(await response.json());
+        }
+        console.log(purchaseDeals)
+        console.log(purchase)
         const addedPurchase = await fetch(`/api/purchase`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({...purchase}),
+            body: JSON.stringify({
+                ...purchase,
+                deals: purchaseDeals.map(deal => deal.id)
+            }),
         });
-
-        for (const items of Object.values(groupedItems)) {
-            const deal = {
-                seller: items[0].product.seller, // Assuming product.user is the seller object
-                items: items,
-                customer: currentUser,
-            };
-            const response = await fetch(`/api/deals`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({...deal,
-                    addedPurchase: addedPurchase.id,
-                }),
-            });
-            purchaseDeals.push(deal);
-
-        }
         // purchaseDeals.forEach(deal => {
         //
         // })
-
 
 
         // purchasedItems.push(purchase);
@@ -903,10 +913,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         // localStorage.setItem('cart', JSON.stringify([]));
         if (paymentMethod === 1) {
             currentUser.balance -= purchase.totalPrice;
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            const users = JSON.parse(localStorage.getItem('user'));
-            users.find(user => user.id === currentUser.id).balance = currentUser.balance;
-            localStorage.setItem('user', JSON.stringify(users));
+            // localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            // const users = JSON.parse(localStorage.getItem('user'));
+            // users.find(user => user.id === currentUser.id).balance = currentUser.balance;
+            // localStorage.setItem('user', JSON.stringify(users));
         }
         return true;
 
@@ -923,7 +933,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const isLoggedIn = localStorage.getItem('currentUser') !== "-1";
         if (isLoggedIn) {
             let carItems = []
-            const response =await  fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
+            const response = await fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
             carItems = carItems.filter(item => item.customer === currentUser.id);
             let inCart = carItems.find(item => item.product.id === product.id);
             if (!inCart) {
