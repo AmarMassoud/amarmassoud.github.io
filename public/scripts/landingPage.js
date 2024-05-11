@@ -29,13 +29,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
-    console.log(currentUserId)
+    console.log("sdka jkl s "  + currentUserId)
     let currentUser = {};
 
 
     const navbar = document.querySelector("#nav");
-if (currentUserId === null || currentUserId === "-1"){
-    currentUserId = "-1";
+if (currentUserId === null || currentUserId === -1){
+    console.log("GOING TO LOGIN")
     const profileButton = document.querySelector("#profile-link");
     profileButton.href = "../login.html";
 
