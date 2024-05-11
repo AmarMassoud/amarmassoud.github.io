@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
     const products = await productsResponse.json();
 
-    const searchedProductIds = JSON.parse(localStorage.getItem('searchedProducts'))
+    const searchedProductIds = JSON.parse(localStorage.getItem('searchedProducts')) || products.map(product => product.id);
     const searchedProducts = products.filter(product => searchedProductIds.includes(product.id));
 
 

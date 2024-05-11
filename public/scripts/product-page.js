@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded",  async() => {
         console.log(currentProductId);
         console.log(currentProduct);
 
-        let currentUserId = localStorage.getItem("currentUser");
+        let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
         let currentUser = {};
         if (currentUserId !== "-1") {
             const responseUser = await fetch(`/api/users/${currentUserId}`, {

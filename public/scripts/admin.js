@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async() => {
   await getUsers(); //
   
   comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    const userId=localStorage.getItem('currentUser')
+    const userId=JSON.parse(localStorage.getItem('currentUser'));
     let currentUser= {};
     const responseUser = await fetch(`/api/users/${userId}`).then(res=>res.json()).then(data=>currentUser=data);
 
