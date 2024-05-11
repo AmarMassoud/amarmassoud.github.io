@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             const newUser = await createAccount.json();
             // console.log('User:', user);
             localStorage.setItem('currentUser', JSON.stringify(newUser.id));
-            const role = newUser.id;
+            const role = newUser.role;
             if (role === 'CUSTOMER') {
                 window.location.href = '/';
             } else if (role === 'SELLER') {

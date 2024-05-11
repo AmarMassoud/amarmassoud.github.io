@@ -26,7 +26,10 @@ document.addEventListener("DOMContentLoaded", async() => {
     document.getElementById("first-name").textContent = currentUser.firstName;
     document.getElementById("last-name").textContent = currentUser.lastName;
     document.getElementById("email").textContent = currentUser.email;
-
+    document.getElementById("logout-button").addEventListener("click", async() => {
+        localStorage.setItem("currentUser", "-1");
+        window.location.href = "/";
+    });
 
 
 });
