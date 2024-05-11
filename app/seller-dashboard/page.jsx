@@ -15,8 +15,9 @@ export default function SellerDashboard() {
   const [requests, setRequests] = useState([]);
   const [userName, setName] = useState(null);
   const [stale, setStale] = useState(true);
-
-  const currentUserId= JSON.parse(localStorage.getItem("currentUser"));
+  let currentUserId;
+  if(typeof window !== "undefined")
+  currentUserId = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
     const currentUserId= (JSON.parse(localStorage.getItem("currentUser")));
