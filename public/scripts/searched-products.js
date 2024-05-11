@@ -321,36 +321,79 @@ document.querySelector("#rating-reverse").addEventListener("click",()=>{
 });
 
 
-const addToCart=(product)=>{
-    
-    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { firstName: "Guest", id: -1 };
+async function addToCart  (product, quantity = 1) {
 
-    const cartItems=JSON.parse(localStorage.getItem('cart')) || [];
-    let inCart= cartItems.find(item=>item.product.id===product.id);
-    console.log(product.id)
-    console.log(inCart)
-    if(!inCart ){
-    const cartItem={
-        product:product,
-        quantity:1,
-        customer:currentUser.id,
-        dealId:null
+    const isLoggedIn = localStorage.getItem('currentUser') !== "-1";
+    if (isLoggedIn) {
+        let carItems = []
+        const response =await  fetch(`/api/cartitems`).then(res => res.json()).then(data => carItems = data);
+        carItems = carItems.filter(item => item.customer === currentUser.id);
+        let inCart = carItems.find(item => item.product.id === product.id);
+        if (!inCart) {
+            const cartItem = {
+                productId: product.id,
+                quantity: quantity,
+                customer: currentUser.id
+            }
+            const addCartItemResponse = await fetch(`/api/cartitems`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cartItem)
+            })
+        }
+        else {
+            console.log(inCart.quantity, inCart.product.stock)
+            if (inCart.quantity < inCart.product.stock) {
+                inCart.quantity += quantity; //todo change in api
+                const updateCartItemResponse = await fetch(`/api/cartitems/${inCart.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(inCart)
+                })
+            } else {
+                showToast('Your reached max stock', 'bg-red-200');
+            }
+        }
+
     }
-    cartItems.push(cartItem);
- showToast('Product added to cart','bg-green-200');
-}
-else if(inCart.quantity<inCart.product.stock){
+    else {
+        let cartItemsLs = JSON.parse(localStorage.getItem('cart')) || [];
+        const allProductsResponse = await fetch(`/api/products`).then(res => res.json()).then(data => {
+            cartItemsLs = cartItemsLs.map(item => {
+                item.product = data.find(product => product.id === item.product.id);
+                return item;
+            })
+        });
+        const mainProduct = products.find(prod => prod.id === product.id);
+        let inCart = cartItemsLs.find(item => item.product === product.id);
+        if (!inCart) {
+            const cartItem = {
+                product: product.id,
+                quantity: 1
+            }
+            cartItemsLs.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+            showToast('Product added to cart', 'bg-green-200');
+        }
 
-    inCart.quantity++;
-    showToast('Product added to cart','bg-green-200');
 
-}
-else{
-    showToast('Your reached max stock','bg-red-200');
+        else if (inCart.quantity < mainProduct.stock) {
 
-}
-localStorage.setItem('cart',JSON.stringify(cartItems));
+            inCart.quantity += quantity;
 
+            showToast('Product added to cart', 'bg-green-200');
+
+        } else {
+            showToast('Your reached max stock', 'bg-red-200');
+
+        }
+        localStorage.setItem('cart', JSON.stringify(cartItemsLs));
+
+    }
 
 }
 

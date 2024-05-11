@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let products = []
     const productsResponse = fetch('/api/products').then(res => res.json()).then(data => products = data);
 
-    cartItems = cartItems.filter(item => item.customer === currentUserId);
+    cartItems = cartItems.filter(item => (item.customer === currentUserId)&&(item.dealId===null));
 
     if (cartItemsLs.length !== 0 && currentUserId !== "-1") {
         cartItemsLs.forEach(cartItem => {
@@ -588,7 +588,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         submitButton.addEventListener('click', () => {
             if (validateCardPaymentForm()) {
                 if (onCheckout()) {
-                    // window.location.href = '../confirmation.html'; todo remove comment
+                    window.location.href = '../confirmation.html';
                 } else {
                     alert('please add items to your cart')
                 }
@@ -628,7 +628,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (onCheckout()) {
                     // console.log('checked out', onCheckout()    )
 
-                    // window.location.href = '../confirmation.html'; todo remove comment
+                    window.location.href = '../confirmation.html';
                 } else {
                     // console.log('failed out', onCheckout()    )
 
@@ -903,6 +903,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 deals: purchaseDeals.map(deal => deal.id)
             }),
         });
+        console.log(cartItems)
+        for (let item in cartItems) {
+            const deleteResponse = await fetch(`/api/cartitems/${item.id}`, {
+                method: 'DELETE',
+            });
+        }
+
         // purchaseDeals.forEach(deal => {
         //
         // })
