@@ -813,9 +813,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
     }
+    async function updateStock(product ,quantity) {
+        const newStock= product.stock - quantity;
+        const response = await fetch(`/api/product/${product.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ stock: newStock }),
+        });
+    }
 
 
-    const onCheckout = () => {
+
+    async function   onCheckout () {
         console.log('checking out', cartItems.length)
         if (cartItems.length === 0) {
             alert('please add items to your cart')
@@ -828,7 +836,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         cartItems.forEach(cartItem => {
             const product = products.find(p => p.id === cartItem.product.id);
             if (product && product.stock >= cartItem.quantity) {
-                product.stock -= cartItem.quantity;
+                // product.stock -= cartItem.quantity;
+                updateStock(product,cartItem.quantity);
             } else {
                 console.log(`Not enough quantity for product with ID ${cartItem.product.id}`);
 
@@ -842,28 +851,51 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             return false;
         }
-        localStorage.setItem('products', JSON.stringify(products)); //todo
+
+        // localStorage.setItem('products', JSON.stringify(products)); //todo
         const purchaseDeals = [];
-        let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
+        // let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
         const groupedItems = Object.groupBy(cartItems, (item) => item.product.seller.id);
 
-        Object.values(groupedItems).forEach((items) => {
+        const purchase = {
+            totalPrice: cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0),
+            timeStamp: new Date(),
+        }
+        const addedPurchase = await fetch(`/api/purchase`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(purchase),
+        });
+
+        Object.values(groupedItems).forEach((items)  => {
             const deal = {
                 seller: items[0].product.seller, // Assuming product.user is the seller object
                 items: items,
                 customer: currentUser,
             };
+            const response = fetch(`/api/deals`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({...deal,
+                    addedPurchase: addedPurchase.id,
+                }),
+            });
             purchaseDeals.push(deal);
+
         });
-        const purchase = {
-            deals: purchaseDeals,
-            totalPrice: cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0),
-            timeStamp: new Date(),
-            id: purchasedItems.length + 1
-        }
-        purchasedItems.push(purchase);
-        localStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
-        localStorage.setItem('cart', JSON.stringify([]));
+        // purchaseDeals.forEach(deal => {
+        //
+        // })
+
+
+
+        // purchasedItems.push(purchase);
+        // localStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
+        // localStorage.setItem('cart', JSON.stringify([]));
         if (paymentMethod === 1) {
             currentUser.balance -= purchase.totalPrice;
             localStorage.setItem('currentUser', JSON.stringify(currentUser));

@@ -1,10 +1,10 @@
 import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js';
 
-let currentUserId = localStorage.getItem("currentUser");
+let currentUserId = JSON.parse(localStorage.getItem("currentUser"));
 let isLoggedIn = currentUserId != null && currentUserId !== "-1";
 let currentUser={firstName: "Guest"}
 if (isLoggedIn) {
-    const response = await fetch(`/api/users/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
+    const response = await fetch(`/api/user/${currentUserId}`).then(res => res.json()).then(data => currentUser = data);
 }
 class SellerNav extends LitElement {
     static properties = {
@@ -102,7 +102,7 @@ class SellerNav extends LitElement {
   render() {
     return html`
   <div  class="seller-navbar">
-  <a href="../seller-dashboard.html"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
+  <a href="/seller-dashboard"><img src="../../media/logo.svg" alt="Logo" id="logo"></a>
   <div id="nav-buttons">
 
       <a href="/seller-dashboard" class="hover:bg-custom-red">Dashboard</a>

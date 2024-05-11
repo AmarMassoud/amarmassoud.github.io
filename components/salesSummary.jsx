@@ -24,7 +24,7 @@ export default function SalesSummary({currentUserID}) {
           .then((data) => {
 
             setPossibleRevenue(data);
-            console.log(data);
+            // console.log(data);
           })
           .catch(() => {})
           .finally(() => {});
@@ -39,7 +39,7 @@ export default function SalesSummary({currentUserID}) {
           .then((data) => {
 
             setCommentCount(data);
-            console.log(data);
+            // console.log(data);
           })
           .catch(() => {})
           .finally(() => {});
@@ -55,7 +55,7 @@ export default function SalesSummary({currentUserID}) {
           .then((data) => {
 
             setDealsCount(data);
-            console.log(data);
+            // console.log(data);
           })
           .catch(() => {})
           .finally(() => {});
@@ -72,7 +72,7 @@ export default function SalesSummary({currentUserID}) {
           .then((data) => {
 
             setProductsCount(data);
-            console.log(data);
+            // console.log(data);
           })
           .catch(() => {})
           .finally(() => {});
@@ -93,7 +93,7 @@ export default function SalesSummary({currentUserID}) {
                 setTotalSales(0);
             }
 
-            console.log(data);
+            // console.log(data);
           })
           .catch(() => {})
           .finally(() => {});
@@ -109,7 +109,7 @@ export default function SalesSummary({currentUserID}) {
           .then((res) => res.json())
           .then((data) => {
             setTotalCustomers(data);
-            console.log(data);
+            // console.log(data);
           })
           .catch(() => {})
           .finally(() => {});

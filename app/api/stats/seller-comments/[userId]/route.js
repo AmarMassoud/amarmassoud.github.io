@@ -6,7 +6,7 @@ export async function GET(request, {params}) {
     try {
         const userId = params.userId;
         console.log(userId)
-        const user = await stats.getSellerCommentsCount(userId.toString());
+        const user = await stats.getSellerCommentsCount(userId);
         return Response.json(user)
     } catch (error) {
         // return "Internal error"

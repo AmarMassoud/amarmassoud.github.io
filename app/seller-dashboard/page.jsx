@@ -13,37 +13,15 @@ import SellerNav from "@/components/sellerNav";
 export default function SellerDashboard() {
   const [comments, setComments] = useState([]);
   const [requests, setRequests] = useState([]);
-
   const [userName, setName] = useState(null);
-  const [currentUserID, setCurrentUserID] = useState(null);
-
-  const projectTitle = useRef();
   const [stale, setStale] = useState(true);
 
-  // useEffect(() => {
-  //   const currentUserId = localStorage.getItem("currentUserId") ||7;
-  //   console.log(currentUserId);
-  //   if (stale) {
-  //     localStorage.getItem("currentUserId")
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           const shortData = data.slice(0, 3);
-  //           setComments(shortData);
-  //         })
-  //         .catch(() => {})
-  //         .finally(() => {});
-  //     setStale(false);
-  //   }
-  //
-  //   return () => {};
-  // }, [stale]); // empty dependency array to run only once on component mount
-  //
-
-
+    const currentUserId= (JSON.parse(localStorage.getItem("currentUser")));
   useEffect(() => {
-    const currentUserId = localStorage.getItem("currentUserId") ||7;
-    console.log(currentUserId);
-    if (stale) {
+
+    if (stale && currentUserId ) {
+      console.log(currentUserId);
+
       fetch(`/api/comments/seller/${currentUserId}`)
           .then((res) => res.json())
           .then((data) => {
@@ -54,14 +32,13 @@ export default function SellerDashboard() {
           .finally(() => {});
       setStale(false);
     }
-
     return () => {};
-  }, [stale]); // empty dependency array to run only once on component mount
+  }, [stale]);
 
   useEffect(() => {
-    const currentUserId = localStorage.getItem("currentUserId") ||7;
-    console.log(currentUserId);
-    if (stale) {
+    if (stale && currentUserId) {
+      console.log(currentUserId);
+
       fetch(`/api/user/${currentUserId}`)
           .then((res) => res.json())
           .then((data) => {
@@ -73,21 +50,17 @@ export default function SellerDashboard() {
     }
 
     return () => {};
-  }, []);
-  console.log(userName);
+  }, [stale]);
 
-
-
-
-  useEffect(() => {
-    const getRequests = async () => {
-      const refundRequests =
-        JSON.parse(localStorage.getItem("refundRequests")) || [];
-      setRequests(refundRequests);
-    };
-
-    getRequests();
-  }, []);
+  // useEffect(() => {
+  //   const getRequests = async () => {
+  //     const refundRequests =
+  //       JSON.parse(localStorage.getItem("refundRequests")) || [];
+  //     setRequests(refundRequests);
+  //   };
+  //
+  //   getRequests();
+  // }, []);
   return (
     <main>
       <SellerNav name={userName}></SellerNav>
@@ -95,7 +68,7 @@ export default function SellerDashboard() {
         <script type="module" src="../../public/scripts/footer.js"></script>
 
         <section id="analytics" className="col-span-3 center">
-          <SalesSummary currentUserID={2}></SalesSummary>
+          <SalesSummary currentUserID={currentUserId}></SalesSummary>
           <SalesChart />
           <Education />
         </section>
