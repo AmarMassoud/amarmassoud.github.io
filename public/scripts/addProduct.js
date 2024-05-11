@@ -72,7 +72,7 @@ dropDown.appendChild(option);
 
 renderCategories()
 
-    const selectedProductId=localStorage.getItem('currentProduct');
+    const selectedProductId=JSON.parse(localStorage.getItem('currentProduct'));
     let selectedProduct= {};
     const responseProduct = await fetch(`/api/products/${selectedProductId}`).then(res=>res.json()).then(data=>selectedProduct=data);
 const productId= selectedProduct? selectedProduct.id : null;
@@ -84,7 +84,14 @@ const onEdit=(product) =>{
     document.querySelector("#stock").value=product.stock;
     document.querySelector("#category").value=product.category;
     document.querySelector("#discount-percentage").value=product.discountPercentage;
-    images=product.images.map(image=>image.url);
+    images=product.images.map(image=> {
+        if (image.url){
+        return image.url
+        }
+        else{
+            return image
+        }
+    });
     document.querySelector("#submit-btn").value='Update Product';
     
     // onDelete(product);
@@ -252,11 +259,11 @@ const categoryRequest=document.querySelector("#request-category").value.trim();
 const rating=Math.floor(Math.random()*6)
 const imagesUrl=images;
 
-const userId=localStorage.getItem('currentUser')
+const userId=JSON.parse(localStorage.getItem('currentUser')||"-1")
     let user= {};
-const responseUser = await fetch(`/api/users/${userId}`).then(res=>res.json()).then(data=>user=data);
+const responseUser = await fetch(`/api/user/${userId}`).then(res=>res.json()).then(data=>user=data);
 
-const currentProductId=localStorage.getItem('currentProduct')
+const currentProductId=JSON.parse(localStorage.getItem('currentProduct')?? "-1")
 let currentProduct= {};
 const responseProduct = await fetch(`/api/products/${currentProductId}`).then(res=>res.json()).then(data=>currentProduct=data);
     let allProducts=[]
@@ -264,39 +271,46 @@ const responseProduct = await fetch(`/api/products/${currentProductId}`).then(re
 console.log(currentProduct);
 let categoryProduct=null
 if (imagesUrl){
-const product={
+let product={
 
-id: currentProduct ? productId :allProducts.length + 1,
+id: (currentProductId!=="-1")? currentProductId : undefined,
 title: productName,
 description: productDescription,
 price: price,
 stock: stock,
+    brand:"market-hub",
 category: category,
 discountPercentage: discountPercentage,
 seller: currentProduct? currentProduct.seller : user,
 thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
 rating: currentProduct? currentProduct.rating: rating,
 };
-    imagesUrl.forEach(imageUrl=>{
-        const res= fetch(`/api/images`, {
-            method: 'POST',
-            body: JSON.stringify({url: imageUrl, product: product.id}),
-        });
-    })
-categoryProduct=product;
-    if(productId){
-        const res= await fetch(`/api/products/${productId}`, {
-            method: 'PATCH',
-            body: JSON.stringify(product),
-        });
-    };
-    }else {
-        const response = await fetch(`/api/products/${product.id}`, {
-            method: 'POST',
-            body: JSON.stringify(product),
-        });
 
+    categoryProduct=product;
+    console.log(product);
+    if(!product.id){
+        product.id= allProducts.length+1;
+        const response = await fetch(`/api/products`, {
+            method: 'POST',
+            body: JSON.stringify({...product}),
+        });
+        console.log('post');
+    }
+    else {
+        const res= await fetch(`/api/products/${currentProductId}`, {
+            method: 'PATCH',
+            body: JSON.stringify({...product}),
+        });
+        console.log('patch');
+    }
+    // for (const imageUrl of imagesUrl) {
+    //     const res=await fetch(`/api/images`, {
+    //         method: 'POST',
+    //         body: JSON.stringify({url: imageUrl, productId: product.id.toString()}),
+    //     });
+    // }
 }
+
 if (categoryRequest!==''){
 
 
@@ -317,8 +331,8 @@ if (categoryRequest!==''){
 
 localStorage.setItem('currentProduct', JSON.stringify("-1"));
 if(currentUser.role==='SELLER'){
-window.location.href = '../sellerProducts.html';
-}else{window.location.href = '../admin.html';
+// window.location.href = '../sellerProducts.html';
+// }else{window.location.href = '../admin.html';
 }
 
 
