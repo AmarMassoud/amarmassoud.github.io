@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
   localStorage.removeItem("currentProduct");
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  let allProducts = JSON.parse(localStorage.getItem("products"));
+  const currentUserId = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUserResponse = await fetch(`/api/user/${currentUserId}`);
+  const currentUser = await currentUserResponse.json();
+  const productsResponse = await fetch("/api/products");
+  const allProducts = await productsResponse.json();
   let products = allProducts.filter(
     (product) => product.seller.id === currentUser.id
   );
@@ -83,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderProducts();
     });
     editButton.addEventListener("click", () => {
-      localStorage.setItem("currentProduct", JSON.stringify(product));
+      localStorage.setItem("currentProduct", JSON.stringify(product.id));
       window.location.href = "./addProduct.html";
     });
 
@@ -91,14 +94,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   const deleteProduct = (id) => {
-    let allProducts = JSON.parse(localStorage.getItem("products"));
-    allProducts = allProducts.filter((product) => product.id !== id);
-    localStorage.setItem("products", JSON.stringify(allProducts));
-    products = allProducts;
-    console.log(id);
+    const deleteProductResponse = fetch(`/api/products/${id}`, {
+        method: "DELETE",
+        });
+    window.location.reload();
 
-    comments = comments.filter((comment) => comment.productId !== id);
-    localStorage.setItem("comments", JSON.stringify(comments));
 
     renderProducts();
   };
