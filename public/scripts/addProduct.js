@@ -263,7 +263,7 @@ const userId=JSON.parse(localStorage.getItem('currentUser')||"-1")
     let user= {};
 const responseUser = await fetch(`/api/user/${userId}`).then(res=>res.json()).then(data=>user=data);
 
-const currentProductId=JSON.parse(localStorage.getItem('currentProduct')?? "-1")
+const currentProductId=JSON.parse(localStorage.getItem('currentProduct') ?? -1);
 let currentProduct= {};
 const responseProduct = await fetch(`/api/products/${currentProductId}`).then(res=>res.json()).then(data=>currentProduct=data);
     let allProducts=[]
@@ -273,33 +273,47 @@ let categoryProduct=null
 if (imagesUrl){
 let product={
 
-id: (currentProductId!=="-1")? currentProductId : undefined,
-title: productName,
-description: productDescription,
-price: price,
-stock: stock,
+    title: productName,
+    description: productDescription,
+    price: parseFloat(price),
+    stock: parseInt(stock),
     brand:"market-hub",
-category: category,
-discountPercentage: discountPercentage,
-seller: currentProduct? currentProduct.seller : user,
-thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
-rating: currentProduct? currentProduct.rating: rating,
-};
+    category: category,
+    discountPercentage: parseFloat(discountPercentage),
+    sellerId: currentUserId,
+    thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
+    rating: parseFloat(currentProduct? currentProduct.rating: rating),
 
+};
+    // console.log(allProducts);
     categoryProduct=product;
     console.log(product);
-    if(!product.id){
+    if(!allProducts.map(product => product.id).includes(currentProductId)){
         product.id= allProducts.length+1;
         const response = await fetch(`/api/products`, {
             method: 'POST',
-            body: JSON.stringify({...product}),
+            body: JSON.stringify({
+                title: productName,
+                description: productDescription,
+                price: parseFloat(price),
+                stock: parseInt(stock),
+                brand:"market-hub",
+                category: category,
+                discountPercentage: parseFloat(discountPercentage),
+                sellerId: currentUserId,
+                thumbnail: currentProduct? currentProduct.thumbnail : imagesUrl[0],
+                rating: parseFloat(currentProduct? currentProduct.rating: rating),
+
+
+
+            }),
         });
         console.log('post');
     }
     else {
         const res= await fetch(`/api/products/${currentProductId}`, {
             method: 'PATCH',
-            body: JSON.stringify({...product}),
+            body: JSON.stringify({...product, id: currentProductId}),
         });
         console.log('patch');
     }
